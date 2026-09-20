@@ -6,7 +6,8 @@
 - [Results](#Results)
 - [Whats Next](#Whats-Next)
 
-![[Media Controller (Poster (US)) (2).png]]
+![Media Controller poster](Mainpic.png)
+
 # The Problem / Why I Built It
 Using a computer for many years, I found that the volume control was way too hard. I had to stretch my finger across the keyboard to press FN + F2 or F3, to control my volume. I realized it wasn't fast, and I just didn't like it. I knew I could make it more satisfying, more interactive, and way faster, so I could control the volume without thinking about it. That’s when it hit me: I had to design and create my own product that solves this issue I had, using the materials and tools I already had. After thinking about it, I realized that I could create a media controller that could control the volume, along with any media that I'm playing or watching.
 # What It Does
@@ -29,7 +30,8 @@ Visualizing it, I could see a design that incorporated the touch sensor and enco
 - Encoder spin = Volume control
 - Touch + Encoder spin = skip through song tracks
 - Encoder press = Pause/Play volume
-- Double touch = RGB LED on/off![[PXL_20260914_232122508.MACRO_FOCUS.jpg|466]]
+- Double touch = RGB LED on/off
+ ![[Wiring.jpg]]
 # The Hard Parts 
 ## The Design
 I probably spent the most time on this, as I wanted it to look really clean and modern, just fitting on my desk along with my keyboard and mouse. I wanted something minimalistic but also functional. After brainstorming for a while, I landed on a circular design: the middle of the circle would have the encoder with a textured knob, giving it a high-quality feel, and the side would have a textured place that reveals the location of the touch sensor, so you could use the touch sensor without looking. In the front would be an RGB LED that responds to whatever you do.
@@ -43,13 +45,13 @@ After a while of using it, I knew that it could do more. I had three more combin
 - Encoder double press
 
 So after thinking about it for a while, I thought of an idea: What if I link the DialZero to my smart home? This was my biggest breakthrough yet. I already had a home server running Home Assistant, which had all my smart devices, and it would make controlling the lights and other smart home things seamless for me. So first I searched it up, if it was even possible, and Google said that it was in fact possible. Doing more research, I found that I could have the DialZero output special keys that weren't found on a normal keyboard, like F13, F14 and F15, after it output this, I could have Apple Shortcuts read these special keys and send messages to my Home Assistant app on my Mac. This allowed me to use those three combinations on the DialZero that I had left to control my smart home, and to this day I use these every day.
-![[Screenshot 2026-09-20 at 2.28.52 PM.png]]![[Screenshot 2026-09-20 at 2.29.55 PM.png|261]]
+![[Shortcuts.png]]![[HA.png|261]]
 # Results
 I had a working product that could control all my media, and me using it was as seamless as clicking space on your keyboard between every word. 
 
 I also had a strong Etsy listing that I have just recently made and already had a custom order for DialZero. On my Etsy shop, looking at the stats, I see that this product gets the most views too.
 Link to listing: https://makrix.etsy.com/listing/4556098632
-![[Screenshot 2026-09-20 at 2.31.36 PM.png]]
+![[Etsy.png]]
 # What's Next
 - Vial/QMK for easier config
 - Another touch sensor for even more combinations 
