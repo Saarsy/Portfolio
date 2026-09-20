@@ -31,7 +31,8 @@ Visualizing it, I could see a design that incorporated the touch sensor and enco
 - Touch + Encoder spin = skip through song tracks
 - Encoder press = Pause/Play volume
 - Double touch = RGB LED on/off
-<img width="2005" height="2532" alt="Wiring" src="https://github.com/user-attachments/assets/ae8ac639-9d02-4cea-814e-e13afb89e754" />
+<img width="720" height="909" alt="Wiring" src="https://github.com/user-attachments/assets/a6dfbd26-d9cc-4f78-a146-8ced1cbd1275" />
+
 
 # The Hard Parts 
 ## The Design
