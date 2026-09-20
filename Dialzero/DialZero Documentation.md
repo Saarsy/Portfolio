@@ -40,11 +40,11 @@ After a while of using it, I knew that it could do more. I had three more combin
 - Encoder double press
 
 So after thinking about it for a while, I thought of an idea: What if I link the DialZero to my smart home? This was my biggest breakthrough yet. I already had a home server running Home Assistant which had all my smart devices and it would make controlling the lights and other smart home things seamless for me. So first I searched it up, if it was even possible, and Google said that it was in fact possible. Doing more research, I found that I could have the DialZero output special keys that weren't found on a normal keyboard, like F13, F14 and F15, after it output this, I could have Apple Shortcuts read these special keys and send messages to my Home Assistant app on my Mac. This allowed me to use those three combinations on the DialZero that I had left to control my smart home and to this day use these everyday.
-# 6. Results
+# Results
 I had a working micro pad that could control all my media. and me using it was as seamless as clicking space on your keyboard between every word. 
 
 I also had a strong Etsy listing that i have just recently made and already had a custom order for DialZero. On my Etsy shop, looking at the stats, I see that this product gets the most views too.
-## 7. What's Next
+# What's Next
 - Vial/QMK for easier config
 - Another touch sensor for even more combinations 
 - Grow my sales for this product
