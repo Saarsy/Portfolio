@@ -1,10 +1,10 @@
 # Contents 
-[The Problem](#the-problem--why-i-built-it)
-[What It Does](#what-it-does)
-[Technical Overview](#technical-overview)
-[The Hard Parts](#the-hard-parts)
-[Results](#Results)
-[Whats Next](#Whats-Next)
+- [The Problem](#the-problem--why-i-built-it)
+- [What It Does](#what-it-does)
+- [Technical Overview](#technical-overview)
+- [The Hard Parts](#the-hard-parts)
+- [Results](#Results)
+- [Whats Next](#Whats-Next)
 # The Problem / Why I Built It
 Using a computer for many years, I found that the volume control was way too hard. I had to stretch my finger across the keyboard to press FN + F2 or F3, to control my volume. I realized it wasn't fast, and I just didn't like it. I knew I could make it more satisfying, more interactive, and way faster, so I could control the volume without thinking about it. That’s when it hit me: I had to design and create my own product that solves this issue I had, using the materials and tools I already had. After thinking about it, I realized that I could create a media controller that could control the volume, along with any media that I'm playing or watching.
 # What It Does
