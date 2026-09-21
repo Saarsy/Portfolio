@@ -1,4 +1,4 @@
-# [Project Name] — Quick Build
+# Wall Mounted Cream Holder — Quick Build
 
 _A smaller project — built in [X hours/days]. Documented at a lighter level than bigger builds like DialZero, proportional to the actual scope of the work._
 
