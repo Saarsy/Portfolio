@@ -1,7 +1,4 @@
-# Wall Mounted Cream Holder — Quick Build
-
-_A smaller project — built in [X hours/days]. Documented at a lighter level than bigger builds like DialZero, proportional to the actual scope of the work._
-
+This is a Quick Build as it only took a few hours so the documentation is less then something bigger like [DialZero.py](/DialZero%20(Big%20project)/DialZero.py)
 # What It Is
 
 (1-2 sentences)
