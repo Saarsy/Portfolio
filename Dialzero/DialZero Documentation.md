@@ -52,7 +52,7 @@ So after thinking about it for a while, I thought of an idea: What if I link the
 
 
 # Results
-I had a working product that could control all my media, and me using it was as seamless as clicking space on your keyboard between every word. 
+I had a working product that could control all my media, and using it was as seamless as clicking space bar on your keyboard between every word. 
 
 I also had a strong Etsy listing that I have just recently made and already had a custom order for DialZero. On my Etsy shop, looking at the stats, I see that this product gets the most views too.
 Link to listing: https://makrix.etsy.com/listing/4556098632
