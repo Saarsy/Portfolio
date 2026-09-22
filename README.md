@@ -5,10 +5,10 @@ This is the place where I document all the projects that I make. I organize my p
 - Small projects (Ones that take only a few hours to make)
 
 # Big Projects:
-- [DialZero](/DialZero%20(Big%20project))
+- [DialZero Documentation](/DialZero%20(Big%20project)/DialZero%20Documentation.md)
 
 # Medium Projects
 - Nice weather tdy
 
 # Small Projects
-- [Cream Holder](/Wall%20Mounted%20Cream%20Holder)
+- [Cream Holder Documentation](/Wall%20Mounted%20Cream%20Holder/Cream%20Holder%20Documentation.md)
