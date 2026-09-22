@@ -1,7 +1,6 @@
 # Contents
 - [The Problem](#the-problem--why-i-built-it)
 - [What It Does](#what-it-does)
-- [Technical Overview](#technical-overview)
 - [The Hard Parts](#the-hard-parts)
 - [Results](#Results)
 - [Whats Next](#Whats-Next)
