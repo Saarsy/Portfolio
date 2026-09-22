@@ -56,6 +56,7 @@ I had a working product that could control all my media, and using it was as sea
 
 I also had a strong Etsy listing that I have just recently made and already had a custom order for DialZero. On my Etsy shop, looking at the stats, I see that this product gets the most views too averaging around 30 per week.
 Link to listing: https://makrix.etsy.com/listing/4556098632
+
 <img width="256" height="418" alt="Etsy" src="https://github.com/user-attachments/assets/82d56de0-8449-4e68-a2ed-d52191dcc4f1" />
 
 # What's Next
