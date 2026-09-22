@@ -8,17 +8,10 @@
 
 
 # The Problem / Why I Built It
-Using a computer for many years, I found that the volume control was way too hard. I had to stretch my finger across the keyboard to press FN + F2 or F3, to control my volume. I realized it wasn't fast, and I just didn't like it. I knew I could make it more satisfying, more interactive, and way faster, so I could control the volume without thinking about it. That’s when it hit me: I had to design and create my own product that solves this issue I had, using the materials and tools I already had. After thinking about it, I realized that I could create a media controller that could control the volume, along with any media that I'm playing or watching.
+My dad loved working on the sofa after a hard day of work, he didn't want to sit at his desk sometimes, and those times when he did sit on the sofa, I always saw him using books or some other unconventional surface to place and use his mouse. After watching him do this a few times I knew that I had to do something, I had all the tools to be able to solve this problem.
 
 # What It Does
-After thinking about it for a while, I created a list of things I wanted it to do:
-- Volume up and down
-- Play/Pause media
-- Swipe through songs
-
-After finishing the build it had incorporated 3 more things tied to me:
-- Turn on/off all the lights in my room
-- Set my room to a colorful scene
+After consulting with my dad and bringing my thoughts, my dad felt the same, so I started making a list of requirements that I needed to achieve with this build.
 
 # The Hard Parts 
 
