@@ -7,8 +7,6 @@ First why didn't I like the old setup?
 - It limited my desk space and didn’t stay where I wanted it to
 - I had to use two hands to open it (holding the bottom container while twisting the lid) which was twice the struggle I could have it be
 - My siblings just stole it and never put it back
-
-A big reason why I made it was because I already had holes in my wall, so I didn’t have to feel guilty putting extra holes in my wall, which might not have been necessary.
 # Design Process
 I wanted the design to be elegant, minimalistic, and functional. I went through a few thought designs and finally thought of this one: a pipe-shaped circular object that held my cream container perfectly.
 
