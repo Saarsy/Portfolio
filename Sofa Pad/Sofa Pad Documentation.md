@@ -1,4 +1,4 @@
-# Contents
+# Contents - Medium Size Project
 - [The Problem](#the-problem--why-i-built-it)
 - [What It Does](#what-it-does)
 - [The Hard Parts](#the-hard-parts)
