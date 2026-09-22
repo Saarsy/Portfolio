@@ -35,12 +35,6 @@ Visualizing it, I could see a design that incorporated the touch sensor and enco
 
 
 # The Hard Parts 
-## The Design
-I probably spent the most time on this, as I wanted it to look really clean and modern, just fitting on my desk along with my keyboard and mouse. I wanted something minimalistic but also functional. After brainstorming for a while, I landed on a circular design: the middle of the circle would have the encoder with a textured knob, giving it a high-quality feel, and the side would have a textured place that reveals the location of the touch sensor, so you could use the touch sensor without looking. In the front would be an RGB LED that responds to whatever you do.
-<img width="3300" height="2550" alt="DialZero drawing" src="https://github.com/user-attachments/assets/4020af42-597d-4b87-bb33-6a621f468c59" />
-
-## Code / Customer Config
-After designing it, I knew that I wanted to sell this as a product on Etsy, so I needed to make this as customer-friendly as possible. So I experimented with Vial and QMK configurations, but in the end I wasn't able to do these. Next, I tried to create a website on GitHub that could be opened on any browser and could easily configure the DialZero to whatever the user wanted. But mysteriously, it only worked every second time you plugged in DialZero, which was really frustrating and after spending a few hours on it, I knew that it wasn't gonna work out. I resorted to a CircuitPython script that could be edited by the customer. This was extremely time consuming, as I had to put support for Windows and Mac and make shortcuts so that the customer could easily set their DialZero to do whatever they wanted it to. Code file that I ended up on: [DialZero.py](/DialZero%20(Big%20project)/DialZero.py)
 ## Linking DialZero with Home Assistant
 After a while of using it, I knew that it could do more. I had three more combinations:
 - Touch + Encoder press
@@ -50,6 +44,12 @@ After a while of using it, I knew that it could do more. I had three more combin
 So after thinking about it for a while, I thought of an idea: What if I link the DialZero to my smart home? This was my biggest breakthrough yet. I already had a home server running Home Assistant, which had all my smart devices, and it would make controlling the lights and other smart home things seamless for me. So first I searched it up, if it was even possible, and Google said that it was in fact possible. Doing more research, I found that I could have the DialZero output special keys that weren't found on a normal keyboard, like F13, F14 and F15, after it output this, I could have Apple Shortcuts read these special keys and send messages to my Home Assistant app on my Mac. This allowed me to use those three combinations on the DialZero that I had left to control my smart home, and to this day I use these every day.
 <img width="431" height="157" alt="Shortcuts" src="https://github.com/user-attachments/assets/939e1e2d-452e-4180-b3ff-af2131b223b2" /> <img width="292" height="185" alt="HA" src="https://github.com/user-attachments/assets/51cdc7b5-6c6b-487b-8d72-3e16e1484180" />
 
+## The Design
+I probably spent the most time on this, as I wanted it to look really clean and modern, just fitting on my desk along with my keyboard and mouse. I wanted something minimalistic but also functional. After brainstorming for a while, I landed on a circular design: the middle of the circle would have the encoder with a textured knob, giving it a high-quality feel, and the side would have a textured place that reveals the location of the touch sensor, so you could use the touch sensor without looking. In the front would be an RGB LED that responds to whatever you do.
+<img width="3300" height="2550" alt="DialZero drawing" src="https://github.com/user-attachments/assets/4020af42-597d-4b87-bb33-6a621f468c59" />
+
+## Code / Customer Config
+After designing it, I knew that I wanted to sell this as a product on Etsy, so I needed to make this as customer-friendly as possible. So I experimented with Vial and QMK configurations, but in the end I wasn't able to do these. Next, I tried to create a website on GitHub that could be opened on any browser and could easily configure the DialZero to whatever the user wanted. But mysteriously, it only worked every second time you plugged in DialZero, which was really frustrating and after spending a few hours on it, I knew that it wasn't gonna work out. I resorted to a CircuitPython script that could be edited by the customer. This was extremely time consuming, as I had to put support for Windows and Mac and make shortcuts so that the customer could easily set their DialZero to do whatever they wanted it to. Code file that I ended up on: [DialZero.py](/DialZero%20(Big%20project)/DialZero.py)
 
 # Results
 I had a working product that could control all my media, and using it was as seamless as clicking space bar on your keyboard between every word. 
