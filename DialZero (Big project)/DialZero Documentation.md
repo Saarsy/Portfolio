@@ -20,7 +20,7 @@ After finishing the build it had incorporated 3 more things tied to me:
 - Turn on/off all the lights in my room
 - Set my room to a colorful scene
 # Technical Overview
-Now for the one of the hard parts. Actually, thinking about how it's gonna work. I opened my closet and took out a box with a lot of sensors and microchips. In there I stumbled across:
+Now, for the one of the hard parts. Actually, thinking about how it's gonna work. I opened my closet and took out a box with a lot of sensors and microchips. In there I stumbled across:
 - Encoder
 - Touch sensor
 - RP2040-zero (Microchip)
