@@ -8,7 +8,7 @@ This is the place where I document all the projects that I make. I organize my p
 - [DialZero Documentation](/DialZero%20(Big%20project)/DialZero%20Documentation.md)
 
 # Medium Projects:
-- To be added
+- [Sofa Pad Documentation](/Sofa%20Pad/Sofa%20Pad%20Documentation.md)
 
 # Small Projects:
 - [Cream Holder Documentation](/Wall%20Mounted%20Cream%20Holder/Cream%20Holder%20Documentation.md)
