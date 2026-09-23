@@ -31,5 +31,5 @@ Now this was a complex problem. Immich did support multiple accounts, but didn't
 
 # Conclusion
 In all, this is a solid tool to have to look at all our family photos (more then 700gb of photos/videos). It is a massive upgrade from the manually sorted photos we had before, even though it failed to FULLY replace the workflow as it didn't support multi-user album sharing. It is great to just have a place to put your 10-minute, zip lining videos.
-![Poster](/Home%20Server%20(Big%20Project)/Images/SS1.jpeg) ![Poster](/Home%20Server%20(Big%20Project)/Images/SS4.jpeg)
-![Poster](/Home%20Server%20(Big%20Project)/Images/SS1.jpeg) ![Poster](/Home%20Server%20(Big%20Project)/Images/SS3.jpeg)
+![Poster](/Home%20Server%20(Big%20Project)/Images/SS4.jpeg)
+![Poster](/Home%20Server%20(Big%20Project)/Images/SS3.jpeg)
