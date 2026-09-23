@@ -7,11 +7,14 @@ For the Hardware I was going to use:
 - A old but capable windows laptop
 - 2TB SSD
 - 2TB HDD
+
 ![Poster](/Home%20Server%20(Big%20Project)/Images/Server.jpeg)
+
 For the Software I was going to run:
 - Ubuntu Server
 - Casa OS
 To code it Im going to use SSH so I can configure/program via my Mac
+
 ![Poster](/Home%20Server%20(Big%20Project)/Images/SS1.jpeg)
 
 Why I chose them:
