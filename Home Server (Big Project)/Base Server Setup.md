@@ -16,6 +16,7 @@ For the Software I was going to run:
 To code it Im going to use SSH so I can configure/program via my Mac
 
 ![Poster](/Home%20Server%20(Big%20Project)/Images/SS1.jpeg) ![Poster](/Home%20Server%20(Big%20Project)/Images/SS2.jpeg)
+(Don't worry about the updates, I did them right after)
 
 Why I chose them:
 - The laptop has more then enough processing power to power my servers needs
