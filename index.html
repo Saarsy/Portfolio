@@ -1,1 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saarsy — Maker Portfolio (Copy)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E1013;
+    --surface: #16191D;
+    --line: #262B31;
+    --text: #E8E6E1;
+    --text-dim: #8B9198;
+    --green: #4A9576;
+    --copper: #D97D4C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.5;
+  }
+  h1, h2, h3, .serif { font-family: 'Fraunces', serif; }
 
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- HERO ---------- */
+  header {
+    padding: 100px 0 80px;
+    border-bottom: 1px solid var(--line);
+  }
+  .kicker {
+    color: var(--green);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-size: clamp(40px, 6vw, 68px);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    max-width: 14ch;
+  }
+  header p.sub {
+    margin-top: 24px;
+    color: var(--text-dim);
+    font-size: 16px;
+    max-width: 52ch;
+    line-height: 1.7;
+  }
+  .hero-links {
+    margin-top: 36px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .hero-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 3px;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .hero-links a:hover { border-color: var(--copper); color: var(--copper); }
+
+  /* ---------- PROJECT ROWS ---------- */
+  .projects { padding: 70px 0; }
+  .tier-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin: 0 0 18px;
+    padding-top: 40px;
+  }
+  .tier-label:first-child { padding-top: 0; }
+
+  .project {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-top: 1px solid var(--line);
+    padding: 26px 0;
+    position: relative;
+  }
+  .project:last-child { border-bottom: 1px solid var(--line); }
+
+  .project-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 20px;
+  }
+  .project-name {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+  .project:hover .project-name { color: var(--copper); }
+  .project-tag {
+    font-size: 12px;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .project-desc {
+    margin-top: 8px;
+    color: var(--text-dim);
+    font-size: 14px;
+    max-width: 60ch;
+    line-height: 1.6;
+  }
+  .project-meta {
+    margin-top: 12px;
+    display: flex;
+    gap: 18px;
+    font-size: 12px;
+    color: var(--green);
+  }
+
+  /* ---------- OTHER PRINTS ---------- */
+  .other-prints {
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+  }
+  .other-prints ul {
+    list-style: none;
+    margin-top: 16px;
+  }
+  .other-prints li {
+    color: var(--text-dim);
+    font-size: 14px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+  }
+  .other-prints li:first-child { border-top: none; }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 40px 0 60px;
+    color: var(--text-dim);
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer a { color: var(--text-dim); }
+  footer a:hover { color: var(--copper); }
+
+  @media (max-width: 600px) {
+    header { padding: 70px 0 60px; }
+    .project-row { grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">saarsy — kirkland, wa</div>
+    <h1>Things I've built, from circuit to Etsy listing.</h1>
+    <p class="sub">
+      A running record of hardware, firmware, and product design projects —
+      what I set out to do, where it broke, and what I learned fixing it.
+    </p>
+    <div class="hero-links">
+      <a href="https://github.com/Saarsy/Portfolio">GitHub</a>
+      <a href="https://makrix.etsy.com">Etsy Shop</a>
+    </div>
+  </header>
+
+  <section class="projects">
+
+    <p class="tier-label">01 — deep builds</p>
+
+    <a class="project" href="https://github.com/Saarsy/Portfolio/blob/main/DialZero%20(Big%20project)/DialZero%20Documentation.md" target="_blank">
+      <div class="project-row">
+        <span class="project-name">DialZero</span>
+        <span class="project-tag">rp2040 · circuitpython</span>
+      </div>
+      <p class="project-desc">
+        A rebindable macropad with a rotary encoder and touch sensor —
+        six control combos, RGB feedback, and an unplanned integration
+        with Home Assistant via hidden function keys.
+      </p>
+      <div class="project-meta">
+        <span>firmware</span>
+        <span>electronics</span>
+        <span>product design</span>
+      </div>
+    </a>
+
+    <p class="tier-label">02 — smaller builds</p>
+
+    <a class="project" href="https://github.com/Saarsy/Portfolio/blob/main/Wall%20Mounted%20Cream%20Holder/Cream%20Holder%20Documentation.md" target="_blank">
+      <div class="project-row">
+        <span class="project-name">Wall-Mounted Cream Holder</span>
+        <span class="project-tag">pla · a few hours</span>
+      </div>
+      <p class="project-desc">
+        A two-piece mount that hides its screws — redesigned mid-build
+        after the first version looked cheap with visible hardware.
+      </p>
+    </a>
+
+    <a class="project" href="https://github.com/Saarsy/Portfolio" target="_blank">
+      <div class="project-row">
+        <span class="project-name">Cupholder Tray</span>
+        <span class="project-tag">pla</span>
+      </div>
+      <p class="project-desc">
+        Fits standard couch and recliner cupholders (75–90mm), turns
+        them into a stable surface for a laptop mouse or a mug.
+      </p>
+    </a>
+
+    <div class="other-prints">
+      <p class="tier-label" style="padding-top:0">03 — other prints</p>
+      <ul>
+        <li>Headphone Hanger — under-desk mount, screw-in bracket</li>
+      </ul>
+    </div>
+
+  </section>
+
+  <footer>
+    <span>Updated as new projects ship.</span>
+    <a href="https://github.com/Saarsy/Portfolio">github.com/saarsy/portfolio</a>
+  </footer>
+</div>
+
+</body>
+</html>
