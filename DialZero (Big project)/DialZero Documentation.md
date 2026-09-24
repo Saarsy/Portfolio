@@ -31,6 +31,7 @@ Visualizing it, I could see a design that incorporated the touch sensor and enco
 - Touch + Encoder spin = skip through song tracks
 - Encoder press = Pause/Play volume
 - Double touch = RGB LED on/off
+
 ![Poster](/DialZero%20(Big%20project)/Images/Wiring.jpeg)
 
 
