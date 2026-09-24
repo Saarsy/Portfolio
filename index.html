@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Saarsy — Maker Portfolio (Copy)</title>
+<title>Saarsy — Maker Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -11,6 +11,7 @@
   :root {
     --bg: #0E1013;
     --surface: #16191D;
+    --surface-hover: #1C2025;
     --line: #262B31;
     --text: #E8E6E1;
     --text-dim: #8B9198;
@@ -23,41 +24,40 @@
     background: var(--bg);
     color: var(--text);
     font-family: 'JetBrains Mono', monospace;
-    line-height: 1.5;
+    line-height: 1.6;
   }
   h1, h2, h3, .serif { font-family: 'Fraunces', serif; }
-
-  .wrap { max-width: 960px; margin: 0 auto; padding: 0 28px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 32px; }
 
   /* ---------- HERO ---------- */
   header {
-    padding: 100px 0 80px;
+    padding: 140px 0 120px;
     border-bottom: 1px solid var(--line);
   }
   .kicker {
     color: var(--green);
     font-size: 13px;
     letter-spacing: 0.02em;
-    margin-bottom: 22px;
+    margin-bottom: 28px;
   }
   h1 {
-    font-size: clamp(40px, 6vw, 68px);
+    font-size: clamp(42px, 6.5vw, 74px);
     font-weight: 500;
-    line-height: 1.08;
+    line-height: 1.1;
     letter-spacing: -0.01em;
-    max-width: 14ch;
+    max-width: 15ch;
   }
   header p.sub {
-    margin-top: 24px;
+    margin-top: 28px;
     color: var(--text-dim);
-    font-size: 16px;
-    max-width: 52ch;
-    line-height: 1.7;
+    font-size: 17px;
+    max-width: 54ch;
+    line-height: 1.75;
   }
   .hero-links {
-    margin-top: 36px;
+    margin-top: 44px;
     display: flex;
-    gap: 24px;
+    gap: 28px;
     flex-wrap: wrap;
   }
   .hero-links a {
@@ -65,85 +65,124 @@
     text-decoration: none;
     font-size: 14px;
     border-bottom: 1px solid var(--line);
-    padding-bottom: 3px;
+    padding-bottom: 4px;
     transition: border-color 0.15s, color 0.15s;
   }
   .hero-links a:hover { border-color: var(--copper); color: var(--copper); }
 
-  /* ---------- PROJECT ROWS ---------- */
-  .projects { padding: 70px 0; }
-  .tier-label {
-    font-size: 12px;
-    color: var(--text-dim);
-    margin: 0 0 18px;
-    padding-top: 40px;
+  /* ---------- TIER SECTIONS ---------- */
+  .tier {
+    padding: 90px 0;
+    border-bottom: 1px solid var(--line);
   }
-  .tier-label:first-child { padding-top: 0; }
+  .tier-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .tier-num {
+    font-size: 13px;
+    color: var(--green);
+  }
+  .tier-title {
+    font-size: 15px;
+    color: var(--text-dim);
+    letter-spacing: 0.01em;
+  }
 
+  /* ---------- PROJECT CARD (spacious) ---------- */
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
   .project {
-    display: block;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 32px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 32px;
     text-decoration: none;
     color: inherit;
-    border-top: 1px solid var(--line);
-    padding: 26px 0;
-    position: relative;
+    transition: background 0.2s, border-color 0.2s;
   }
-  .project:last-child { border-bottom: 1px solid var(--line); }
-
-  .project-row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: baseline;
-    gap: 20px;
+  .project:hover {
+    background: var(--surface-hover);
+    border-color: var(--copper);
   }
+  .project-thumb {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 3px;
+    background: #0B0D10;
+    display: block;
+  }
+  .project-thumb.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    font-size: 12px;
+    border: 1px dashed var(--line);
+  }
+  .project-body { display: flex; flex-direction: column; }
   .project-name {
     font-family: 'Fraunces', serif;
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 500;
     transition: color 0.15s;
   }
   .project:hover .project-name { color: var(--copper); }
+  .project-tags {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
   .project-tag {
-    font-size: 12px;
-    color: var(--text-dim);
-    white-space: nowrap;
+    font-size: 11px;
+    color: var(--green);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 4px 12px;
   }
   .project-desc {
-    margin-top: 8px;
+    margin-top: 20px;
     color: var(--text-dim);
-    font-size: 14px;
+    font-size: 15px;
+    line-height: 1.75;
     max-width: 60ch;
-    line-height: 1.6;
   }
-  .project-meta {
-    margin-top: 12px;
-    display: flex;
-    gap: 18px;
-    font-size: 12px;
-    color: var(--green);
+  .project-cta {
+    margin-top: auto;
+    padding-top: 24px;
+    font-size: 13px;
+    color: var(--text-dim);
   }
+  .project:hover .project-cta { color: var(--copper); }
 
   /* ---------- OTHER PRINTS ---------- */
-  .other-prints {
-    padding-top: 40px;
-    border-top: 1px solid var(--line);
-  }
   .other-prints ul {
     list-style: none;
-    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
   .other-prints li {
     color: var(--text-dim);
     font-size: 14px;
-    padding: 10px 0;
+    padding: 18px 0;
     border-top: 1px solid var(--line);
   }
   .other-prints li:first-child { border-top: none; }
 
   /* ---------- FOOTER ---------- */
   footer {
-    border-top: 1px solid var(--line);
-    padding: 40px 0 60px;
+    padding: 60px 0 80px;
     color: var(--text-dim);
     font-size: 13px;
     display: flex;
@@ -154,9 +193,10 @@
   footer a { color: var(--text-dim); }
   footer a:hover { color: var(--copper); }
 
-  @media (max-width: 600px) {
-    header { padding: 70px 0 60px; }
-    .project-row { grid-template-columns: 1fr; gap: 6px; }
+  @media (max-width: 700px) {
+    header { padding: 90px 0 70px; }
+    .project { grid-template-columns: 1fr; }
+    .project-thumb { aspect-ratio: 16/9; }
   }
 </style>
 </head>
@@ -176,58 +216,21 @@
     </div>
   </header>
 
-  <section class="projects">
+  <!-- Everything below this line renders automatically from the
+       PROJECTS array in the <script> at the bottom of this file.
+       To add a project: scroll to the bottom, copy one {...} block
+       inside the matching tier, and edit the text. No HTML editing
+       needed for routine additions. -->
 
-    <p class="tier-label">01 — deep builds</p>
+  <section class="tier" id="tier-big"></section>
+  <section class="tier" id="tier-medium"></section>
 
-    <a class="project" href="https://github.com/Saarsy/Portfolio/blob/main/DialZero%20(Big%20project)/DialZero%20Documentation.md" target="_blank">
-      <div class="project-row">
-        <span class="project-name">DialZero</span>
-        <span class="project-tag">rp2040 · circuitpython</span>
-      </div>
-      <p class="project-desc">
-        A rebindable macropad with a rotary encoder and touch sensor —
-        six control combos, RGB feedback, and an unplanned integration
-        with Home Assistant via hidden function keys.
-      </p>
-      <div class="project-meta">
-        <span>firmware</span>
-        <span>electronics</span>
-        <span>product design</span>
-      </div>
-    </a>
-
-    <p class="tier-label">02 — smaller builds</p>
-
-    <a class="project" href="https://github.com/Saarsy/Portfolio/blob/main/Wall%20Mounted%20Cream%20Holder/Cream%20Holder%20Documentation.md" target="_blank">
-      <div class="project-row">
-        <span class="project-name">Wall-Mounted Cream Holder</span>
-        <span class="project-tag">pla · a few hours</span>
-      </div>
-      <p class="project-desc">
-        A two-piece mount that hides its screws — redesigned mid-build
-        after the first version looked cheap with visible hardware.
-      </p>
-    </a>
-
-    <a class="project" href="https://github.com/Saarsy/Portfolio" target="_blank">
-      <div class="project-row">
-        <span class="project-name">Cupholder Tray</span>
-        <span class="project-tag">pla</span>
-      </div>
-      <p class="project-desc">
-        Fits standard couch and recliner cupholders (75–90mm), turns
-        them into a stable surface for a laptop mouse or a mug.
-      </p>
-    </a>
-
-    <div class="other-prints">
-      <p class="tier-label" style="padding-top:0">03 — other prints</p>
-      <ul>
-        <li>Headphone Hanger — under-desk mount, screw-in bracket</li>
-      </ul>
+  <section class="tier other-prints">
+    <div class="tier-head">
+      <span class="tier-num">03</span>
+      <span class="tier-title">other prints</span>
     </div>
-
+    <ul id="other-prints-list"></ul>
   </section>
 
   <footer>
@@ -235,6 +238,89 @@
     <a href="https://github.com/Saarsy/Portfolio">github.com/saarsy/portfolio</a>
   </footer>
 </div>
+
+<script>
+/* =====================================================================
+   EDIT PROJECTS HERE — this is the only part you need to touch to add,
+   remove, or update a project. Each object becomes one card above.
+
+   Fields:
+     name  — project title
+     tags  — array of short labels (materials, skills, whatever)
+     desc  — 1-3 sentence description
+     link  — where clicking the card goes (your GitHub doc URL)
+     image — path/URL to a thumbnail photo, or leave as "" for a
+             placeholder box (useful before you have a good photo yet)
+   ===================================================================== */
+
+const BIG_PROJECTS = [
+  {
+    name: "DialZero",
+    tags: ["rp2040", "circuitpython", "firmware", "electronics"],
+    desc: "A rebindable macropad with a rotary encoder and touch sensor — six control combos, RGB feedback, and an unplanned integration with Home Assistant via hidden function keys.",
+    link: "https://github.com/Saarsy/Portfolio/blob/main/DialZero%20(Big%20project)/DialZero%20Documentation.md",
+    image: "" // e.g. "DialZero (Big project)/Images/Poster Hero Shot.jpeg"
+  }
+];
+
+const MEDIUM_PROJECTS = [
+  {
+    name: "Wall-Mounted Cream Holder",
+    tags: ["pla", "product design"],
+    desc: "A two-piece mount that hides its screws — redesigned mid-build after the first version looked cheap with visible hardware.",
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Wall%20Mounted%20Cream%20Holder/Cream%20Holder%20Documentation.md",
+    image: ""
+  },
+  {
+    name: "Cupholder Tray",
+    tags: ["pla"],
+    desc: "Fits standard couch and recliner cupholders (75–90mm), turns them into a stable surface for a laptop mouse or a mug.",
+    link: "https://github.com/Saarsy/Portfolio",
+    image: ""
+  }
+];
+
+const OTHER_PRINTS = [
+  "Headphone Hanger — under-desk mount, screw-in bracket"
+];
+
+/* ===================== rendering — no need to edit below ===================== */
+
+function projectCard(p) {
+  const thumb = p.image
+    ? `<img class="project-thumb" src="${p.image}" alt="${p.name}">`
+    : `<div class="project-thumb placeholder">no photo yet</div>`;
+  const tags = p.tags.map(t => `<span class="project-tag">${t}</span>`).join("");
+  return `
+    <a class="project" href="${p.link}" target="_blank" rel="noopener">
+      ${thumb}
+      <div class="project-body">
+        <div class="project-name">${p.name}</div>
+        <div class="project-tags">${tags}</div>
+        <p class="project-desc">${p.desc}</p>
+        <div class="project-cta">view full write-up →</div>
+      </div>
+    </a>`;
+}
+
+function renderTier(sectionId, num, title, projects) {
+  const section = document.getElementById(sectionId);
+  section.innerHTML = `
+    <div class="tier-head">
+      <span class="tier-num">${num}</span>
+      <span class="tier-title">${title}</span>
+    </div>
+    <div class="project-list">
+      ${projects.map(projectCard).join("")}
+    </div>`;
+}
+
+renderTier("tier-big", "01", "deep builds", BIG_PROJECTS);
+renderTier("tier-medium", "02", "smaller builds", MEDIUM_PROJECTS);
+
+document.getElementById("other-prints-list").innerHTML =
+  OTHER_PRINTS.map(item => `<li>${item}</li>`).join("");
+</script>
 
 </body>
 </html>
