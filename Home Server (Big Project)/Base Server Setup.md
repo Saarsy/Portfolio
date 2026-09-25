@@ -43,6 +43,6 @@ In the end of this section, I ended up with a solid foundation to add software t
 
 # Whats Next
 The next steps for me included:
-- Setting up Immich for photos: 
-- Setting up Home Assistant for my smart home: 
+- Setting up Immich for photos: [Immich Documentation](/Home%20Server%20(Big%20Project)/Immich%20Setup.md)
+- Setting up Home Assistant for my smart home: [Home Assistant Documentation](/Home%20Server%20(Big%20Project)/Home%20Assistant%20Setup.md)
 - Making a Server Laptop holder to mount the server to the wall: 
