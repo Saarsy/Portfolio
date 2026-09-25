@@ -53,7 +53,7 @@
   /* ---------- HERO ---------- */
 
   header {
-    padding: 110px 0 50px;
+    padding: 110px 0 20px;
     border-bottom: 1px solid var(--line);
   }
 
@@ -76,7 +76,7 @@
     margin-top: 28px;
     color: var(--text-dim);
     font-size: 17px;
-    max-width: 54ch;
+    max-width: 60ch;
     line-height: 1.75;
   }
 
@@ -379,25 +379,34 @@
     color: var(--copper);
   }
 
-  /* ---------- FOOTER ---------- */
+  /* ---------- FOOTER contacts ---------- */
 
-  footer {
-    padding: 60px 0 80px;
-    color: var(--text-dim);
-    font-size: 13px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
+footer {
+  padding: 60px 0 80px;
+  color: var(--text-dim);
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
 
-  footer a {
-    color: var(--text-dim);
-  }
+.footer-links {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
 
-  footer a:hover {
-    color: var(--copper);
-  }
+.footer-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.footer-links a:hover {
+  color: var(--copper);
+}
 
   /* ---------- RESPONSIVE ---------- */
 
@@ -452,7 +461,8 @@
 
     <p class="sub">
       I like building things! From CAD and 3D printing, to software and electronics,
-      to polished, sellable products | Here are some of the projects I've worked on.
+      to polished, sellable products.
+      Here are some of the projects I've worked on:
     </p>
 
     <div class="hero-links">
@@ -460,7 +470,7 @@
       <a href="https://makrix.etsy.com">Etsy Shop</a>
     </div>
   </header>
-
+  
   <!-- Everything below this line renders automatically from the
        PROJECTS arrays in the <script> at the bottom of this file.
        To add a project: scroll to the bottom, copy one {...} block
@@ -480,12 +490,14 @@
     <ul id="other-prints-list"></ul>
   </section>
 
-  <footer>
-    <span>Updated as new projects are made</span>
-    <a href="https://github.com/Saarsy/Portfolio">
-      github.com/saarsy/Portfolio
-    </a>
-  </footer>
+<footer>
+  <span>Updated as new projects are made</span>
+  <div class="footer-links">
+    <a href="https://github.com/Saarsy/Portfolio" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://makrix.etsy.com" target="_blank" rel="noopener">Etsy</a>
+    <a href="mailto:saarthak1069@gmail.com">Email</a>
+  </div>
+</footer>
 
 </div>
 
