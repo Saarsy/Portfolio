@@ -1,6 +1,7 @@
 # Contents
 - [What Is HA](#what-is-Home-Assistant-(HA))
-- [The Hard Parts](#the-hard-parts)
+- [iPad Integration](#iPad-Integration)
+- [The Hard Parts](#The-Hard-Parts)
 - [Results](#Results)
 - [Whats Next](#Whats-Next)
 # What Is Home Assistant (HA)
@@ -11,6 +12,10 @@ Home Assistant, abbreviated to HA is a self-hosted software that allows you to c
 - All the bullet points above also mean it can execute HIGHLY complex and specific tasks. For example, "If my calendar shows a meeting before 8am tomorrow, and the temperature overnight outside drops below 30F, then turn on my electric car charger (So it preconditions), but only if the car is plugged in and is below 80% battery level." No other software could even compare to HA's functionality.
 
 It basically has no disadvantages aside from the fact that it requires time to set up and program.
+# iPad Integration
+With so many devices came a problem of how to control all of them. Of course, you could just open your phone, but that was way too inconvenient, especially when I had a slightly cracked iPad lying around.
+
+When thinking about this idea, I knew that I needed to mount it to the wall, so I CADed some 2-piece mounts to mount this iPad to the wall and printed them out, and they fit on the first try! I configured the iPad to stay on 24/7 at 70% brightness and stay on Home Assistant, so now there’s an iPad on top of my main living room switches to control my smart home quickly.
 # The Hard Parts 
 This was supposed to be a quick project but turned out to be the single biggest thing I use the home server for, with this came hard parts:
 ## Automations
