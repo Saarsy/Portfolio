@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SG Maker Portfolio</title>
 
-<!-- FAVICON -->
 <link rel="icon" type="image/png" href="./Website%20Images/favicon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,33 +53,8 @@
   /* ---------- HERO ---------- */
 
   header {
-    position: relative;
     padding: 110px 0 20px;
     border-bottom: 1px solid var(--line);
-  }
-
-  /* Very subtle copper line animation */
-  header::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-    width: 0;
-    height: 1px;
-    background: var(--copper);
-    animation: heroLine 1.2s ease-out 0.45s forwards;
-  }
-
-  @keyframes heroLine {
-    from {
-      width: 0;
-      opacity: 0;
-    }
-
-    to {
-      width: 150px;
-      opacity: 0.8;
-    }
   }
 
   .kicker {
@@ -425,13 +399,32 @@
   }
 
   .footer-links a {
+    position: relative;
     color: var(--text-dim);
     text-decoration: none;
+    padding-bottom: 4px;
     transition: color 0.15s ease;
+  }
+
+  .footer-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--copper);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
   }
 
   .footer-links a:hover {
     color: var(--copper);
+  }
+
+  .footer-links a:hover::after {
+    transform: scaleX(1);
   }
 
   /* ---------- RESPONSIVE ---------- */
@@ -473,19 +466,6 @@
       padding: 24px;
     }
   }
-
-  /* ---------- REDUCED MOTION ---------- */
-
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      scroll-behavior: auto !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
 </style>
 </head>
 
@@ -509,7 +489,7 @@
       <a href="https://makrix.etsy.com">Etsy Shop</a>
     </div>
   </header>
-
+  
   <!-- Everything below this line renders automatically from the
        PROJECTS arrays in the <script> at the bottom of this file.
        To add a project: scroll to the bottom, copy one {...} block
