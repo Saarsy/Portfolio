@@ -283,6 +283,34 @@
 
   .other-prints li:first-child { border-top: none; }
 
+  .other-prints li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .other-prints li strong {
+    color: var(--text);
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .other-prints li span {
+    color: var(--text-dim);
+  }
+
+  .other-prints li a {
+    color: var(--text-dim);
+    font-size: 13px;
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .other-prints li a:hover {
+    color: var(--copper);
+  }
+
   /* ---------- FOOTER ---------- */
   footer {
     padding: 60px 0 80px;
@@ -357,10 +385,15 @@
 
 
 
+
+
   
 
 
 
+
+
+  
 
 
 
@@ -415,12 +448,15 @@ const MEDIUM_PROJECTS = [
 const OTHER_PRINTS = [
   {
     name: "Headphone Hanger",
-    desc: "Underside shelf mounted headphone holder to hand your headphones, and not take up space on your desk",
-    link: "https://github.com/Saarsy/Portfolio",
+    desc: "Underside shelf mounted headphone holder to hang your headphones, and not take up space on your desk",
+    link: "https://github.com/Saarsy/Portfolio"
   }
 ];
 
 /* ===================== rendering — no need to edit below ===================== */
+
+
+
 
 
 
@@ -430,6 +466,8 @@ const OTHER_PRINTS = [
 
 
 
+
+  
 
 
 
@@ -470,7 +508,13 @@ renderTier("tier-big", "01", "Big Projects", BIG_PROJECTS);
 renderTier("tier-medium", "02", "Smaller Projects", MEDIUM_PROJECTS);
 
 document.getElementById("other-prints-list").innerHTML =
-  OTHER_PRINTS.map(item => `<li>${item}</li>`).join("");
+  OTHER_PRINTS.map(item => `
+    <li>
+      <strong>${item.name}</strong>
+      <span>${item.desc}</span>
+      <a href="${item.link}" target="_blank" rel="noopener">view project →</a>
+    </li>
+  `).join("");
 
 /* ---------- SCROLL REVEAL ---------- */
 
