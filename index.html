@@ -338,7 +338,7 @@
   <section class="tier other-prints">
     <div class="tier-head">
       <span class="tier-num">03</span>
-      <span class="tier-title">Other Projects</span>
+      <span class="tier-title">Other Builds</span>
     </div>
     <ul id="other-prints-list"></ul>
   </section>
@@ -432,8 +432,8 @@ function renderTier(sectionId, num, title, projects) {
     </div>`;
 }
 
-renderTier("tier-big", "01", "deep builds", BIG_PROJECTS);
-renderTier("tier-medium", "02", "smaller builds", MEDIUM_PROJECTS);
+renderTier("tier-big", "01", "Big Projects", BIG_PROJECTS);
+renderTier("tier-medium", "02", "Smaller Projects", MEDIUM_PROJECTS);
 
 document.getElementById("other-prints-list").innerHTML =
   OTHER_PRINTS.map(item => `<li>${item}</li>`).join("");
