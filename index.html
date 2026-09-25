@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
   :root {
     --bg: #131a24;
@@ -22,9 +23,15 @@
     --copper: #D97D4C;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
 
   body {
     background: var(--bg);
@@ -33,11 +40,18 @@
     line-height: 1.6;
   }
 
-  h1, h2, h3, .serif { font-family: 'Fraunces', serif; }
+  h1, h2, h3, .serif {
+    font-family: 'Fraunces', serif;
+  }
 
-  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+  .wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
 
   /* ---------- HERO ---------- */
+
   header {
     padding: 110px 0 50px;
     border-bottom: 1px solid var(--line);
@@ -105,11 +119,13 @@
   }
 
   /* ---------- HERO ANIMATION ---------- */
+
   @keyframes heroFade {
     from {
       opacity: 0;
       transform: translateY(18px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -120,12 +136,24 @@
     animation: heroFade 0.7s ease both;
   }
 
-  header .kicker { animation-delay: 0.05s; }
-  header h1 { animation-delay: 0.15s; }
-  header .sub { animation-delay: 0.25s; }
-  header .hero-links { animation-delay: 0.35s; }
+  header .kicker {
+    animation-delay: 0.05s;
+  }
+
+  header h1 {
+    animation-delay: 0.15s;
+  }
+
+  header .sub {
+    animation-delay: 0.25s;
+  }
+
+  header .hero-links {
+    animation-delay: 0.35s;
+  }
 
   /* ---------- TIER SECTIONS ---------- */
+
   .tier {
     padding: 90px 0;
     border-bottom: 1px solid var(--line);
@@ -139,7 +167,9 @@
 
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
   }
 
   .tier-head.visible {
@@ -158,7 +188,8 @@
     letter-spacing: 0.01em;
   }
 
-  /* ---------- PROJECT CARD (spacious) ---------- */
+  /* ---------- PROJECT CARD ---------- */
+
   .project-list {
     display: flex;
     flex-direction: column;
@@ -223,7 +254,10 @@
     border: 1px dashed var(--line);
   }
 
-  .project-body { display: flex; flex-direction: column; }
+  .project-body {
+    display: flex;
+    flex-direction: column;
+  }
 
   .project-name {
     font-family: 'Fraunces', serif;
@@ -232,7 +266,9 @@
     transition: color 0.15s;
   }
 
-  .project:hover .project-name { color: var(--copper); }
+  .project:hover .project-name {
+    color: var(--copper);
+  }
 
   .project-tags {
     display: flex;
@@ -264,54 +300,87 @@
     color: var(--text-dim);
   }
 
-  .project:hover .project-cta { color: var(--copper); }
+  .project:hover .project-cta {
+    color: var(--copper);
+  }
 
-  /* ---------- OTHER PRINTS ---------- */
+  /* ---------- OTHER BUILDS ---------- */
+
   .other-prints ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 28px;
   }
 
   .other-prints li {
-    color: var(--text-dim);
-    font-size: 14px;
-    padding: 18px 0;
-    border-top: 1px solid var(--line);
+    list-style: none;
   }
 
-  .other-prints li:first-child { border-top: none; }
-
-  .other-prints li {
+  .other-build {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 36px;
+
+    text-decoration: none;
+    color: inherit;
+
+    opacity: 0;
+    transform: translateY(20px);
+
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease,
+      opacity 0.6s ease;
   }
 
-  .other-prints li strong {
+  .other-build.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .other-build:hover {
+    background: var(--surface-hover);
+    border-color: var(--copper);
+    transform: translateY(-3px);
+  }
+
+  .other-build strong {
     color: var(--text);
     font-family: 'Fraunces', serif;
-    font-size: 18px;
+    font-size: 30px;
     font-weight: 500;
+    transition: color 0.15s;
   }
 
-  .other-prints li span {
+  .other-build:hover strong {
+    color: var(--copper);
+  }
+
+  .other-build span {
+    margin-top: 20px;
     color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.75;
+    max-width: 60ch;
   }
 
-  .other-prints li a {
-    color: var(--text-dim);
-    font-size: 13px;
-    text-decoration: none;
-    width: fit-content;
+  .other-build .project-cta {
+    margin-top: 24px;
+    padding-top: 0;
   }
 
-  .other-prints li a:hover {
+  .other-build:hover .project-cta {
     color: var(--copper);
   }
 
   /* ---------- FOOTER ---------- */
+
   footer {
     padding: 60px 0 80px;
     color: var(--text-dim);
@@ -322,33 +391,70 @@
     gap: 12px;
   }
 
-  footer a { color: var(--text-dim); }
-  footer a:hover { color: var(--copper); }
+  footer a {
+    color: var(--text-dim);
+  }
+
+  footer a:hover {
+    color: var(--copper);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
 
   @media (max-width: 900px) {
-    .wrap { padding: 0 32px; }
-    .project { grid-template-columns: 200px 1fr; gap: 28px; padding: 28px; }
+    .wrap {
+      padding: 0 32px;
+    }
+
+    .project {
+      grid-template-columns: 200px 1fr;
+      gap: 28px;
+      padding: 28px;
+    }
+
+    .other-build {
+      padding: 28px;
+    }
   }
 
   @media (max-width: 700px) {
-    header { padding: 90px 0 70px; }
-    .wrap { padding: 0 24px; }
-    .project { grid-template-columns: 1fr; }
-    .project-thumb { aspect-ratio: 16/9; }
+    header {
+      padding: 90px 0 70px;
+    }
+
+    .wrap {
+      padding: 0 24px;
+    }
+
+    .project {
+      grid-template-columns: 1fr;
+    }
+
+    .project-thumb {
+      aspect-ratio: 16/9;
+    }
+
+    .other-build {
+      padding: 24px;
+    }
   }
 </style>
 </head>
+
 <body>
 
 <div class="wrap">
+
   <header>
     <div class="kicker">Saarthak Gupta — Kirkland, WA</div>
+
     <h1>Stuff I've made.</h1>
+
     <p class="sub">
       I like building things! From CAD and 3D printing, to software and electronics,
       to polished, sellable products | Here are some of the projects I've worked on.
     </p>
-    </p>
+
     <div class="hero-links">
       <a href="https://github.com/Saarsy/Portfolio">GitHub</a>
       <a href="https://makrix.etsy.com">Etsy Shop</a>
@@ -356,12 +462,13 @@
   </header>
 
   <!-- Everything below this line renders automatically from the
-       PROJECTS array in the <script> at the bottom of this file.
+       PROJECTS arrays in the <script> at the bottom of this file.
        To add a project: scroll to the bottom, copy one {...} block
        inside the matching tier, and edit the text. No HTML editing
        needed for routine additions. -->
 
   <section class="tier" id="tier-big"></section>
+
   <section class="tier" id="tier-medium"></section>
 
   <section class="tier other-prints">
@@ -369,82 +476,82 @@
       <span class="tier-num">03</span>
       <span class="tier-title">Other Builds</span>
     </div>
+
     <ul id="other-prints-list"></ul>
   </section>
 
   <footer>
     <span>Updated as new projects are made</span>
-    <a href="https://github.com/Saarsy/Portfolio">github.com/saarsy/Portfolio</a>
+    <a href="https://github.com/Saarsy/Portfolio">
+      github.com/saarsy/Portfolio
+    </a>
   </footer>
+
 </div>
 
 <script>
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-  
-/* =====================================================================
-   EDIT PROJECTS HERE — this is the only part you need to touch to add,
-   remove, or update a project. Each object becomes one card above.
-
-   Fields:
-     name  — project title
-     tags  — array of short labels (materials, skills, whatever)
-     desc  — 1-3 sentence description
-     link  — where clicking the card goes (your GitHub doc URL)
-     image — path/URL to a thumbnail photo, or leave as "" for a
-             placeholder box (useful before you have a good photo yet)
-   ===================================================================== */
+/* =========================================================
+   PROJECT DATA
+   ========================================================= */
 
 const BIG_PROJECTS = [
   {
     name: "DialZero",
-    tags: ["RP2040", "CircuitPython", "Customizable", "Macropad", "Etsy"],
+    tags: [
+      "RP2040",
+      "CircuitPython",
+      "Customizable",
+      "Macropad",
+    ],
     desc: "A customizable macropad with a rotary encoder and touch sensor | six control combos, RGB LED feedback, and integration with Home Assistant",
     link: "https://github.com/Saarsy/Portfolio/blob/main/DialZero%20(Big%20project)/DialZero%20Documentation.md",
     image: "DialZero%20(Big%20project)/Images/Ground%20Shot.jpeg"
   },
+
   {
     name: "Home Server",
-    tags: ["RP2040", "CircuitPython", "Customizable", "Macropad", "Etsy"],
+    tags: [
+      "RP2040",
+      "CircuitPython",
+      "Customizable",
+      "Macropad",
+    ],
     desc: "A self-hosted server for personal storage and managing smart home",
     link: "https://github.com/Saarsy/Portfolio/tree/main/Home%20Server%20(Big%20Project)",
     image: ""
   }
 ];
 
+
 const MEDIUM_PROJECTS = [
   {
     name: "Wall Mounted Lotion Holder",
-    tags: ["Mounted", "Etsy", "Minimalistic", "Modern", "Custom"],
+    tags: [
+      "Mounted",
+      "Minimalistic",
+      "Modern",
+      "Custom"
+    ],
     desc: "A two piece mount that hides its screws, easy to install and use",
     link: "https://github.com/Saarsy/Portfolio/blob/main/Wall%20Mounted%20Lotion%20Holder/Lotion%20Holder%20Documentation.md",
     image: "Wall%20Mounted%20Lotion%20Holder/Images/In%20Use.jpeg"
   },
+
   {
     name: "Sofa Pad",
-    tags: ["WFH", "Convenient", "Custom", "Simple"],
+    tags: [
+      "WFH",
+      "Convenient",
+      "Custom",
+      "Simple"
+    ],
     desc: "Customizable trey for mousepads and food | Support for cupholders through 50mm to 100mm",
     link: "https://github.com/Saarsy/Portfolio",
     image: ""
   }
 ];
+
 
 const OTHER_PRINTS = [
   {
@@ -454,85 +561,166 @@ const OTHER_PRINTS = [
   }
 ];
 
-/* ===================== rendering — no need to edit below ===================== */
 
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-  
+/* =========================================================
+   PROJECT CARD RENDERING
+   ========================================================= */
 
 function projectCard(p) {
+
   const thumb = p.image
     ? `<img class="project-thumb" src="${p.image}" alt="${p.name}">`
     : `<div class="project-thumb placeholder">no photo yet</div>`;
-  const tags = p.tags.map(t => `<span class="project-tag">${t}</span>`).join("");
+
+  const tags = p.tags
+    .map(t => `<span class="project-tag">${t}</span>`)
+    .join("");
+
   return `
-    <a class="project" href="${p.link}" target="_blank" rel="noopener">
+    <a
+      class="project"
+      href="${p.link}"
+      target="_blank"
+      rel="noopener"
+    >
       ${thumb}
+
       <div class="project-body">
-        <div class="project-name">${p.name}</div>
-        <div class="project-tags">${tags}</div>
-        <p class="project-desc">${p.desc}</p>
-        <div class="project-cta">view full write-up →</div>
+
+        <div class="project-name">
+          ${p.name}
+        </div>
+
+        <div class="project-tags">
+          ${tags}
+        </div>
+
+        <p class="project-desc">
+          ${p.desc}
+        </p>
+
+        <div class="project-cta">
+          view full write-up →
+        </div>
+
       </div>
-    </a>`;
+    </a>
+  `;
 }
+
+
+/* =========================================================
+   TIER RENDERING
+   ========================================================= */
 
 function renderTier(sectionId, num, title, projects) {
+
   const section = document.getElementById(sectionId);
+
   section.innerHTML = `
     <div class="tier-head">
-      <span class="tier-num">${num}</span>
-      <span class="tier-title">${title}</span>
+
+      <span class="tier-num">
+        ${num}
+      </span>
+
+      <span class="tier-title">
+        ${title}
+      </span>
+
     </div>
+
     <div class="project-list">
       ${projects.map(projectCard).join("")}
-    </div>`;
+    </div>
+  `;
 }
 
-renderTier("tier-big", "01", "Big Projects", BIG_PROJECTS);
-renderTier("tier-medium", "02", "Smaller Projects", MEDIUM_PROJECTS);
+
+/* =========================================================
+   RENDER BIG + MEDIUM PROJECTS
+   ========================================================= */
+
+renderTier(
+  "tier-big",
+  "01",
+  "Big Projects",
+  BIG_PROJECTS
+);
+
+renderTier(
+  "tier-medium",
+  "02",
+  "Smaller Projects",
+  MEDIUM_PROJECTS
+);
+
+
+/* =========================================================
+   RENDER OTHER BUILDS
+   ========================================================= */
 
 document.getElementById("other-prints-list").innerHTML =
   OTHER_PRINTS.map(item => `
     <li>
-      <strong>${item.name}</strong>
-      <span>${item.desc}</span>
-      <a href="${item.link}" target="_blank" rel="noopener">view project →</a>
+
+      <a
+        class="other-build"
+        href="${item.link}"
+        target="_blank"
+        rel="noopener"
+      >
+
+        <strong>
+          ${item.name}
+        </strong>
+
+        <span>
+          ${item.desc}
+        </span>
+
+        <div class="project-cta">
+          view project →
+        </div>
+
+      </a>
+
     </li>
   `).join("");
 
-/* ---------- SCROLL REVEAL ---------- */
+
+/* =========================================================
+   SCROLL REVEAL
+   ========================================================= */
 
 const observer = new IntersectionObserver(
   entries => {
+
     entries.forEach(entry => {
+
       if (entry.isIntersecting) {
+
         entry.target.classList.add("visible");
+
         observer.unobserve(entry.target);
+
       }
+
     });
+
   },
-  { threshold: 0.15 }
+  {
+    threshold: 0.15
+  }
 );
 
-document.querySelectorAll(".project, .tier-head")
+
+/* Observe all animated elements */
+
+document
+  .querySelectorAll(".project, .tier-head, .other-build")
   .forEach(el => observer.observe(el));
+
 </script>
 
 </body>
