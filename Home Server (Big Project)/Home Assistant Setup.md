@@ -13,9 +13,9 @@ Home Assistant, abbreviated to HA is a self-hosted software that allows you to c
 
 It basically has no disadvantages aside from the fact that it requires time to set up and program.
 # iPad Integration
-With so many devices came a problem of how to control all of them. Of course, you could just open your phone, but that was way too inconvenient, especially when I had a slightly cracked iPad lying around.
+With so many devices came a problem of how to control all of them. Of course, you could just open Home Assistant on your phone, but that was way too inconvenient, especially when I had a slightly cracked iPad lying around.
 
-When thinking about this idea, I knew that I needed to mount it to the wall, so I CADed some 2-piece mounts to mount this iPad to the wall and printed them out, and they fit on the first try! I configured the iPad to stay on 24/7 at 70% brightness and stay on Home Assistant, so now there’s an iPad on top of my main living room switches to control my smart home quickly.
+When thinking about this idea, I knew that I needed to mount it to the wall, so I CADed some 2-piece mounts to mount this iPad to the wall and printed them out, and they fit on the first try! I configured the iPad to stay on 24/7 at 70% brightness and stay on Home Assistant, so now there’s an iPad on top of my main living room switches, to control my smart home quickly.
 # The Hard Parts 
 This was supposed to be a quick project but turned out to be the single biggest thing I use the home server for, with this came hard parts:
 ## Automations
