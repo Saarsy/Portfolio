@@ -46,4 +46,4 @@ The next steps for me included:
 - Setting up Immich for photos: [Immich Documentation](/Home%20Server%20(Big%20Project)/Immich%20Setup.md)
 - Setting up Home Assistant for my smart home: [Home Assistant Documentation](/Home%20Server%20(Big%20Project)/Home%20Assistant%20Setup.md)
 - Making a Server Laptop holder to mount the server to the wall: [Laptop Wall Mount Documentation](/Home%20Server%20(Big%20Project)/Laptop%20Wall%20Mount%20Documentation.md)
-- Allow access to the server from outside local network: [Taiscale Setup](Home%20Server%20(Big%20Project)/Tailscale%20Setup.md)
+- Allow access to the server from outside local network: [Taiscale Setup](/Home%20Server%20(Big%20Project)/Tailscale%20Setup.md)
