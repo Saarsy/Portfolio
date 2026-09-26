@@ -28,7 +28,8 @@ It was a really simple solution: I just had to go to my administration tab and g
 So when showing this self-hosted thing to my parents, they liked everything about it but brought up a good point: they didn't have any personal storage. At the moment, everything was one big shared account in which all of the family members could upload photos and videos; all of it was organized into one big timeline. Now, this was good in some situations but bad in others, like when they wanted to just dump their camera roll to the server; no one wants to see your family’s unorganized junk that they haven't sorted through. They needed personal storage.
 ### Realization
 Now this was a complex problem. Immich did support multiple accounts, but didn't support multi-user shared albums. A person could have a shared timeline with another person but couldn't have it with more than one user. So the only option was having personal storage but having to re-upload the family photos using another account which had all the family photos timeline access. This is still a problem I am trying to come up with a solution to, but it seems to be that I can’t do anything until Immich officially makes the update to support multiple accounts in a timeline/album.
-
+# Connecting to Immich outside of home network
+I have a separate section to how I made it so that I could access the home server outside of my local network: 
 # Conclusion
 In all, this is a solid tool to have to look at all our family photos (more then 300gb of photos/videos). It is a massive upgrade from the manually sorted photos we had before, even though it failed to FULLY replace the workflow as it didn't support multi-user album sharing. It is great to just have a place to put your 10-minute, zip lining videos.
 ![Poster](/Home%20Server%20(Big%20Project)/Images/SS4.jpeg)
