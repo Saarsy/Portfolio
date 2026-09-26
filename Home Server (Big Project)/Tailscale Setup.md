@@ -7,3 +7,5 @@ My memory is still a little foggy, but here is what I can recall myself doing to
 
 # Results
 I could now access whatever I put on my home server from anywhere in the world, with a fast and secure connection. 
+
+![Poster](/Home%20Server%20(Big%20Project)/Images/SS6.jpeg)
