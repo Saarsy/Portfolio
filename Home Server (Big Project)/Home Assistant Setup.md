@@ -17,7 +17,7 @@ Now mostly all devices were supported by HA, but the ones that weren't were hard
 ## NFC Tags
 So I had a control center in the middle of my living room, but what if I wanted to control my lights from my room? Here is where NFC tags come in handy; these allow me to just tap my phone on the tag and activate whatever automation I want. One tag can close my blinds, one can turn off all the lights, one can set the volume of the tv to a low level. These still required a phone but were way faster as you only had to tap your phone to the NFC tag and it executed the automation rather than opening the app and then running the automation; over time, this makes the smart home experience more seamless.
 ## Connecting to Immich outside of home network
-I have a separate section to how I made it so that I could access the home server outside of my local network: 
+I have a separate section to how I made it so that I could access the home server outside of my local network: [Taiscale Setup](/Home%20Server%20(Big%20Project)/Tailscale%20Setup.md)
 ## Raspberry Pi
 Since this is a big topic in which I also did a lot of work on (automated my blinds and door), I have a separate documentation on it too: 
 # Results
