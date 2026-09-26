@@ -8,5 +8,10 @@ I incorporated many features in my build:
 - Space for the storage wires to pop out
 Here is the CAD design I ended up with:
 
+![Poster](/Home%20Server%20(Big%20Project)/Images/SS5.png)
 # Results
 I now had a perfect place for my server to go, it took no space at all and I would argue that it also looks cool. 
+
+![Poster](/Home%20Server%20(Big%20Project)/Images/Server.jpeg)
+
+![Poster](/Home%20Server%20(Big%20Project)/Images/Close%20Server.jpeg)
