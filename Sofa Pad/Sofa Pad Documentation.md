@@ -34,7 +34,7 @@ The main changes, excluding way better print quality, consisted of:
 - Filleted edges + whole body
 - TPU (Flexible filament) attachment to allow it to fit into cupholders with a range of diameters
 # Results
-I had a polished product rather than an in-progress build that my dad used every day for even things other than using his mouse. It felt good seeing something I built getting used every day and becoming a weird conversation starter.
+I had a polished product rather than an in progress build that my dad used every day for even things other than using his mouse. It felt good seeing something I built getting used every day and becoming a weird conversation starter.
 # What's Next
 - Use PETG for withstanding higher temperatures
 - Grow Etsy sales for this product
