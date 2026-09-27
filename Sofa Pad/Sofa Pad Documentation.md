@@ -9,9 +9,33 @@ After consulting with my dad and bringing my thoughts, my dad felt the same, so 
 - A smooth surface that also looked cool
 Filling out all these requirements would lead to a very good product.
 # Prototype 1
-I had modeled my first version, at that time I had a A1 Mini so I had to split the model into 2 parts and then print. The print took around 300 grams and 6 hours to print for both of the parts combined.  
+I had modeled my first version, at that time I had a A1 Mini so I had to split the model into 2 parts and then print. The print took around 300 grams and 6 hours to print for both of the parts combined. 
 
+
+
+It had a few things wrong with it:
+- There was a small gap between the two pieces
+- It took a ton of sanding to join the 2 parts together
+- I forgot to wash my plate so the corners didn't adhere to the printers build plate properly
+- I forgot to add proper fillets to he design to make it more polished
+- The 2 pieces were in separate colors as I ran out of one
+- There was a subtle layer line shift on one of the parts
+- The fit was a bit loose so had to add tape to make it tighter
+- I printed it out of PLA so the top would have small marks from putting hot objects on it after some time
+
+At the moment this version worked, it still had a smooth enough surface to glide a mouse on it, so I left this project for another day.
+# Prototype 2 
+A few months after, I revisited this project, as I saw the potential in it and starting my Etsy shop, I knew that this would be a good product to put on it. I worked on refining my build, I fixed all the things wrong with it, and mainly I had gotten a P1S which is a way bigger printer, so I could print the whole thing in one time. This version resolved all of the things wrong with it, and added additional functionality
+
+
+
+The main changes excluding way better print quality consisted of:
+- A soother surface
+- Filleted edges + whole body
+- TPU (Flexible filament) attachment to allow for it to fit into cupholders with a range of diameters
+# Results
+I had a polished product rather then a in progress build that my dad used everyday for even things other then using his mouse. It felt good seeing something I built getting used everyday and becoming a weird conversation starter.
 # What's Next
-- Vial/QMK for easier config
-- Another touch sensor for even more combinations 
-- Grow my sales for this product
+- Using PETG for withstanding higher temperatures
+- Grow Etsy sales for this product
+- Make it support even more cupholders
