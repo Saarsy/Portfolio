@@ -1,33 +1,15 @@
-# Contents - Medium Size Project
-- [The Problem](#the-problem--why-i-built-it)
-- [What It Does](#what-it-does)
-- [The Hard Parts](#the-hard-parts)
-- [Results](#Results)
-- [Whats Next](#Whats-Next)
-
-
-
 # The Problem / Why I Built It
-My dad loved working on the sofa after a hard day of work, he didn't want to sit at his desk sometimes, and those times when he did sit on the sofa, I always saw him using books or some other unconventional surface to place and use his mouse. After watching him do this a few times I knew that I had to do something, I had all the tools to be able to solve this problem.
+My dad loved working on the sofa after a hard day of work or he didn't want to sit at his desk sometimes, and those times when he did sit on the sofa, I always saw him using books or some other unconventional surface to use his mouse. After watching him do this a few times I knew that I had to do something, I had all the tools to be able to solve this problem.
 
 # What It Does
-After consulting with my dad and bringing my thoughts, my dad felt the same, so I started making a list of requirements that I needed to achieve with this build.
-
-# The Hard Parts 
-
-## Linking DialZero with Home Assistant
-After a while of using it, I knew that it could do more. I had three more combinations:
-- Touch + Encoder press
-- Encoder press and hold
-- Encoder double press
-
-So after thinking about it for a while, I thought of an idea: What if I link the DialZero to my smart home? This was my biggest breakthrough yet. I already had a home server running Home Assistant, which had all my smart devices, and it would make controlling the lights and other smart home things seamless for me. So first I searched it up, if it was even possible, and Google said that it was in fact possible. Doing more research, I found that I could have the DialZero output special keys that weren't found on a normal keyboard, like F13, F14 and F15, after it output this, I could have Apple Shortcuts read these special keys and send messages to my Home Assistant app on my Mac. This allowed me to use those three combinations on the DialZero that I had left to control my smart home, and to this day I use these every day.
-
-## The Design
-I probably spent the most time on this, as I wanted it to look really clean and modern, just fitting on my desk along with my keyboard and mouse. I wanted something minimalistic but also functional. After brainstorming for a while, I landed on a circular design: the middle of the circle would have the encoder with a textured knob, giving it a high-quality feel, and the side would have a textured place that reveals the location of the touch sensor, so you could use the touch sensor without looking. In the front would be an RGB LED that responds to whatever you do.
-
-# Results
-I had a working product that could control all my media, and using it was as seamless as clicking space bar on your keyboard between every word. 
+After consulting with my dad and bringing my thoughts, my dad felt the same, so I started making a list of requirements that I needed to achieve with this build:
+- Enough surface area to comfortably use a mouse
+- Use the cupholder on the sofa
+- Good structural integrity as we estimated heavy use
+- A smooth surface that also looked cool
+Filling out all these requirements would lead to a very good product.
+# Prototype 1
+I had modeled my first version, at that time I had a A1 Mini so I had to split the model into 2 parts and then print. The print took around 300 grams and 6 hours to print for both of the parts. 
 
 I also had a strong Etsy listing that I have just recently made and already had a custom order for DialZero. On my Etsy shop, looking at the stats, I see that this product gets the most views too averaging around 30 per week.
 Link to listing: https://makrix.etsy.com/listing/4556098632
