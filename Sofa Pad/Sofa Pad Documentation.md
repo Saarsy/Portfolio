@@ -11,7 +11,7 @@ Filling out all these requirements would lead to a very good product.
 # Prototype 1
 I had modeled my first version, at that time I had a A1 Mini so I had to split the model into 2 parts and then print. The print took around 300 grams and 6 hours to print for both of the parts combined. 
 
-
+![Poster](/Sofa%20Pad/Images/Before.jpeg) ![Poster](/Sofa%20Pad/Images/Before%20Top.jpeg)
 
 It had a few things wrong with it:
 - There was a small gap between the two pieces
@@ -27,7 +27,7 @@ At the moment this version worked, it still had a smooth enough surface to glide
 # Prototype 2 
 A few months after, I revisited this project, as I saw the potential in it and starting my Etsy shop, I knew that this would be a good product to put on it. I worked on refining my build, I fixed all the things wrong with it, and mainly I had gotten a P1S which is a way bigger printer, so I could print the whole thing in one time. This version resolved all of the things wrong with it, and added additional functionality
 
-
+![Poster](/Sofa%20Pad/Images/After.jpeg) ![Poster](/Sofa%20Pad/Images/After%20Top.jpeg) ![Poster](/Sofa%20Pad/Images/Drawing.png)
 
 The main changes excluding way better print quality consisted of:
 - A soother surface
