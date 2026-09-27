@@ -9,10 +9,7 @@ After consulting with my dad and bringing my thoughts, my dad felt the same, so 
 - A smooth surface that also looked cool
 Filling out all these requirements would lead to a very good product.
 # Prototype 1
-I had modeled my first version, at that time I had a A1 Mini so I had to split the model into 2 parts and then print. The print took around 300 grams and 6 hours to print for both of the parts. 
-
-I also had a strong Etsy listing that I have just recently made and already had a custom order for DialZero. On my Etsy shop, looking at the stats, I see that this product gets the most views too averaging around 30 per week.
-Link to listing: https://makrix.etsy.com/listing/4556098632
+I had modeled my first version, at that time I had a A1 Mini so I had to split the model into 2 parts and then print. The print took around 300 grams and 6 hours to print for both of the parts combined.  
 
 # What's Next
 - Vial/QMK for easier config
