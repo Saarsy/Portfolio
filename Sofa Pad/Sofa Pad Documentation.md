@@ -27,7 +27,7 @@ At the moment, this version worked; it still had a smooth enough surface to glid
 # Prototype 2 
 A few months later, I revisited this project, as I saw the potential in it. Starting my Etsy shop, I knew that this would be a good product to put on it. I worked on refining my build, fixed all the things wrong with it, and mainly I had gotten a P1S which is a way bigger printer, so I could print the whole thing in one go. This version resolved all of the things wrong with it and added additional functionality.
 
-![Poster](/Sofa%20Pad/Images/After.jpeg)![Poster](/Sofa%20Pad/Images/After%20Top.jpeg)![Poster](/Sofa%20Pad/Images/Drawing.png)
+![Poster](/Sofa%20Pad/Images/After.jpeg)![Poster](/Sofa%20Pad/Images/After%20Top.jpeg)
 
 The main changes, excluding way better print quality, consisted of:
 - A smoother surface
@@ -40,9 +40,11 @@ This prototype consisted of the changes that led it to being sellable: the new b
 ![Poster](/Sofa%20Pad/Images/Big.jpeg)
 ![Poster](/Sofa%20Pad/Images/Small.jpeg)
 ![Poster](/Sofa%20Pad/Images/Bottom.jpeg)
+![Poster](/Sofa%20Pad/Images/Drawing.jpeg)
+
 # Results
-I had a polished product rather than an in progress build that my dad used every day for even things other than using his mouse. It felt good seeing something I built getting used every day and becoming a weird conversation starter.
+I had a polished product rather than an in progress build that my dad used every day for even things other than using his mouse. It felt good seeing something I built getting used every day and becoming a weird conversation starter. This product has also had a few sales on etsy.
 # What's Next
 - Use PETG for withstanding higher temperatures
 - Grow Etsy sales for this product
-- Make it support even more cupholders
+- Use the space inside the model for small storage (Ex: Pen holder inside)
