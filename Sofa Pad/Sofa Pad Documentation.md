@@ -27,12 +27,19 @@ At the moment, this version worked; it still had a smooth enough surface to glid
 # Prototype 2 
 A few months later, I revisited this project, as I saw the potential in it. Starting my Etsy shop, I knew that this would be a good product to put on it. I worked on refining my build, fixed all the things wrong with it, and mainly I had gotten a P1S which is a way bigger printer, so I could print the whole thing in one go. This version resolved all of the things wrong with it and added additional functionality.
 
-![Poster](/Sofa%20Pad/Images/After.jpeg) ![Poster](/Sofa%20Pad/Images/After%20Top.jpeg) ![Poster](/Sofa%20Pad/Images/Drawing.png)
+![Poster](/Sofa%20Pad/Images/After.jpeg)![Poster](/Sofa%20Pad/Images/After%20Top.jpeg)![Poster](/Sofa%20Pad/Images/Drawing.png)
 
 The main changes, excluding way better print quality, consisted of:
 - A smoother surface
 - Filleted edges + whole body
-- TPU (Flexible filament) attachment to allow it to fit into cupholders with a range of diameters
+- TPU (Flexible filament) attachment to allow it to fit into cupholders with a range of diameters (problem)
+This prototype still didn’t fully solve the problem of fitting in a range of sizes, as smaller sizes still didn’t fit with this design.
+# Prototype 3
+This prototype consisted of the changes that led it to being sellable: the new bottom design now tightly fit the small cupholders while also tightly fitting big cupholders. I solved this by making the tpu flaps bigger so they could accommodate more space and bend more.
+
+![Poster](/Sofa%20Pad/Images/Big.jpeg)
+![Poster](/Sofa%20Pad/Images/Small.jpeg)
+![Poster](/Sofa%20Pad/Images/Bottom.jpeg)
 # Results
 I had a polished product rather than an in progress build that my dad used every day for even things other than using his mouse. It felt good seeing something I built getting used every day and becoming a weird conversation starter.
 # What's Next
