@@ -24,7 +24,7 @@ So I had a control center in the middle of my living room, but what if I wanted 
 ## Connecting to Immich outside of home network
 I have a separate section to how I made it so that I could access the home server outside of my local network: [Taiscale Setup](/Home%20Server%20(Big%20Project)/Tailscale%20Setup.md)
 ## Raspberry Pi
-Since these are big topics in which I also did a lot of work on (automated my blinds and door), I have separate documentations for them too: [Automating Blinds](/Automating%20Blinds%20(Pi)/Automating%20Blinds%20Documentation.md) [Door Sentry](/Door%20Sentry%20(Pi)/Door%20Sentry%20Documentation.md)
+Since these are big topics in which I also did a lot of work on (automated my blinds and door), I have separate documentations for them too: [Automating Blinds](/Automating%20Blinds%20(Pi)/Automating%20Blinds%20Documentation.md) - [Door Sentry](/Door%20Sentry%20(Pi)/Door%20Sentry%20Documentation.md)
 # Results
 Home Assistant was now the center of my whole home, It was the single thing that kept all my smart devices alive, honestly this has grown to be so important that I cant even imagine how much more I would have to do manually if HA even stopped for one day. 
 
