@@ -33,9 +33,10 @@ The main changes, excluding way better print quality, consisted of:
 - A smoother surface
 - Filleted edges + whole body
 - TPU (Flexible filament) attachment to allow it to fit into cupholders with a range of diameters (problem)
-This prototype still didn’t fully solve the problem of fitting in a range of sizes, as smaller sizes still didn’t fit with this design.
+
+This prototype still didn’t fully solve the problem of fitting in a wide range of sizes, as smaller sizes still didn’t fit with this design which I found out after testing a little more.
 # Prototype 3
-This prototype consisted of the changes that led it to being sellable: the new bottom design now tightly fit the small cupholders while also tightly fitting big cupholders. I solved this by making the tpu flaps bigger so they could accommodate more space and bend more.
+This prototype consisted of the changes that led it to being sellable: the new bottom design now tightly fit the small cupholders while also tightly fitting big cupholders. I solved this by making the TPU flaps bigger so they could accommodate more space and bend more.
 
 ![Poster](/Sofa%20Pad/Images/Big.jpeg)
 ![Poster](/Sofa%20Pad/Images/Small.jpeg)
