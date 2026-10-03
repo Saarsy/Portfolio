@@ -22,18 +22,12 @@ The way this was going to work in my mind was the Raspberry Pi 5 was going to re
 # The Hard Parts 
 ## CADing The Design
 This was the steepest learning curve for me, as I had to design and make gears that would work for my blinds. The concept of a gear is simple for me, but actually creating it and learning about the different variables that are needed to create a gear was the harder part for me. Eventually, I settled on a gear generator and generated some gears that fit perfectly (in around 7 tries). All the rest of the housing was easy as it was basic CAD. 
+
+(drawing)
 ## Code
-After designing, printing, and fitting it to my blinds, I came with the daunting task of figuring out how to code it so it seamlessly worked. 
-
+After designing, printing, and fitting it to my blinds, I came to the daunting task of figuring out how to code it so it seamlessly worked every day. I used Claude to generate the base code for me, the nI tried to understand it at a high level so I at least knew what was going on. After I understood most of the code, I sent it out to the Raspberry Pi and Arduino. After some troubleshooting, the code worked! You can see the code in here: (link)
 # Results
-I had a working product that could control all my media, and using it was as seamless as clicking space bar on your keyboard between every word. 
 
-I also had a strong Etsy listing that I have just recently made and already had a custom order for DialZero. On my Etsy shop, looking at the stats, I see that this product gets the most views too averaging around 30 per week.
-Link to listing: https://makrix.etsy.com/listing/4556098632
-
-![Poster](/DialZero%20(Big%20project)/Images/SS3.jpeg)
 
 # What's Next
-- Vial/QMK for easier config
-- Another touch sensor for even more combinations 
-- Grow my sales for this product
+
