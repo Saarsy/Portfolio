@@ -1,9 +1,9 @@
 # Contents
-- [What Is HA](#What-Is-Home-Assistant-(HA))
+- [What Is HA](#what-is-home-assistant)
 - [iPad Integration](#iPad-Integration)
 - [The Hard Parts](#the-hard-parts)
 - [Results](#Results)
-# What Is Home Assistant (HA)
+# What Is Home Assistant
 Home Assistant, abbreviated to HA is a self-hosted software that allows you to connect all your smart devices to one place. Here are its advantages:
 - Usually, the average person has an app for Feit Electric, one for Wiz, one for Govee, etc., but with HA you can have all of those smart devices in one place. This allows the smart devices to rely on each other and can make your "Smart home” actually smart.
 - You have way more control. Most manufacturers actually don't even use all the things that your Smart device can do; HA makes it so that there are no hidden features, just pure functionality. 
