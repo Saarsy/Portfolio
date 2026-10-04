@@ -1,5 +1,5 @@
 # Contents
-- [What Is HA](#what-is-home-assistant-(HA))
+- [What Is HA](#what-is-home-assistant)
 - [iPad Integration](#iPad-Integration)
 - [The Hard Parts](#the-hard-parts)
 - [Results](#Results)
