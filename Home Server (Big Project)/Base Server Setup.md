@@ -1,3 +1,9 @@
+# Contents
+- [Why I Built It](#why-i-built-it)
+- [What I Did](#what-i-did)
+- [Learnings](#what-i-learned)
+- [Results](#Results)
+- [Whats Next](#Whats-Next)
 # Why I Built It
 Growing up, all my stuff revolved around the cloud, all my pictures, all my files, literally everything, and the price for those just kept going up. How much money would I allow myself and my family to spend on monthly subscriptions? I knew the answer to this: a home server. But I always hesitated to actually get started, as this was an entirely new field for me, in which I had no prior experience. But then, this was my time to build experience, so I took on the daunting task of researching and making a home server. This would turn out a bigger project then I first imagined.
 

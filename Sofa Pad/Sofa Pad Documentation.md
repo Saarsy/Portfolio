@@ -1,3 +1,11 @@
+# Contents
+- [The Problem](#the-problem--why-i-built-it)
+- [What It Does](#what-it-does)
+- [Prototype 1](#prototype-1)
+- [Prototype 2](#prototype-2)
+- [Prototype 3](#prototype-3)
+- [Results](#Results)
+- [Whats Next](#Whats-Next)
 # The Problem / Why I Built It
 My dad loved working on the sofa after a hard day of work, or he didn't want to sit at his desk sometimes, and those times when he did sit on the sofa, I always saw him using books or some other unconventional surface to use his mouse. After watching him do this a few times, I knew that I had to do something; I had all the tools to be able to solve this problem.
 

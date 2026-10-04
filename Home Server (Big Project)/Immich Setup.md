@@ -1,3 +1,8 @@
+# Contents
+- [What Is Immich](#what-is-immich)
+- [Why Immich](#why-i-chose-immich)
+- [Problems](#problems-i-faced)
+- [Conclusion](#conclusion)
 # What Is Immich
 Immich is a self-hosted photo and video manager. It is something like Google Photos or Apple Photos but is self-hosted so your in full control of your data.
 # Why I Chose Immich
