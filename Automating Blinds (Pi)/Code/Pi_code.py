@@ -7,7 +7,7 @@ import requests
 ARDUINO_PORT = '/dev/ttyACM2'
 BAUD = 9600
 HA_URL = "http://192.168.1.43:8123"
-HA_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjN2EzOWYwZjc1ZmM0NzZjYmM1ZWI2MDlkYWI4ZjhjMCIsImlhdCI6MTc3NzI0NTc2OCwiZXhwIjoyMDkyNjA1NzY4fQ.Uqdw5bi4p8loWeCmYJQR1mc4c1GgJj5vujHqoIla3Fg"
+HA_TOKEN = "long lived token put here"
 BLIND_TRAVEL_TIME = 48
 
 # State tracking
