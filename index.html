@@ -55,6 +55,39 @@
     padding: 0 48px;
   }
 
+  /* ---------- LIVE STATS (fixed, stays put while scrolling) ---------- */
+
+  .live-stats {
+    position: fixed;
+    top: clamp(16px, 3vw, 28px);
+    right: clamp(16px, 3vw, 32px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 1.2vw, 10px);
+    z-index: 50;
+  }
+
+  .stat-pill {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(6px, 1vw, 9px);
+    font-size: clamp(8px, 2.4vw, 15px);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: clamp(6px, 1.4vw, 10px) clamp(11px, 2.4vw, 18px);
+    white-space: nowrap;
+  }
+
+  .stat-pill .stat-label {
+    color: var(--green);
+  }
+
+  .stat-pill .stat-num {
+    color: var(--copper);
+    font-weight: 600;
+  }
+
   /* ---------- HERO ---------- */
 
   header {
@@ -476,6 +509,17 @@
 
 <body>
 
+<div class="live-stats" id="liveStats">
+  <div class="stat-pill">
+    <span class="stat-label">Word Count</span>
+    <span class="stat-num" id="wcNum">—</span>
+  </div>
+  <div class="stat-pill">
+    <span class="stat-label">Documentations</span>
+    <span class="stat-num" id="docNum">—</span>
+  </div>
+</div>
+
 <div class="wrap">
 
   <header>
@@ -538,6 +582,60 @@
 
 <script>
 
+/* =========================================================
+   PROJECT DATA
+   ========================================================= */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -565,10 +663,48 @@
 
 
   
-/* =========================================================
-   PROJECT DATA
-   ========================================================= */
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 const BIG_PROJECTS = [
   
   {
@@ -610,14 +746,14 @@ const BIG_PROJECTS = [
   {
     name: "Automating Blinds (Pi)",
     tags: [
-      "",
-      "",
-      "",
-      "",
+      "HA",
+      "Automated",
+      "Arduino",
+      "Life-Changer",
     ],
-    desc: "In Progress",
-    link: "https://github.com/Saarsy/Portfolio",
-    image: ""
+    desc: "A project utilizing Raspberry Pi and Home Assistant to open and close room blinds automatically",
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Automating%20Blinds%20(Pi)/Automating%20Blinds%20Documentation.md",
+    image: "Automating%20Blinds%20(Pi)/Image/Mech.jpeg"
   }
 ];
 
@@ -655,6 +791,11 @@ const OTHER_PRINTS = [
     name: "Headphone Hanger",
     desc: "Underside shelf mounted headphone holder to hang your headphones, and not take up space on your desk",
     link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Headphone%20Hanger/Headphone%20Hanger%20Documentation.md"
+  },
+  {
+    name: "USB C to USB A Adapter Holder",
+    desc: "Used for a place to put adapters to stay organized",
+    link: ""
   }
 ];
 
@@ -684,6 +825,153 @@ const OTHER_PRINTS = [
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 /* =========================================================
    PROJECT CARD RENDERING
@@ -843,6 +1131,22 @@ const observer = new IntersectionObserver(
 document
   .querySelectorAll(".project, .tier-head, .other-build")
   .forEach(el => observer.observe(el));
+
+
+/* =========================================================
+   LIVE STATS — fetched from wordcount.json, generated
+   automatically by the GitHub Action on every push to main
+   ========================================================= */
+
+fetch("wordcount.json")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("wcNum").textContent = data.words.toLocaleString();
+    document.getElementById("docNum").textContent = data.documentations;
+  })
+  .catch(() => {
+    // Keep "—" placeholders if the file isn't there yet or the fetch fails
+  });
 
 </script>
 

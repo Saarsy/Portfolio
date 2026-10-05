@@ -1,0 +1,30 @@
+name: Update Word Count
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  count-words:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Calculate Stats
+        run: |
+          TOTAL_WORDS=$(find . -type f -name "*.md" -not -path "*/.*" -exec cat {} + | wc -w)
+          DOC_COUNT=$(find . -type f -name "*.md" -not -path "*/.*" | wc -l)
+          IMAGE_COUNT=$(find . -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" \) -not -path "*/.*" | wc -l)
+          echo "{\"words\": $TOTAL_WORDS, \"documentations\": $DOC_COUNT, \"images\": $IMAGE_COUNT}" > wordcount.json
+
+      - name: Commit and Push wordcount.json
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add wordcount.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "update: word count stats" && git push)
