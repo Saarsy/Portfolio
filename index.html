@@ -59,23 +59,23 @@
 
   .live-stats {
     position: fixed;
-    top: 28px;
-    right: 32px;
+    top: clamp(16px, 3vw, 28px);
+    right: clamp(16px, 3vw, 32px);
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: clamp(6px, 1.2vw, 10px);
     z-index: 50;
   }
 
   .stat-pill {
     display: flex;
     align-items: baseline;
-    gap: 9px;
-    font-size: 15px;
+    gap: clamp(6px, 1vw, 9px);
+    font-size: clamp(11px, 2.4vw, 15px);
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 20px;
-    padding: 10px 18px;
+    padding: clamp(6px, 1.4vw, 10px) clamp(11px, 2.4vw, 18px);
     white-space: nowrap;
   }
 
@@ -86,19 +86,6 @@
   .stat-pill .stat-num {
     color: var(--copper);
     font-weight: 600;
-  }
-
-  @media (max-width: 700px) {
-    .live-stats {
-      top: 16px;
-      right: 16px;
-      gap: 8px;
-    }
-
-    .stat-pill {
-      font-size: 13px;
-      padding: 8px 14px;
-    }
   }
 
   /* ---------- HERO ---------- */
@@ -985,6 +972,7 @@ const OTHER_PRINTS = [
 
 
   
+
 /* =========================================================
    PROJECT CARD RENDERING
    ========================================================= */
