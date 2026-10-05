@@ -55,6 +55,52 @@
     padding: 0 48px;
   }
 
+  /* ---------- LIVE STATS (fixed, stays put while scrolling) ---------- */
+
+  .live-stats {
+    position: fixed;
+    top: 28px;
+    right: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 50;
+  }
+
+  .stat-pill {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+    font-size: 15px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 10px 18px;
+    white-space: nowrap;
+  }
+
+  .stat-pill .stat-label {
+    color: var(--green);
+  }
+
+  .stat-pill .stat-num {
+    color: var(--copper);
+    font-weight: 600;
+  }
+
+  @media (max-width: 700px) {
+    .live-stats {
+      top: 16px;
+      right: 16px;
+      gap: 8px;
+    }
+
+    .stat-pill {
+      font-size: 13px;
+      padding: 8px 14px;
+    }
+  }
+
   /* ---------- HERO ---------- */
 
   header {
@@ -476,6 +522,17 @@
 
 <body>
 
+<div class="live-stats" id="liveStats">
+  <div class="stat-pill">
+    <span class="stat-label">Word Count</span>
+    <span class="stat-num" id="wcNum">—</span>
+  </div>
+  <div class="stat-pill">
+    <span class="stat-label">Documentations</span>
+    <span class="stat-num" id="docNum">—</span>
+  </div>
+</div>
+
 <div class="wrap">
 
   <header>
@@ -538,95 +595,129 @@
 
 <script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-  
-
-
-
-
-  
 /* =========================================================
    PROJECT DATA
    ========================================================= */
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 const BIG_PROJECTS = [
   
   {
@@ -713,6 +804,11 @@ const OTHER_PRINTS = [
     name: "Headphone Hanger",
     desc: "Underside shelf mounted headphone holder to hang your headphones, and not take up space on your desk",
     link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Headphone%20Hanger/Headphone%20Hanger%20Documentation.md"
+  },
+  {
+    name: "USB C to USB A Adapter Holder",
+    desc: "Used for a place to put adapters to stay organized",
+    link: ""
   }
 ];
 
@@ -725,6 +821,71 @@ const OTHER_PRINTS = [
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 
 
@@ -768,6 +929,38 @@ const OTHER_PRINTS = [
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 
 
@@ -784,6 +977,14 @@ const OTHER_PRINTS = [
 
 
 
+
+
+
+
+
+
+
+  
 /* =========================================================
    PROJECT CARD RENDERING
    ========================================================= */
@@ -942,6 +1143,22 @@ const observer = new IntersectionObserver(
 document
   .querySelectorAll(".project, .tier-head, .other-build")
   .forEach(el => observer.observe(el));
+
+
+/* =========================================================
+   LIVE STATS — fetched from wordcount.json, generated
+   automatically by the GitHub Action on every push to main
+   ========================================================= */
+
+fetch("wordcount.json")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("wcNum").textContent = data.words.toLocaleString();
+    document.getElementById("docNum").textContent = data.documentations;
+  })
+  .catch(() => {
+    // Keep "—" placeholders if the file isn't there yet or the fetch fails
+  });
 
 </script>
 
