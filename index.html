@@ -238,6 +238,7 @@
     display: grid;
     grid-template-columns: 260px 1fr;
     gap: 40px;
+    align-items: start;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 4px;
@@ -268,11 +269,12 @@
 
   .project-thumb {
     width: 100%;
-    aspect-ratio: 4/3;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
     border-radius: 3px;
     background: #0B0D10;
     display: block;
+    align-self: start;
   }
 
   .project-thumb:not(.placeholder) {
@@ -358,7 +360,7 @@
   .other-build {
     display: flex;
     flex-direction: row;
-    align-items: stretch;
+    align-items: start;
     justify-content: space-between;
     gap: 32px;
 
@@ -426,15 +428,16 @@
     color: var(--copper);
   }
 
-  /* Fill out available height without expanding card size */
+  /* Fixed 4:3 ratio rectangular thumbnail for Other Builds */
   .other-build-thumb {
     width: 200px;
-    align-self: stretch;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
     border-radius: 3px;
     border: 1px solid var(--line);
     background: #0B0D10;
     flex-shrink: 0;
+    align-self: start;
     transition: transform 0.3s ease, border-color 0.2s ease;
   }
 
@@ -548,7 +551,7 @@
 
     .other-build-thumb {
       width: 100%;
-      height: 160px;
+      aspect-ratio: 16/9;
     }
   }
 </style>
@@ -627,22 +630,6 @@
    PROJECT DATA
    ========================================================= */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 const BIG_PROJECTS = [
   {
     name: "Home Server",
@@ -738,22 +725,6 @@ const OTHER_PRINTS = [
   }
 ];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 /* =========================================================
    PROJECT CARD RENDERING
    ========================================================= */
