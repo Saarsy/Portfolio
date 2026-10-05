@@ -357,7 +357,10 @@
 
   .other-build {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 32px;
 
     background: var(--surface);
     border: 1px solid var(--line);
@@ -388,6 +391,12 @@
     transform: translateY(-3px);
   }
 
+  .other-build-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
   .other-build strong {
     color: var(--text);
     font-family: 'Fraunces', serif;
@@ -415,6 +424,33 @@
 
   .other-build:hover .project-cta {
     color: var(--copper);
+  }
+
+  /* Fill out available height without expanding card size */
+  .other-build-thumb {
+    width: 200px;
+    align-self: stretch;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid var(--line);
+    background: #0B0D10;
+    flex-shrink: 0;
+    transition: transform 0.3s ease, border-color 0.2s ease;
+  }
+
+  .other-build:hover .other-build-thumb:not(.placeholder) {
+    transform: scale(1.025);
+    border-color: var(--copper);
+  }
+
+  .other-build-thumb.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    font-size: 11px;
+    text-align: center;
+    border: 1px dashed var(--line);
   }
 
   /* ---------- FOOTER CONTACTS ---------- */
@@ -481,6 +517,10 @@
     .other-build {
       padding: 28px;
     }
+
+    .other-build-thumb {
+      width: 160px;
+    }
   }
 
   @media (max-width: 700px) {
@@ -502,6 +542,13 @@
 
     .other-build {
       padding: 24px;
+      flex-direction: column-reverse;
+      align-items: flex-start;
+    }
+
+    .other-build-thumb {
+      width: 100%;
+      height: 160px;
     }
   }
 </style>
@@ -539,12 +586,6 @@
     </div>
   </header>
   
-  <!-- Everything below this line renders automatically from the
-       PROJECTS arrays in the <script> at the bottom of this file.
-       To add a project: scroll to the bottom, copy one {...} block
-       inside the matching tier, and edit the text. No HTML editing
-       needed for routine additions. -->
-
   <section class="tier" id="tier-big"></section>
 
   <section class="tier" id="tier-medium"></section>
@@ -601,112 +642,8 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   
 const BIG_PROJECTS = [
-  
   {
     name: "Home Server",
     tags: [
@@ -790,12 +727,14 @@ const OTHER_PRINTS = [
   {
     name: "Headphone Hanger",
     desc: "Underside shelf mounted headphone holder to hang your headphones, and not take up space on your desk",
-    link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Headphone%20Hanger/Headphone%20Hanger%20Documentation.md"
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Headphone%20Hanger/Headphone%20Hanger%20Documentation.md",
+    image: "Other%20Builds/Headphone%20Hanger/Images/Hanger.jpeg"
   },
   {
     name: "USB C to USB A Adapter Holder",
     desc: "Used for a place to put adapters to stay organized",
-    link: ""
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/USB%20Adapter%20Holder/USB%20Adapter%20Holder%20Documentation.md",
+    image: "Other%20Builds/USB%20Adapter%20Holder/Holder.jpeg"
   }
 ];
 
@@ -814,165 +753,7 @@ const OTHER_PRINTS = [
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
 /* =========================================================
    PROJECT CARD RENDERING
    ========================================================= */
@@ -1072,32 +853,42 @@ renderTier(
    ========================================================= */
 
 document.getElementById("other-prints-list").innerHTML =
-  OTHER_PRINTS.map(item => `
-    <li>
+  OTHER_PRINTS.map(item => {
+    const thumb = item.image
+      ? `<img class="other-build-thumb" src="${item.image}" alt="${item.name}">`
+      : `<div class="other-build-thumb placeholder">no photo</div>`;
 
-      <a
-        class="other-build"
-        href="${item.link}"
-        target="_blank"
-        rel="noopener"
-      >
+    return `
+      <li>
 
-        <strong>
-          ${item.name}
-        </strong>
+        <a
+          class="other-build"
+          href="${item.link}"
+          target="_blank"
+          rel="noopener"
+        >
 
-        <span>
-          ${item.desc}
-        </span>
+          <div class="other-build-body">
+            <strong>
+              ${item.name}
+            </strong>
 
-        <div class="project-cta">
-          view project →
-        </div>
+            <span>
+              ${item.desc}
+            </span>
 
-      </a>
+            <div class="project-cta">
+              view project →
+            </div>
+          </div>
 
-    </li>
-  `).join("");
+          ${thumb}
+
+        </a>
+
+      </li>
+    `;
+  }).join("");
 
 
 /* =========================================================
@@ -1145,6 +936,7 @@ fetch("wordcount.json")
     document.getElementById("docNum").textContent = data.documentations;
   })
   .catch(() => {
+
     // Keep "—" placeholders if the file isn't there yet or the fetch fails
   });
 
