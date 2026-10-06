@@ -437,7 +437,7 @@
     color: var(--copper);
   }
 
-  .other-build-date {
+  .other-build .other-build-date {
     font-size: 13px;
     color: var(--green);
     transition: color 0.15s ease;
@@ -447,7 +447,7 @@
     color: var(--copper);
   }
 
-  .other-build span {
+  .other-build-desc {
     margin-top: 20px;
     color: var(--text-dim);
     font-size: 15px;
@@ -666,60 +666,6 @@
    PROJECT DATA
    ========================================================= */
 
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 const BIG_PROJECTS = [
   {
     name: "Home Server",
@@ -829,71 +775,6 @@ const OTHER_PRINTS = [
     image: "Other%20Builds/Cable%20Peg/In%20Use.jpeg"
   },
 ];
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* =========================================================
@@ -1026,9 +907,9 @@ document.getElementById("other-prints-list").innerHTML =
               ${dateHtml}
             </div>
 
-            <span>
+            <p class="other-build-desc">
               ${item.desc}
-            </span>
+            </p>
 
             <div class="project-cta">
               view project →
