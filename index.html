@@ -299,6 +299,14 @@
     flex-direction: column;
   }
 
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
   .project-name {
     font-family: 'Fraunces', serif;
     font-size: 30px;
@@ -307,6 +315,16 @@
   }
 
   .project:hover .project-name {
+    color: var(--copper);
+  }
+
+  .project-date {
+    font-size: 13px;
+    color: var(--green);
+    transition: color 0.15s ease;
+  }
+
+  .project:hover .project-date {
     color: var(--copper);
   }
 
@@ -399,6 +417,14 @@
     flex: 1;
   }
 
+  .other-build-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
   .other-build strong {
     color: var(--text);
     font-family: 'Fraunces', serif;
@@ -408,6 +434,16 @@
   }
 
   .other-build:hover strong {
+    color: var(--copper);
+  }
+
+  .other-build-date {
+    font-size: 13px;
+    color: var(--green);
+    transition: color 0.15s ease;
+  }
+
+  .other-build:hover .other-build-date {
     color: var(--copper);
   }
 
@@ -630,9 +666,64 @@
    PROJECT DATA
    ========================================================= */
 
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 const BIG_PROJECTS = [
   {
     name: "Home Server",
+    date: "6/11/26",
     tags: [
       "Master Project",
       "Software",
@@ -645,18 +736,20 @@ const BIG_PROJECTS = [
   },
   {
     name: "Sofa Pad",
+    date: "3/9/25 - 8/19/26",
     tags: [
       "WFH",
       "Convenient",
       "Custom",
       "Simple"
     ],
-    desc: "Customizable trey for mousepads and food | Support for cupholders through 50mm to 100mm",
+    desc: "Customizable trey for mousepads and food | Support for cupholders through 70mm to 100mm",
     link: "https://github.com/Saarsy/Portfolio/blob/main/Sofa%20Pad/Sofa%20Pad%20Documentation.md",
     image: "Sofa%20Pad/Images/After.jpeg"
   },
   {
     name: "DialZero",
+    date: "7/13/26",
     tags: [
       "RP2040",
       "CircuitPython",
@@ -669,6 +762,7 @@ const BIG_PROJECTS = [
   },
   {
     name: "Automating Blinds (Pi)",
+    date: "5/22/26",
     tags: [
       "HA",
       "Automated",
@@ -685,6 +779,7 @@ const BIG_PROJECTS = [
 const MEDIUM_PROJECTS = [
   {
     name: "Wall Mounted Lotion Holder",
+    date: "7/24/26",
     tags: [
       "Mounted",
       "Minimalistic",
@@ -697,6 +792,7 @@ const MEDIUM_PROJECTS = [
   },
   {
     name: "Door Sentury (Pi)",
+    date: "In Progress",
     tags: [
       "",
       "",
@@ -713,23 +809,92 @@ const MEDIUM_PROJECTS = [
 const OTHER_PRINTS = [
   {
     name: "Headphone Hanger",
+    date: "8/11/26",
     desc: "Underside shelf mounted headphone holder to hang your headphones, and not take up space on your desk",
     link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Headphone%20Hanger/Headphone%20Hanger%20Documentation.md",
     image: "Other%20Builds/Headphone%20Hanger/Hanger.jpeg"
   },
   {
     name: "USB C to USB A Adapter Holder",
+    date: "1/26/26",
     desc: "Used for a place to put adapters to stay organized",
     link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/USB%20Adapter%20Holder/USB%20Adapter%20Holder%20Documentation.md",
     image: "Other%20Builds/USB%20Adapter%20Holder/Holder.jpeg"
   },
   {
     name: "Cable Peg",
+    date: "1/12/26",
     desc: "A tiny print to organize the cables behind my desk for a cleaner setup",
-    link: "",
-    image: ""
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Cable%20Peg/Cable%20Peg%20Documentation.md",
+    image: "Other%20Builds/Cable%20Peg/In%20Use.jpeg"
   },
 ];
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* =========================================================
    PROJECT CARD RENDERING
@@ -742,8 +907,11 @@ function projectCard(p) {
     : `<div class="project-thumb placeholder">no photo yet</div>`;
 
   const tags = p.tags
+    .filter(t => t && t.trim() !== "")
     .map(t => `<span class="project-tag">${t}</span>`)
     .join("");
+
+  const dateHtml = p.date ? `<span class="project-date">${p.date}</span>` : "";
 
   return `
     <a
@@ -756,8 +924,11 @@ function projectCard(p) {
 
       <div class="project-body">
 
-        <div class="project-name">
-          ${p.name}
+        <div class="project-header">
+          <div class="project-name">
+            ${p.name}
+          </div>
+          ${dateHtml}
         </div>
 
         <div class="project-tags">
@@ -835,6 +1006,8 @@ document.getElementById("other-prints-list").innerHTML =
       ? `<img class="other-build-thumb" src="${item.image}" alt="${item.name}">`
       : `<div class="other-build-thumb placeholder">no photo</div>`;
 
+    const dateHtml = item.date ? `<span class="other-build-date">${item.date}</span>` : "";
+
     return `
       <li>
 
@@ -846,9 +1019,12 @@ document.getElementById("other-prints-list").innerHTML =
         >
 
           <div class="other-build-body">
-            <strong>
-              ${item.name}
-            </strong>
+            <div class="other-build-header">
+              <strong>
+                ${item.name}
+              </strong>
+              ${dateHtml}
+            </div>
 
             <span>
               ${item.desc}
