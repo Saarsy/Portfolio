@@ -267,6 +267,23 @@
     transform: translateY(-3px);
   }
 
+  .project-wip {
+    cursor: default;
+    opacity: 0.6;
+  }
+
+  .project-wip:hover {
+    background: var(--surface);
+    border-color: var(--line);
+    transform: none;
+  }
+
+  .project-wip .project-name,
+  .project-wip .project-cta,
+  .project-wip strong {
+    color: var(--text-dim) !important;
+  }
+
   .project-thumb {
     width: 100%;
     aspect-ratio: 4 / 3;
@@ -727,7 +744,7 @@ const MEDIUM_PROJECTS = [
     name: "Door Sentry (Pi)",
     date: "3/28/25",
     tags: [
-      "Goofy",
+      "Experimental",
       "Alarm",
       "Safety",
       "Growable",
@@ -737,7 +754,7 @@ const MEDIUM_PROJECTS = [
     image: ""
   },
   {
-    name: "GoPro Case With Chanrging",
+    name: "GoPro Case With Charging",
     date: "",
     tags: [
       "Convenient",
@@ -750,7 +767,7 @@ const MEDIUM_PROJECTS = [
     image: ""
   },
   {
-    name: "Wood Moniter Riser",
+    name: "Wood Monitor Riser",
     date: "",
     tags: [
       "High Quality",
@@ -800,11 +817,11 @@ const OTHER_PRINTS = [
     image: "Other%20Builds/Countertop%20Protector/Protector.jpeg"
   },
   {
-    name: "Wall Extension Chord Mount",
+    name: "Wall Extension Cord Mount",
     date: "1/12/26",
     desc: "A mounting plate to attach an extension cord to for cable management",
-    link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Wall%20Extension%20Chord%20Mount/Wall%20Extension%20Chord%20Mount%20Documentation.md",
-    image: "Other%20Builds/Wall%20Extension%20Chord%20Mount/Full.jpeg"
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Wall%20Extension%20Cord%20Mount/Wall%20Extension%20Cord%20Mount%20Documentation.md",
+    image: "Other%20Builds/Wall%20Extension%20Cord%20Mount/Full.jpeg"
   },
   {
     name: "Shelf Katana Holder",
@@ -830,7 +847,7 @@ const OTHER_PRINTS = [
   {
     name: "Tofu Press Holder",
     date: "7/25/26",
-    desc: "A holder for those big tofu holders which take more space then they should",
+    desc: "A holder for oversized tofu holders which take more space than they should",
     link: "",
     image: ""
   }
@@ -854,12 +871,15 @@ function projectCard(p) {
 
   const dateHtml = p.date ? `<span class="project-date">${p.date}</span>` : "";
 
+  const hasLink = p.link && p.link.trim().length > 0;
+  const tag = hasLink ? "a" : "div";
+  const linkAttrs = hasLink ? `href="${p.link}" target="_blank" rel="noopener"` : "";
+  const ctaText = hasLink ? "view full write-up →" : "in progress — check back soon";
+
   return `
-    <a
-      class="project"
-      href="${p.link}"
-      target="_blank"
-      rel="noopener"
+    <${tag}
+      class="project${hasLink ? "" : " project-wip"}"
+      ${linkAttrs}
     >
       ${thumb}
 
@@ -881,11 +901,11 @@ function projectCard(p) {
         </p>
 
         <div class="project-cta">
-          view full write-up →
+          ${ctaText}
         </div>
 
       </div>
-    </a>
+    </${tag}>
   `;
 }
 
@@ -949,14 +969,17 @@ document.getElementById("other-prints-list").innerHTML =
 
     const dateHtml = item.date ? `<span class="other-build-date">${item.date}</span>` : "";
 
+    const hasLink = item.link && item.link.trim().length > 0;
+    const tag = hasLink ? "a" : "div";
+    const linkAttrs = hasLink ? `href="${item.link}" target="_blank" rel="noopener"` : "";
+    const ctaText = hasLink ? "view project →" : "in progress — check back soon";
+
     return `
       <li>
 
-        <a
-          class="other-build"
-          href="${item.link}"
-          target="_blank"
-          rel="noopener"
+        <${tag}
+          class="other-build${hasLink ? "" : " project-wip"}"
+          ${linkAttrs}
         >
 
           <div class="other-build-body">
@@ -972,13 +995,13 @@ document.getElementById("other-prints-list").innerHTML =
             </p>
 
             <div class="project-cta">
-              view project →
+              ${ctaText}
             </div>
           </div>
 
           ${thumb}
 
-        </a>
+        </${tag}>
 
       </li>
     `;
