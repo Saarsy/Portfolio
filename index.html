@@ -604,6 +604,13 @@
 
   html.about-open { overflow: hidden; }
 
+  /* once printed, hide the main page behind it so nothing can show through at the edges */
+  html.about-printed,
+  html.about-printed body { background: var(--about-bg); }
+
+  html.about-printed .wrap,
+  html.about-printed .live-stats { visibility: hidden; }
+
   .about-overlay {
     --n: 14;          /* layers (JS overrides) */
     --step: 38ms;     /* delay between layers (JS overrides) */
@@ -611,6 +618,8 @@
     --box-rest: 0.55; /* how bright outlines settle to after drawing (1 = full, 0 = invisible) */
     position: fixed;
     inset: 0;
+    height: 100vh;
+    height: 100lvh;   /* full height even when phone toolbars collapse */
     z-index: 100;
     visibility: hidden;
     pointer-events: none;
@@ -783,6 +792,21 @@
   .about-box.drawn > * {
     opacity: 1;
     transition: opacity 0.5s ease calc(var(--d, 0ms) + 380ms + var(--c, 0) * 70ms);
+  }
+
+  /* boxes below the first screen are already fully drawn: no animation while scrolling */
+  .about-box.settled::before {
+    background-size:
+      100% var(--box-w),
+      var(--box-w) 100%,
+      100% var(--box-w),
+      var(--box-w) 100%;
+    opacity: var(--box-rest, 0.55);
+  }
+
+  .about-box.settled > * {
+    opacity: 1;
+    transition: none;
   }
 
   @keyframes boxDraw {
@@ -982,6 +1006,7 @@
 
     .about-label {
       position: relative;
+      top: auto;
       flex-direction: row;
       align-items: baseline;
       gap: 14px;
@@ -990,6 +1015,7 @@
 
   @media (max-width: 700px) {
     .about-inner { padding-top: 100px; }
+    .about-section { margin-top: 52px; }
     .about-photos { grid-template-columns: 1fr; }
   }
 
@@ -1343,6 +1369,7 @@ const OTHER_PRINTS = [
 ];
 
 
+
 /* =========================================================
    PROJECT CARD RENDERING
    ========================================================= */
@@ -1363,7 +1390,7 @@ function projectCard(p) {
   const hasLink = p.link && p.link.trim().length > 0;
   const tag = hasLink ? "a" : "div";
   const linkAttrs = hasLink ? `href="${p.link}" target="_blank" rel="noopener"` : "";
-  const ctaText = hasLink ? "View Project →" : "In progress — check back soon!";
+  const ctaText = hasLink ? "view full write-up →" : "in progress — check back soon";
 
   return `
     <${tag}
@@ -1461,7 +1488,7 @@ document.getElementById("other-prints-list").innerHTML =
     const hasLink = item.link && item.link.trim().length > 0;
     const tag = hasLink ? "a" : "div";
     const linkAttrs = hasLink ? `href="${item.link}" target="_blank" rel="noopener"` : "";
-    const ctaText = hasLink ? "View Project →" : "In progress — check back soon!";
+    const ctaText = hasLink ? "view project →" : "in progress — check back soon";
 
     return `
       <li>
@@ -1614,7 +1641,6 @@ const ABOUT_STEP = 38;    // ms between layers (lower = faster)
   let lastFocus = null;
   let printedTimer = null;
   let drawTimer = null;
-  let observer = null;
 
   overlay.style.setProperty("--n", ABOUT_LAYERS);
   overlay.style.setProperty("--step", ABOUT_STEP + "ms");
@@ -1691,40 +1717,29 @@ const ABOUT_STEP = 38;    // ms between layers (lower = faster)
 
   const boxes = inner.querySelectorAll(".about-box");
 
-  /* --- draw the outline boxes: ones on screen first, the rest as you scroll to them --- */
-  function drawBatch(entries) {
+  /* --- draw the outline boxes ---
+     Boxes on the first screen are drawn (staggered) as the page opens.
+     Everything below is already drawn, so scrolling has no animation. */
+  function startDrawing() {
+    stopDrawing();
+    const view = content.getBoundingClientRect();
     let i = 0;
-    entries.forEach(en => {
-      if (!en.isIntersecting) return;
-      const el = en.target;
-      el.style.setProperty("--d", (i * 70) + "ms");
-      el.classList.add("drawn");
-      observer.unobserve(el);
-      i++;
+    boxes.forEach(b => {
+      const r = b.getBoundingClientRect();
+      const onScreen = r.bottom > view.top && r.top < view.bottom;
+      if (onScreen) {
+        b.style.setProperty("--d", (i * 70) + "ms");
+        b.classList.add("drawn");
+        i++;
+      } else {
+        b.classList.add("settled");
+      }
     });
   }
 
-  function startDrawing() {
-    stopDrawing();
-    if ("IntersectionObserver" in window) {
-      observer = new IntersectionObserver(drawBatch, {
-        root: content,
-        threshold: 0.12,
-        rootMargin: "0px 0px -6% 0px"
-      });
-      boxes.forEach(b => observer.observe(b));
-    } else {
-      boxes.forEach((b, i) => {
-        b.style.setProperty("--d", (i * 70) + "ms");
-        b.classList.add("drawn");
-      });
-    }
-  }
-
   function stopDrawing() {
-    if (observer) { observer.disconnect(); observer = null; }
     boxes.forEach(b => {
-      b.classList.remove("drawn");
+      b.classList.remove("drawn", "settled");
       b.style.removeProperty("--d");
     });
   }
@@ -1745,8 +1760,10 @@ const ABOUT_STEP = 38;    // ms between layers (lower = faster)
 
     clearTimeout(printedTimer);
     clearTimeout(drawTimer);
-    printedTimer = setTimeout(() => overlay.classList.add("printed"),
-      ABOUT_LAYERS * ABOUT_STEP + 450);
+    printedTimer = setTimeout(() => {
+      overlay.classList.add("printed");
+      document.documentElement.classList.add("about-printed");
+    }, ABOUT_LAYERS * ABOUT_STEP + 450);
     drawTimer = setTimeout(startDrawing, ABOUT_LAYERS * ABOUT_STEP + 150);
 
     requestAnimationFrame(() => closeBtn.focus({ preventScroll: true }));
@@ -1760,7 +1777,7 @@ const ABOUT_STEP = 38;    // ms between layers (lower = faster)
     clearTimeout(drawTimer);
     stopDrawing();
     overlay.classList.remove("open", "printed");
-    document.documentElement.classList.remove("about-open");
+    document.documentElement.classList.remove("about-open", "about-printed");
     document.body.style.paddingRight = "";
 
     if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
