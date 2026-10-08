@@ -1390,7 +1390,7 @@ function projectCard(p) {
   const hasLink = p.link && p.link.trim().length > 0;
   const tag = hasLink ? "a" : "div";
   const linkAttrs = hasLink ? `href="${p.link}" target="_blank" rel="noopener"` : "";
-  const ctaText = hasLink ? "view full write-up →" : "in progress — check back soon";
+  const ctaText = hasLink ? "View Project →" : "In progress — check back soon!";
 
   return `
     <${tag}
@@ -1488,7 +1488,7 @@ document.getElementById("other-prints-list").innerHTML =
     const hasLink = item.link && item.link.trim().length > 0;
     const tag = hasLink ? "a" : "div";
     const linkAttrs = hasLink ? `href="${item.link}" target="_blank" rel="noopener"` : "";
-    const ctaText = hasLink ? "view project →" : "in progress — check back soon";
+    const ctaText = hasLink ? "View Project →" : "In progress — check back soon!";
 
     return `
       <li>
