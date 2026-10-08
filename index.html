@@ -26,6 +26,10 @@
     --text-dim: #8B9198;
     --green: #4A9576;
     --copper: #D97D4C;
+
+    /* About page background. Change this one line to recolor it.
+       Try: #0d131b (darker navy), #17120f (warm dark), #0e1a17 (deep green), #1a2331 (lighter) */
+    --about-bg: #0d131b;
   }
 
   * {
@@ -269,11 +273,17 @@
 
   .project-wip {
     cursor: default;
-    opacity: 0.6;
   }
 
-  .project-wip:hover {
-    opacity: 0.85;
+  /* dimmed at rest, brightens on hover (needs the extra selectors to beat .visible) */
+  .project.project-wip.visible,
+  .other-build.project-wip.visible {
+    opacity: 0.65;
+  }
+
+  .project.project-wip.visible:hover,
+  .other-build.project-wip.visible:hover {
+    opacity: 0.9;
   }
 
   .project-thumb {
@@ -549,6 +559,477 @@
     transform: scaleX(1);
   }
 
+  /* ---------- LINK-STYLE BUTTONS ---------- */
+
+  .link-btn {
+    position: relative;
+    background: none;
+    border: none;
+    padding: 0 0 4px;
+    font: inherit;
+    color: var(--text);
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+
+  .link-btn::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--copper);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  .link-btn:hover,
+  .link-btn:focus-visible {
+    color: var(--copper);
+    outline: none;
+  }
+
+  .link-btn:hover::after,
+  .link-btn:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .hero-links .link-btn { font-size: 14px; }
+  .footer-links .link-btn { color: var(--text-dim); }
+  .footer-links .link-btn:hover { color: var(--copper); }
+
+  /* ---------- ABOUT PAGE: "printed" layer by layer ---------- */
+
+  html.about-open { overflow: hidden; }
+
+  .about-overlay {
+    --n: 14;          /* layers (JS overrides) */
+    --step: 38ms;     /* delay between layers (JS overrides) */
+    --box-w: 2px;     /* thickness of the copper outline boxes */
+    --box-rest: 0.55; /* how bright outlines settle to after drawing (1 = full, 0 = invisible) */
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    visibility: hidden;
+    pointer-events: none;
+    transition: visibility 0s linear 0.75s;
+  }
+
+  .about-overlay.open {
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+
+  .about-overlay.printed { background: var(--about-bg); }
+
+  /* the print layers */
+  .about-layers {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .about-layer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(var(--i) * 100% / var(--n));
+    height: calc(100% / var(--n) + 2px);
+    background: var(--about-bg);
+    transform: scaleX(0);
+    transform-origin: left;
+    /* closing: un-prints from the top down, quickly */
+    transition:
+      transform 0.26s cubic-bezier(0.5, 0, 0.75, 0) calc((var(--n) - 1 - var(--k)) * 20ms),
+      background-color 0.2s ease;
+  }
+
+  /* alternate direction each layer, like a real print path */
+  .about-layer:nth-child(even) { transform-origin: right; }
+
+  /* every other layer is a touch lighter while printing so you can see the layers */
+  @supports (background: color-mix(in srgb, red 50%, white)) {
+    .about-layer:nth-child(odd) {
+      background: color-mix(in srgb, var(--about-bg) 94%, #fff 6%);
+    }
+  }
+
+  .about-overlay.open .about-layer {
+    transform: scaleX(1);
+    /* opening: bottom layer first */
+    transition:
+      transform 0.38s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--k) * var(--step)),
+      background-color 0.3s ease;
+  }
+
+  /* when fully printed, the layer shades melt into one solid color */
+  .about-overlay.printed .about-layer {
+    background: var(--about-bg);
+    transition: background-color 0.9s ease;
+  }
+
+  /* top bar with close button */
+  .about-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px clamp(20px, 4vw, 48px) 34px;
+    background: linear-gradient(to bottom, var(--about-bg) 55%, transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .about-overlay.open .about-top {
+    opacity: 1;
+    transition: opacity 0.5s ease calc(var(--n) * var(--step) * 0.6);
+  }
+
+  .about-kicker {
+    color: var(--green);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+
+  .about-close {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    font: inherit;
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 7px 16px;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .about-close:hover,
+  .about-close:focus-visible {
+    color: var(--copper);
+    border-color: var(--copper);
+    outline: none;
+  }
+
+  /* scrolling content */
+  .about-content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .about-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 130px clamp(22px, 5vw, 56px) 110px;
+  }
+
+  /* ---------- COPPER OUTLINE BOXES (drawn like a printed line) ----------
+     Each box is four copper edges whose lengths grow in sequence:
+     top (left to right), right (down), bottom (right to left), left (up). */
+
+  .about-box {
+    position: relative;
+  }
+
+  .about-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--copper), var(--copper)),
+      linear-gradient(var(--copper), var(--copper)),
+      linear-gradient(var(--copper), var(--copper)),
+      linear-gradient(var(--copper), var(--copper));
+    background-repeat: no-repeat;
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    background-size:
+      0 var(--box-w),
+      var(--box-w) 0,
+      0 var(--box-w),
+      var(--box-w) 0;
+  }
+
+  /* text inside a box fades in just after its outline starts drawing */
+  .about-box > * {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .about-box > :nth-child(2) { --c: 1; }
+  .about-box > :nth-child(3) { --c: 2; }
+  .about-box > :nth-child(4) { --c: 3; }
+  .about-box > :nth-child(5) { --c: 4; }
+  .about-box > :nth-child(6) { --c: 5; }
+  .about-box > :nth-child(7) { --c: 6; }
+  .about-box > :nth-child(8) { --c: 7; }
+
+  /* draws at full brightness (0.55s), then settles to a dimmer copper right after */
+  .about-box.drawn::before {
+    animation:
+      boxDraw 0.55s linear var(--d, 0ms) both,
+      boxDim 0.8s ease calc(var(--d, 0ms) + 0.55s) both;
+  }
+
+  .about-box.drawn > * {
+    opacity: 1;
+    transition: opacity 0.5s ease calc(var(--d, 0ms) + 380ms + var(--c, 0) * 70ms);
+  }
+
+  @keyframes boxDraw {
+    0%   { background-size: 0 var(--box-w),    var(--box-w) 0,    0 var(--box-w),    var(--box-w) 0; }
+    25%  { background-size: 100% var(--box-w), var(--box-w) 0,    0 var(--box-w),    var(--box-w) 0; }
+    50%  { background-size: 100% var(--box-w), var(--box-w) 100%, 0 var(--box-w),    var(--box-w) 0; }
+    75%  { background-size: 100% var(--box-w), var(--box-w) 100%, 100% var(--box-w), var(--box-w) 0; }
+    100% { background-size: 100% var(--box-w), var(--box-w) 100%, 100% var(--box-w), var(--box-w) 100%; }
+  }
+
+  @keyframes boxDim {
+    from { opacity: 1; }
+    to   { opacity: var(--box-rest, 0.55); }
+  }
+
+  .about-hero {
+    padding: 44px clamp(24px, 4vw, 52px) 48px;
+  }
+
+  .about-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(44px, 8vw, 92px);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    max-width: 14ch;
+  }
+
+  .about-intro {
+    margin-top: 28px;
+    color: var(--text-dim);
+    font-size: 17px;
+    line-height: 1.75;
+    max-width: 56ch;
+  }
+
+  .about-section {
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    gap: 40px;
+    margin-top: 88px;
+  }
+
+  .about-label {
+    position: sticky;
+    top: 96px;
+    align-self: start;
+    justify-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 16px;
+  }
+
+  .about-card {
+    padding: 30px clamp(22px, 3vw, 36px);
+  }
+
+  .about-story p {
+    font-size: 16px;
+    line-height: 1.85;
+    max-width: 60ch;
+  }
+
+  .about-story p + p { margin-top: 18px; }
+
+  .about-photos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .about-photos figure:first-child { grid-column: 1 / -1; }
+
+  .about-photos img,
+  .about-photo-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 3px;
+    display: block;
+  }
+
+  .about-photos img {
+    border: 1px solid var(--line);
+    background: #0B0D10;
+  }
+
+  .about-photos figure:first-child img,
+  .about-photos figure:first-child .about-photo-placeholder {
+    aspect-ratio: 16 / 9;
+  }
+
+  .about-photo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed var(--line);
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+
+  .about-photos figcaption {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .about-steps {
+    list-style: none;
+  }
+
+  .about-steps li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 18px;
+    padding-bottom: 30px;
+  }
+
+  .about-steps li:last-child { padding-bottom: 0; }
+
+  .about-steps li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 34px;
+    bottom: 2px;
+    width: 1px;
+    background: var(--line);
+  }
+
+  .step-num {
+    position: relative;
+    z-index: 1;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--about-bg);
+    color: var(--copper);
+    font-size: 12px;
+  }
+
+  .step-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  .step-desc {
+    margin-top: 4px;
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 56ch;
+  }
+
+  .tool-group + .tool-group { margin-top: 22px; }
+
+  .tool-group-label {
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .tool-group .project-tags { margin-top: 0; }
+
+  .about-cta {
+    margin-top: 96px;
+    padding: 26px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  .about-cta a {
+    color: var(--copper);
+    text-decoration: none;
+  }
+
+  .about-cta a:hover { text-decoration: underline; }
+
+  @media (max-width: 900px) {
+    .about-section {
+      grid-template-columns: 1fr;
+      gap: 22px;
+      margin-top: 64px;
+    }
+
+    .about-label {
+      position: relative;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 14px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .about-inner { padding-top: 100px; }
+    .about-photos { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-layer {
+      transform: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .about-overlay.open .about-layer {
+      transform: none;
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+
+    .about-overlay.printed .about-layer { transition: background-color 0.25s ease; }
+
+    .about-top,
+    .about-overlay.open .about-top { transition: opacity 0.2s ease; }
+
+    /* boxes just appear fully drawn */
+    .about-box::before {
+      background-size:
+        100% var(--box-w),
+        var(--box-w) 100%,
+        100% var(--box-w),
+        var(--box-w) 100%;
+      opacity: var(--box-rest, 0.55);
+    }
+
+    .about-box > *,
+    .about-box.drawn > * {
+      opacity: 1;
+      transition: none;
+    }
+
+    .about-box.drawn::before { animation: none; }
+  }
+
   /* ---------- RESPONSIVE ---------- */
 
   @media (max-width: 900px) {
@@ -629,6 +1110,7 @@
     </p>
 
     <div class="hero-links">
+      <button type="button" class="link-btn" data-about-open>About me</button>
       <a href="https://github.com/Saarsy/Portfolio">GitHub</a>
       <a href="https://makrix.etsy.com">Etsy Shop</a>
     </div>
@@ -663,10 +1145,25 @@
         rel="noopener"
       >Etsy</a>
 
+      <button type="button" class="link-btn" data-about-open>About</button>
+
       <a href="mailto:saarthak1069@gmail.com">Email</a>
     </div>
   </footer>
 
+</div>
+
+<div class="about-overlay" id="aboutOverlay" role="dialog" aria-modal="true" aria-labelledby="aboutTitle" tabindex="-1">
+  <div class="about-layers" id="aboutLayers"></div>
+
+  <div class="about-top">
+    <span class="about-kicker">about me</span>
+    <button type="button" class="about-close" id="aboutClose" aria-label="Close about page">close ✕</button>
+  </div>
+
+  <div class="about-content" id="aboutContent">
+    <div class="about-inner" id="aboutInner"></div>
+  </div>
 </div>
 
 <script>
@@ -1048,6 +1545,262 @@ fetch("wordcount.json")
 
     // Keep "—" placeholders if the file isn't there yet or the fetch fails
   });
+
+
+/* =========================================================
+   ABOUT PAGE — "prints" in layer by layer.
+   ALL the text lives in ABOUT below. Edit it freely:
+   - story:     paragraphs (rewrite these in your own voice!)
+   - workspace: add a photo path in `src` (leave "" for a placeholder box)
+   - process:   the steps of how you make things
+   - tools:     groups of tags
+   ========================================================= */
+
+const ABOUT = {
+  title: "Hi, I'm Saarthak.",
+
+  intro: "I'm a maker from Kirkland, WA. I design, print, wire up, and sell small products that fix problems I run into.",
+
+  /* EDIT ME: this is a draft based on your DialZero write-up. */
+  story: [
+    "It usually starts with a small annoyance. DialZero began because changing the volume meant stretching a finger across the keyboard for Fn + F2. I knew I could make something faster and more satisfying, so I built it.",
+    "The first attempt is almost never the one that ships. DialZero went through three ways of letting customers configure it (QMK/Vial, a browser-based tool, and finally a plain text file) before one held up. I write down what broke and why, so the next project starts from a better place."
+  ],
+
+  workspace: [
+    { src: "", caption: "Design desk" },
+    { src: "", caption: "Printers" },
+    { src: "", caption: "Assembly & electronics" }
+    /* e.g. { src: "About/Desk.jpeg", caption: "Where I design" } */
+  ],
+
+  process: [
+    { title: "Spot the problem",  desc: "Most projects start as a small daily annoyance: a cluttered desk, a volume key that's too far away." },
+    { title: "Sketch & plan",     desc: "Quick sketches, real measurements, and a short list of what the thing has to do." },
+    { title: "Model in Onshape",  desc: "Parametric CAD, so a dimension is easy to change when something doesn't fit." },
+    { title: "Print & test fit",  desc: "PLA, PLA+ or TPU depending on the job. Test prints are cheap; guessing isn't." },
+    { title: "Iterate",           desc: "Parts rarely work the first time. The wall-mounted lotion holder became a two-piece mount to hide its screws." },
+    { title: "Document",          desc: "Every project gets a write-up with dates, photos, and what went wrong." },
+    { title: "Ship & sell",       desc: "List it on Etsy, take custom orders, and learn from what customers say." }
+  ],
+
+  tools: [
+    { label: "Design",              items: ["Onshape (CAD)", "Sketching & measuring"] },
+    { label: "Making",              items: ["3D printing", "PLA", "PLA+", "TPU", "Wood"] },
+    { label: "Electronics & code",  items: ["RP2040", "Raspberry Pi", "Arduino", "CircuitPython", "Python", "Home Assistant"] },
+    { label: "Workflow",            items: ["VS Code", "Obsidian", "GitHub"] },
+    { label: "Selling",             items: ["Etsy", "Product photography", "Custom orders"] },
+    { label: "Credentials & teams", items: ["Onshape certification", "FRC robotics"] }
+  ],
+
+  contact: {
+    text: "Want to talk about a build?",
+    label: "Email me",
+    href: "mailto:saarthak1069@gmail.com"
+  }
+};
+
+const ABOUT_LAYERS = 14;  // how many "print layers" the animation uses
+const ABOUT_STEP = 38;    // ms between layers (lower = faster)
+
+(function setupAbout() {
+
+  const overlay  = document.getElementById("aboutOverlay");
+  const layersEl = document.getElementById("aboutLayers");
+  const content  = document.getElementById("aboutContent");
+  const inner    = document.getElementById("aboutInner");
+  const closeBtn = document.getElementById("aboutClose");
+
+  let lastFocus = null;
+  let printedTimer = null;
+  let drawTimer = null;
+  let observer = null;
+
+  overlay.style.setProperty("--n", ABOUT_LAYERS);
+  overlay.style.setProperty("--step", ABOUT_STEP + "ms");
+
+  /* --- build the print layers --- */
+  layersEl.innerHTML = Array.from({ length: ABOUT_LAYERS }, (_, i) =>
+    `<div class="about-layer" style="--i:${i};--k:${ABOUT_LAYERS - 1 - i}"></div>`
+  ).join("");
+
+  /* --- build the content (every .about-box gets a copper outline) --- */
+  const label = (num, text) => `
+    <div class="about-box about-label">
+      <span class="tier-num">${num}</span>
+      <span class="tier-title">${text}</span>
+    </div>`;
+
+  const story = ABOUT.story.map(p => `<p>${p}</p>`).join("");
+
+  const photos = ABOUT.workspace.map(w => {
+    const media = w.src
+      ? `<img src="${w.src}" alt="${w.caption}">`
+      : `<div class="about-photo-placeholder">add a photo</div>`;
+    return `<figure>${media}<figcaption>${w.caption}</figcaption></figure>`;
+  }).join("");
+
+  const steps = ABOUT.process.map((s, n) => `
+    <li>
+      <span class="step-num">${n + 1}</span>
+      <div>
+        <div class="step-title">${s.title}</div>
+        <p class="step-desc">${s.desc}</p>
+      </div>
+    </li>`).join("");
+
+  const tools = ABOUT.tools.map(g => `
+    <div class="tool-group">
+      <div class="tool-group-label">${g.label}</div>
+      <div class="project-tags">
+        ${g.items.map(t => `<span class="project-tag">${t}</span>`).join("")}
+      </div>
+    </div>`).join("");
+
+  inner.innerHTML = `
+    <div class="about-box about-hero">
+      <h2 class="about-title" id="aboutTitle">${ABOUT.title}</h2>
+      <p class="about-intro">${ABOUT.intro}</p>
+    </div>
+
+    <section class="about-section">
+      ${label("01", "why I build")}
+      <div class="about-box about-card about-story">${story}</div>
+    </section>
+
+    <section class="about-section">
+      ${label("02", "where I work")}
+      <div class="about-box about-card about-photos">${photos}</div>
+    </section>
+
+    <section class="about-section">
+      ${label("03", "how I work")}
+      <ol class="about-box about-card about-steps">${steps}</ol>
+    </section>
+
+    <section class="about-section">
+      ${label("04", "tools & credentials")}
+      <div class="about-box about-card">${tools}</div>
+    </section>
+
+    <div class="about-box about-cta">
+      <span>${ABOUT.contact.text}</span>
+      <a href="${ABOUT.contact.href}">${ABOUT.contact.label} →</a>
+    </div>
+  `;
+
+  const boxes = inner.querySelectorAll(".about-box");
+
+  /* --- draw the outline boxes: ones on screen first, the rest as you scroll to them --- */
+  function drawBatch(entries) {
+    let i = 0;
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      const el = en.target;
+      el.style.setProperty("--d", (i * 70) + "ms");
+      el.classList.add("drawn");
+      observer.unobserve(el);
+      i++;
+    });
+  }
+
+  function startDrawing() {
+    stopDrawing();
+    if ("IntersectionObserver" in window) {
+      observer = new IntersectionObserver(drawBatch, {
+        root: content,
+        threshold: 0.12,
+        rootMargin: "0px 0px -6% 0px"
+      });
+      boxes.forEach(b => observer.observe(b));
+    } else {
+      boxes.forEach((b, i) => {
+        b.style.setProperty("--d", (i * 70) + "ms");
+        b.classList.add("drawn");
+      });
+    }
+  }
+
+  function stopDrawing() {
+    if (observer) { observer.disconnect(); observer = null; }
+    boxes.forEach(b => {
+      b.classList.remove("drawn");
+      b.style.removeProperty("--d");
+    });
+  }
+
+  /* --- open / close --- */
+  function isOpen() { return overlay.classList.contains("open"); }
+
+  function openAbout() {
+    if (isOpen()) return;
+    lastFocus = document.activeElement;
+
+    const sw = window.innerWidth - document.documentElement.clientWidth;
+    if (sw > 0) document.body.style.paddingRight = sw + "px";
+    document.documentElement.classList.add("about-open");
+
+    content.scrollTop = 0;
+    overlay.classList.add("open");
+
+    clearTimeout(printedTimer);
+    clearTimeout(drawTimer);
+    printedTimer = setTimeout(() => overlay.classList.add("printed"),
+      ABOUT_LAYERS * ABOUT_STEP + 450);
+    drawTimer = setTimeout(startDrawing, ABOUT_LAYERS * ABOUT_STEP + 150);
+
+    requestAnimationFrame(() => closeBtn.focus({ preventScroll: true }));
+
+    try { history.replaceState(null, "", "#about"); } catch (e) {}
+  }
+
+  function closeAbout() {
+    if (!isOpen()) return;
+    clearTimeout(printedTimer);
+    clearTimeout(drawTimer);
+    stopDrawing();
+    overlay.classList.remove("open", "printed");
+    document.documentElement.classList.remove("about-open");
+    document.body.style.paddingRight = "";
+
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+  }
+
+  document.querySelectorAll("[data-about-open]")
+    .forEach(btn => btn.addEventListener("click", openAbout));
+
+  closeBtn.addEventListener("click", closeAbout);
+
+  document.addEventListener("keydown", e => {
+    if (!isOpen()) return;
+
+    if (e.key === "Escape") {
+      closeAbout();
+      return;
+    }
+
+    if (e.key === "Tab") {
+      const f = overlay.querySelectorAll("a[href], button");
+      if (!f.length) return;
+      const first = f[0];
+      const last = f[f.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  /* yoursite/#about opens the page directly */
+  if (location.hash === "#about") openAbout();
+
+})();
 
 </script>
 
