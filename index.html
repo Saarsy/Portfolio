@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-<!-- Markdown parser for documentation preview -->
+<!-- Markdown parser for in-site documentation reading -->
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <style>
@@ -614,7 +614,7 @@
     transform: translateY(-1px);
   }
 
-  /* ---------- PROJECT DOCUMENTATION MODAL ---------- */
+  /* ---------- IN-SITE PROJECT DOCUMENTATION MODAL ---------- */
 
   html.doc-open {
     overflow: hidden;
@@ -624,7 +624,7 @@
     position: fixed;
     inset: 0;
     z-index: 200;
-    background: rgba(10, 14, 20, 0.82);
+    background: rgba(10, 14, 20, 0.85);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     display: flex;
@@ -646,11 +646,11 @@
     border: 1px solid var(--line);
     border-radius: 6px;
     width: 100%;
-    max-width: 940px;
+    max-width: 960px;
     max-height: 90vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
     transform: translateY(16px) scale(0.98);
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     overflow: hidden;
@@ -663,8 +663,8 @@
   .doc-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 20px 28px;
+    align-items: flex-start;
+    padding: 22px 28px;
     border-bottom: 1px solid var(--line);
     background: #14171B;
     gap: 16px;
@@ -675,6 +675,8 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
+    flex: 1;
+    min-width: 240px;
   }
 
   .doc-badge {
@@ -690,6 +692,38 @@
     font-weight: 500;
     color: var(--text);
     margin: 0;
+  }
+
+  /* Multi-document tabs */
+  .doc-tabs {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .doc-tab-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    padding: 5px 14px;
+    border-radius: 16px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .doc-tab-btn:hover {
+    border-color: var(--copper);
+    color: var(--copper);
+  }
+
+  .doc-tab-btn.active {
+    background: var(--copper);
+    border-color: var(--copper);
+    color: var(--bg);
+    font-weight: 600;
   }
 
   .doc-actions {
@@ -1497,7 +1531,8 @@
     <div class="doc-header">
       <div class="doc-header-info">
         <span class="doc-badge">Project Documentation</span>
-        <h2 class="doc-title" id="docModalTitle">Loading...</h2>
+        <h2 class="doc-title" id="docModalTitle">Documentation</h2>
+        <div class="doc-tabs" id="docModalTabs"></div>
       </div>
       <div class="doc-actions">
         <a href="#" class="doc-gh-btn" id="docModalGithub" target="_blank" rel="noopener">GitHub ↗</a>
@@ -1533,7 +1568,7 @@
    DATE FORMATTER
    Converts dates like "1/18/26" to "Jan of 2026",
    handles date ranges ("3/9/25 - 8/19/26"),
-   and leaves already-formatted strings as-is.
+   and leaves already-formatted strings untouched.
    ========================================================= */
 
 function formatSingleDate(dStr) {
@@ -1565,6 +1600,7 @@ function formatDate(dateStr) {
 
 /* =========================================================
    PROJECT DATA
+   Supports both single "link" and multi-doc "docs: [...]" tabs!
    ========================================================= */
 
 const BIG_PROJECTS = [
@@ -1578,6 +1614,13 @@ const BIG_PROJECTS = [
       "High Potential",
     ],
     desc: "A self-hosted server for personal storage and managing all smart home devices",
+    // Multi-doc support: add documents here if your project has multiple files
+    docs: [
+      {
+        title: "Overview",
+        link: "https://github.com/Saarsy/Portfolio/blob/main/Home%20Server%20(Big%20Project)/Home%20Server%20Documentation.md"
+      }
+    ],
     link: "https://github.com/Saarsy/Portfolio/tree/main/Home%20Server%20(Big%20Project)",
     image: "Home%20Server%20(Big%20Project)/Images/Server.jpeg"
   },
@@ -1752,10 +1795,12 @@ function projectCard(p) {
   const formattedDate = formatDate(p.date);
   const dateHtml = formattedDate ? `<span class="project-date">${formattedDate}</span>` : "";
 
-  const hasLink = p.link && p.link.trim().length > 0;
+  const hasDocs = p.docs && p.docs.length > 0;
+  const hasLink = (p.link && p.link.trim().length > 0) || hasDocs;
   const tag = hasLink ? "a" : "div";
+  const defaultLink = (p.link && p.link.trim().length > 0) ? p.link : (hasDocs ? p.docs[0].link : "");
   const linkAttrs = hasLink
-    ? `href="${p.link}" data-doc-link="${p.link}" data-doc-name="${p.name}"`
+    ? `href="${defaultLink}" data-project-name="${p.name}"`
     : "";
   const ctaText = hasLink ? "View Project →" : "In progress — check back soon!";
 
@@ -1813,10 +1858,12 @@ document.getElementById("other-prints-list").innerHTML =
     const formattedDate = formatDate(item.date);
     const dateHtml = formattedDate ? `<span class="other-build-date">${formattedDate}</span>` : "";
 
-    const hasLink = item.link && item.link.trim().length > 0;
+    const hasDocs = item.docs && item.docs.length > 0;
+    const hasLink = (item.link && item.link.trim().length > 0) || hasDocs;
     const tag = hasLink ? "a" : "div";
+    const defaultLink = (item.link && item.link.trim().length > 0) ? item.link : (hasDocs ? item.docs[0].link : "");
     const linkAttrs = hasLink
-      ? `href="${item.link}" data-doc-link="${item.link}" data-doc-name="${item.name}"`
+      ? `href="${defaultLink}" data-project-name="${item.name}"`
       : "";
     const ctaText = hasLink ? "View Project →" : "In progress — check back soon!";
 
@@ -1877,13 +1924,15 @@ fetch("wordcount.json")
 
 /* =========================================================
    PROJECT DOCUMENTATION IN-SITE VIEWER
-   Fetches markdown directly from GitHub and renders it with
-   marked.js without navigating away to a new tab.
+   - Fetches markdown directly without opening a new tab
+   - Supports multi-doc tabs per project
+   - Rewrites relative image paths (including fallback to GitHub raw)
    ========================================================= */
 
 (function setupDocViewer() {
-  const overlay   = document.getElementById("docOverlay");
+  const overlay    = document.getElementById("docOverlay");
   const modalTitle = document.getElementById("docModalTitle");
+  const modalTabs  = document.getElementById("docModalTabs");
   const modalBody  = document.getElementById("docModalBody");
   const modalGh    = document.getElementById("docModalGithub");
   const closeBtn   = document.getElementById("docModalClose");
@@ -1896,80 +1945,66 @@ fetch("wordcount.json")
   }
 
   closeBtn.addEventListener("click", closeDoc);
-
-  overlay.addEventListener("click", e => {
-    if (e.target === overlay) closeDoc();
-  });
-
+  overlay.addEventListener("click", e => { if (e.target === overlay) closeDoc(); });
   document.addEventListener("keydown", e => {
-    if (overlay.classList.contains("open") && e.key === "Escape") {
-      closeDoc();
-    }
+    if (overlay.classList.contains("open") && e.key === "Escape") closeDoc();
   });
 
-  async function openDoc(name, ghLink) {
-    if (!ghLink) return;
+  function getSubfolder(link) {
+    if (!link) return "";
+    let path = link.replace(/^https:\/\/github\.com\/[^/]+\/[^/]+\/(blob|tree)\/[^/]+\//, "");
+    path = decodeURIComponent(path).replace(/\/$/, "");
+    if (path.toLowerCase().endsWith(".md")) {
+      const idx = path.lastIndexOf("/");
+      return idx !== -1 ? path.slice(0, idx) : "";
+    }
+    return path;
+  }
 
-    modalTitle.textContent = name;
-    modalGh.href = ghLink;
+  async function loadMarkdownContent(targetLink, baseFolder, projectName) {
     modalBody.innerHTML = `
       <div class="doc-loading">
         <div class="doc-spinner"></div>
-        <span>Fetching documentation for ${name}...</span>
+        <span>Loading documentation...</span>
       </div>
     `;
 
-    overlay.classList.add("open");
-    document.documentElement.classList.add("doc-open");
-    closeBtn.focus({ preventScroll: true });
-
     const thisFetchId = ++activeFetchId;
+    let repoPath = targetLink.replace(/^https:\/\/github\.com\/[^/]+\/[^/]+\/(blob|tree)\/[^/]+\//, "");
+    repoPath = decodeURIComponent(repoPath).replace(/\/$/, "");
 
-    // Determine paths from the GitHub link
-    // Examples:
-    // https://github.com/Saarsy/Portfolio/blob/main/DialZero%20(Big%20project)/DialZero%20Documentation.md
-    // https://github.com/Saarsy/Portfolio/tree/main/Home%20Server%20(Big%20Project)
-    let repoSubPath = ghLink.replace(/^https:\/\/github\.com\/[^/]+\/[^/]+\/(blob|tree)\/[^/]+\//, "");
-    repoSubPath = decodeURIComponent(repoSubPath).replace(/\/$/, "");
-
-    let docPathsToTry = [];
-    let baseFolder = "";
-
-    if (repoSubPath.toLowerCase().endsWith(".md")) {
-      docPathsToTry.push(repoSubPath);
-      const lastSlash = repoSubPath.lastIndexOf("/");
-      baseFolder = lastSlash !== -1 ? repoSubPath.slice(0, lastSlash) : "";
+    let candidatePaths = [];
+    if (repoPath.toLowerCase().endsWith(".md")) {
+      candidatePaths.push(repoPath);
     } else {
-      baseFolder = repoSubPath;
-      docPathsToTry.push(`${repoSubPath}/README.md`);
-      docPathsToTry.push(`${repoSubPath}/${name} Documentation.md`);
-      docPathsToTry.push(`${repoSubPath}/Documentation.md`);
+      // If folder link was provided, check multiple common markdown naming patterns
+      candidatePaths.push(`${repoPath}/README.md`);
+      candidatePaths.push(`${repoPath}/${projectName} Documentation.md`);
+      candidatePaths.push(`${repoPath}/Home Server Documentation.md`);
+      candidatePaths.push(`${repoPath}/Documentation.md`);
     }
 
     let markdown = null;
-    let successfulPath = "";
 
-    for (const relPath of docPathsToTry) {
+    for (const relPath of candidatePaths) {
       const rawUrl = `https://raw.githubusercontent.com/Saarsy/Portfolio/main/${encodeURI(relPath)}`;
       const localUrl = relPath;
 
-      // Try local/relative first if on http(s), then fall back to GitHub raw
-      const candidates = window.location.protocol.startsWith("http")
+      const urlsToTry = window.location.protocol.startsWith("http")
         ? [localUrl, rawUrl]
         : [rawUrl, localUrl];
 
-      for (const url of candidates) {
+      for (const url of urlsToTry) {
         try {
           const res = await fetch(url);
           if (res.ok) {
-            const txt = await res.text();
-            if (!txt.trim().startsWith("<!DOCTYPE html") && !txt.trim().startsWith("<html")) {
-              markdown = txt;
-              successfulPath = relPath;
+            const text = await res.text();
+            if (!text.trim().startsWith("<!DOCTYPE html") && !text.trim().startsWith("<html")) {
+              markdown = text;
               break;
             }
           }
-        } catch (e) {}
+        } catch (err) {}
       }
       if (markdown) break;
     }
@@ -1979,62 +2014,86 @@ fetch("wordcount.json")
     if (!markdown) {
       modalBody.innerHTML = `
         <div class="doc-error">
-          <p>Couldn't load a documentation preview for this project directly.</p>
-          <a href="${ghLink}" target="_blank" rel="noopener">Open project folder on GitHub →</a>
+          <p>Couldn't load this documentation file directly.</p>
+          <a href="${targetLink}" target="_blank" rel="noopener">Open on GitHub →</a>
         </div>
       `;
       return;
     }
 
-    // Parse Markdown using marked.js
-    let html = "";
-    if (window.marked && typeof window.marked.parse === "function") {
-      html = window.marked.parse(markdown);
-    } else {
-      html = `<pre>${markdown}</pre>`;
-    }
+    modalBody.innerHTML = window.marked ? marked.parse(markdown) : `<pre>${markdown}</pre>`;
 
-    modalBody.innerHTML = html;
-
-    // Resolve relative image paths inside markdown so they load from the project's folder
-    const folderEncoded = encodeURI(baseFolder);
+    // --- FIX RELATIVE IMAGES SO THEY NEVER 404 ---
     modalBody.querySelectorAll("img").forEach(img => {
-      const src = img.getAttribute("src");
-      if (src && !/^https?:\/\/|^\/\//.test(src)) {
-        const clean = src.replace(/^\.\//, "");
-        const localSrc = baseFolder ? `${folderEncoded}/${clean}` : clean;
-        const rawSrc = `https://raw.githubusercontent.com/Saarsy/Portfolio/main/${baseFolder ? folderEncoded + "/" : ""}${clean}`;
+      const originalSrc = img.getAttribute("src");
+      if (originalSrc && !/^https?:\/\/|^\/\//.test(originalSrc)) {
+        const cleanSrc = originalSrc.replace(/^\.\//, "");
+        const folderPart = baseFolder ? encodeURI(baseFolder) + "/" : "";
+        const rawGithubFallback = `https://raw.githubusercontent.com/Saarsy/Portfolio/main/${folderPart}${cleanSrc}`;
+        const relativeLocal = `${folderPart}${cleanSrc}`;
 
-        if (window.location.protocol.startsWith("http")) {
-          img.src = localSrc;
-          img.onerror = () => { img.src = rawSrc; };
-        } else {
-          img.src = rawSrc;
-        }
+        img.src = window.location.protocol.startsWith("http") ? relativeLocal : rawGithubFallback;
+        img.onerror = function() {
+          if (!this.dataset.triedRaw) {
+            this.dataset.triedRaw = "true";
+            this.src = rawGithubFallback;
+          }
+        };
       }
     });
 
-    // Make all markdown links open safely in a new tab
     modalBody.querySelectorAll("a").forEach(a => {
       a.setAttribute("target", "_blank");
       a.setAttribute("rel", "noopener noreferrer");
     });
   }
 
-  // Intercept clicks on project cards
-  document.addEventListener("click", e => {
-    const cardLink = e.target.closest("[data-doc-link]");
-    if (!cardLink) return;
+  window.openDocProject = function(project) {
+    modalTitle.textContent = project.name;
+    modalGh.href = project.link || (project.docs && project.docs[0] ? project.docs[0].link : "https://github.com/Saarsy/Portfolio");
+    modalTabs.innerHTML = "";
 
-    // Allow user to Ctrl/Cmd-click or middle-click to open GitHub in a new tab if desired
+    const baseFolder = getSubfolder(project.link || (project.docs && project.docs[0].link) || "");
+
+    // Multi-doc tabs handling
+    if (project.docs && project.docs.length > 1) {
+      project.docs.forEach((doc, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = `doc-tab-btn ${idx === 0 ? "active" : ""}`;
+        btn.textContent = doc.title;
+        btn.addEventListener("click", () => {
+          modalTabs.querySelectorAll(".doc-tab-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          modalGh.href = doc.link;
+          loadMarkdownContent(doc.link, baseFolder, project.name);
+        });
+        modalTabs.appendChild(btn);
+      });
+      loadMarkdownContent(project.docs[0].link, baseFolder, project.name);
+    } else {
+      const activeLink = (project.docs && project.docs[0]) ? project.docs[0].link : project.link;
+      loadMarkdownContent(activeLink, baseFolder, project.name);
+    }
+
+    overlay.classList.add("open");
+    document.documentElement.classList.add("doc-open");
+    closeBtn.focus({ preventScroll: true });
+  };
+
+  // Intercept click on project cards
+  document.addEventListener("click", e => {
+    const card = e.target.closest("[data-project-name]");
+    if (!card) return;
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
 
-    const link = cardLink.getAttribute("data-doc-link");
-    const name = cardLink.getAttribute("data-doc-name") || "Project";
+    const name = card.getAttribute("data-project-name");
+    const all = [...BIG_PROJECTS, ...MEDIUM_PROJECTS, ...OTHER_PRINTS];
+    const found = all.find(p => p.name === name);
 
-    if (link.includes("github.com")) {
+    if (found && (found.link || (found.docs && found.docs.length))) {
       e.preventDefault();
-      openDoc(name, link);
+      openDocProject(found);
     }
   });
 })();
