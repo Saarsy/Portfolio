@@ -28,8 +28,8 @@ To code it Im going to use SSH so I can configure/program via my Mac
 
 Why I chose them:
 - The laptop has more then enough processing power to power my servers needs
-- The 2tb ssd is for quick uploads and acts as my main storage
-- The 2tb hdd is for backups that happen overnight so is my backup storage
+- The 2TB SSD is the primary high speed storage
+- The 2TB HDD is for backups that run weekly at night
 - Ubuntu server was just what I found on many servers and what my researching concluded to
 - Casa OS is a web based OS that can manage my apps and other stuff cleanly so my server stays organized, for me staying organized is one of the biggest things to understanding and succeeding
 - SSH just allows me to sit at my main setup and cleanly configure/program my server
