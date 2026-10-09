@@ -2101,31 +2101,37 @@ fetch("wordcount.json")
       let src = img.getAttribute("src");
       if (!src) return;
 
-      // If user pasted a GitHub blob URL directly into markdown, convert to raw
+      // 1. If it's a GitHub blob link, convert to raw
       if (src.includes("github.com") && src.includes("/blob/")) {
         img.src = src.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("/blob/", "/");
         return;
       }
 
-      // If already an absolute web URL or base64, leave as is
+      // 2. If it's already an external https link or base64 data, leave it as is
       if (/^https?:\/\/|^\/\//i.test(src) || src.startsWith("data:")) return;
 
-      // Clean relative path syntax
+      // 3. Clean up leading slashes: "/DialZero..." -> "DialZero..."
       let cleanSrc = src.replace(/^\.?\//, "").replace(/^\.\.\//, "");
       try { cleanSrc = decodeURIComponent(cleanSrc); } catch(e) {}
 
       let decodedBase = baseFolder ? decodeURIComponent(baseFolder).replace(/\/$/, "") : "";
-      let fullPath = decodedBase ? `${decodedBase}/${cleanSrc}` : cleanSrc;
 
-      const rawGithubUrl = "https://raw.githubusercontent.com/Saarsy/Portfolio/main/" + encodeURI(fullPath);
-      const localRelativeUrl = encodeURI(fullPath);
+      // 4. If the path ALREADY starts with the project folder, don't duplicate it!
+      let fullPath = cleanSrc;
+      if (decodedBase && !cleanSrc.toLowerCase().startsWith(decodedBase.toLowerCase())) {
+        fullPath = `${decodedBase}/${cleanSrc}`;
+      }
 
-      // Load from raw GitHub (reliable across GitHub Pages, custom domains, and local files)
-      img.src = rawGithubUrl;
+      // 5. Build raw GitHub URL so it loads reliably anywhere
+      const rawUrl = "https://raw.githubusercontent.com/Saarsy/Portfolio/main/" + encodeURI(fullPath);
+      const localUrl = encodeURI(fullPath);
+
+      // Try raw GitHub first, fall back to local relative path
+      img.src = rawUrl;
       img.onerror = function() {
         if (!this.dataset.triedLocal) {
           this.dataset.triedLocal = "true";
-          this.src = localRelativeUrl;
+          this.src = localUrl;
         }
       };
     });
