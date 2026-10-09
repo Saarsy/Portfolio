@@ -585,7 +585,7 @@
   .footer-links .link-btn { color: var(--text-dim); }
   .footer-links .link-btn:hover { color: var(--copper); }
 
-  /* ---------- HOMEPAGE "ABOUT ME" BUTTON (Clean, without glow) ---------- */
+  /* ---------- HOMEPAGE "ABOUT ME" BUTTON (Clean, without blurry glow) ---------- */
 
   .hero-links .about-btn {
     color: var(--about-btn);
@@ -789,6 +789,7 @@
     margin-top: 36px;
     margin-bottom: 14px;
     line-height: 1.25;
+    scroll-margin-top: 18px; /* Smooth scroll offset for Table of Contents */
   }
 
   .doc-body h1 {
@@ -820,6 +821,19 @@
 
   .doc-body a:hover {
     color: #f19f74;
+  }
+
+  /* Specific styling for Table of Contents links */
+  .doc-body a.doc-toc-link {
+    color: var(--green);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--line);
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .doc-body a.doc-toc-link:hover {
+    color: var(--copper);
+    border-color: var(--copper);
   }
 
   .doc-body code {
@@ -1566,9 +1580,6 @@
 
 /* =========================================================
    DATE FORMATTER
-   Converts dates like "1/18/26" to "Jan of 2026",
-   handles date ranges ("3/9/25 - 8/19/26"),
-   and leaves already-formatted strings untouched.
    ========================================================= */
 
 function formatSingleDate(dStr) {
@@ -1600,7 +1611,6 @@ function formatDate(dateStr) {
 
 /* =========================================================
    PROJECT DATA
-   Supports both single "link" and multi-doc "docs: [...]" tabs!
    ========================================================= */
 
 const BIG_PROJECTS = [
@@ -1614,7 +1624,6 @@ const BIG_PROJECTS = [
       "High Potential",
     ],
     desc: "A self-hosted server for personal storage and managing all smart home devices",
-    // Multi-doc support: add documents here if your project has multiple files
     docs: [
       {
         title: "Base Server",
@@ -1623,15 +1632,15 @@ const BIG_PROJECTS = [
       {
         title: "Home Assistant",
         link: "https://github.com/Saarsy/Portfolio/blob/main/Home%20Server%20(Big%20Project)/Home%20Assistant%20Setup.md"
-      }
+      },
       {
         title: "Immich",
         link: "https://github.com/Saarsy/Portfolio/blob/main/Home%20Server%20(Big%20Project)/Immich%20Setup.md"
-      }
+      },
       {
         title: "Laptop Wall Mount",
         link: "https://github.com/Saarsy/Portfolio/blob/main/Home%20Server%20(Big%20Project)/Laptop%20Wall%20Mount%20Documentation.md"
-      }
+      },
       {
         title: "Tailscale",
         link: "https://github.com/Saarsy/Portfolio/blob/main/Home%20Server%20(Big%20Project)/Tailscale%20Setup.md"
@@ -1940,9 +1949,9 @@ fetch("wordcount.json")
 
 /* =========================================================
    PROJECT DOCUMENTATION IN-SITE VIEWER
-   - Fetches markdown directly without opening a new tab
-   - Supports multi-doc tabs per project
-   - Rewrites relative image paths (including fallback to GitHub raw)
+   - Automatic Table of Contents link handling & heading ID generation
+   - Comprehensive relative image path resolution (Raw GitHub fallback)
+   - Multi-doc tabs for projects with multiple write-ups
    ========================================================= */
 
 (function setupDocViewer() {
@@ -1985,6 +1994,7 @@ fetch("wordcount.json")
       </div>
     `;
 
+    modalBody.scrollTop = 0;
     const thisFetchId = ++activeFetchId;
     let repoPath = targetLink.replace(/^https:\/\/github\.com\/[^/]+\/[^/]+\/(blob|tree)\/[^/]+\//, "");
     repoPath = decodeURIComponent(repoPath).replace(/\/$/, "");
@@ -1993,7 +2003,6 @@ fetch("wordcount.json")
     if (repoPath.toLowerCase().endsWith(".md")) {
       candidatePaths.push(repoPath);
     } else {
-      // If folder link was provided, check multiple common markdown naming patterns
       candidatePaths.push(`${repoPath}/README.md`);
       candidatePaths.push(`${repoPath}/${projectName} Documentation.md`);
       candidatePaths.push(`${repoPath}/Home Server Documentation.md`);
@@ -2039,28 +2048,86 @@ fetch("wordcount.json")
 
     modalBody.innerHTML = window.marked ? marked.parse(markdown) : `<pre>${markdown}</pre>`;
 
-    // --- FIX RELATIVE IMAGES SO THEY NEVER 404 ---
-    modalBody.querySelectorAll("img").forEach(img => {
-      const originalSrc = img.getAttribute("src");
-      if (originalSrc && !/^https?:\/\/|^\/\//.test(originalSrc)) {
-        const cleanSrc = originalSrc.replace(/^\.\//, "");
-        const folderPart = baseFolder ? encodeURI(baseFolder) + "/" : "";
-        const rawGithubFallback = `https://raw.githubusercontent.com/Saarsy/Portfolio/main/${folderPart}${cleanSrc}`;
-        const relativeLocal = `${folderPart}${cleanSrc}`;
+    // --- 1. GENERATE HEADING IDs FOR TABLE OF CONTENTS ---
+    const headingCounts = {};
+    modalBody.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach(heading => {
+      const text = heading.textContent.trim();
+      let slug = text
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
 
-        img.src = window.location.protocol.startsWith("http") ? relativeLocal : rawGithubFallback;
-        img.onerror = function() {
-          if (!this.dataset.triedRaw) {
-            this.dataset.triedRaw = "true";
-            this.src = rawGithubFallback;
+      if (!slug) slug = "section";
+
+      if (headingCounts[slug] !== undefined) {
+        headingCounts[slug]++;
+        slug = `${slug}-${headingCounts[slug]}`;
+      } else {
+        headingCounts[slug] = 0;
+      }
+
+      heading.id = slug;
+    });
+
+    // --- 2. FIX TABLE OF CONTENTS ANCHOR LINKS (PREVENT OPENING NEW TABS) ---
+    modalBody.querySelectorAll("a").forEach(a => {
+      const href = a.getAttribute("href");
+      if (!href) return;
+
+      if (href.startsWith("#")) {
+        // Table of contents link: intercept and smooth-scroll inside the modal
+        a.removeAttribute("target");
+        a.removeAttribute("rel");
+        a.classList.add("doc-toc-link");
+
+        a.addEventListener("click", e => {
+          e.preventDefault();
+          const targetId = href.slice(1).toLowerCase();
+          const targetEl = document.getElementById(targetId) || modalBody.querySelector(`[id="${targetId}"]`);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
           }
-        };
+        });
+      } else {
+        // External link: open in a new tab safely
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener noreferrer");
       }
     });
 
-    modalBody.querySelectorAll("a").forEach(a => {
-      a.setAttribute("target", "_blank");
-      a.setAttribute("rel", "noopener noreferrer");
+    // --- 3. FIX RELATIVE IMAGES SO THEY NEVER BREAK ---
+    modalBody.querySelectorAll("img").forEach(img => {
+      let src = img.getAttribute("src");
+      if (!src) return;
+
+      // If user pasted a GitHub blob URL directly into markdown, convert to raw
+      if (src.includes("github.com") && src.includes("/blob/")) {
+        img.src = src.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("/blob/", "/");
+        return;
+      }
+
+      // If already an absolute web URL or base64, leave as is
+      if (/^https?:\/\/|^\/\//i.test(src) || src.startsWith("data:")) return;
+
+      // Clean relative path syntax
+      let cleanSrc = src.replace(/^\.?\//, "").replace(/^\.\.\//, "");
+      try { cleanSrc = decodeURIComponent(cleanSrc); } catch(e) {}
+
+      let decodedBase = baseFolder ? decodeURIComponent(baseFolder).replace(/\/$/, "") : "";
+      let fullPath = decodedBase ? `${decodedBase}/${cleanSrc}` : cleanSrc;
+
+      const rawGithubUrl = "https://raw.githubusercontent.com/Saarsy/Portfolio/main/" + encodeURI(fullPath);
+      const localRelativeUrl = encodeURI(fullPath);
+
+      // Load from raw GitHub (reliable across GitHub Pages, custom domains, and local files)
+      img.src = rawGithubUrl;
+      img.onerror = function() {
+        if (!this.dataset.triedLocal) {
+          this.dataset.triedLocal = "true";
+          this.src = localRelativeUrl;
+        }
+      };
     });
   }
 
