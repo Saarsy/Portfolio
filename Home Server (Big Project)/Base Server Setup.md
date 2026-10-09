@@ -3,7 +3,7 @@
 - [What I Did](#what-i-did)
 - [Learnings](#what-i-learned)
 - [Results](#results)
-- [Whats Next](#whats-next)
+- [What's Next](#what's-next)
 # Why I Built It
 Growing up, all my stuff revolved around the cloud, all my pictures, all my files, literally everything, and the price for those just kept going up. How much money would I allow myself and my family to spend on monthly subscriptions? I knew the answer to this: a home server. But I always hesitated to actually get started, as this was an entirely new field for me, in which I had no prior experience. But then, this was my time to build experience, so I took on the daunting task of researching and making a home server. This would turn out a bigger project then I first imagined.
 
@@ -47,7 +47,7 @@ I know a ton of people say this already but going to Google and doing it the old
 # Results
 In the end of this section, I ended up with a solid foundation to add software to, a organized place to build my server off of. Casa OS running beautifully with all the failsafes so that this server will get back online after whatever it gets hit with. 
 
-# Whats Next
+# What's Next
 The next steps for me included:
 - Setting up Immich for photos: [Immich Documentation](/Home%20Server%20(Big%20Project)/Immich%20Setup.md)
 - Setting up Home Assistant for my smart home: [Home Assistant Documentation](/Home%20Server%20(Big%20Project)/Home%20Assistant%20Setup.md)

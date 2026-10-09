@@ -3,8 +3,8 @@
 - [What It Does](#what-it-does)
 - [Technical Overview](#technical-overview)
 - [The Hard Parts](#the-hard-parts)
-- [Results](#Results)
-- [Whats Next](#Whats-Next)
+- [Results](#results)
+- [What's Next](#what's-next)
 
 ![Poster](/DialZero%20(Big%20project)/Images/Poster%20Hero%20Shot.jpeg)
 

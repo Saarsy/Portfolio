@@ -3,8 +3,8 @@
 - [What It Does](#what-it-does)
 - [Technical Overview](#technical-overview)
 - [The Hard Parts](#the-hard-parts)
-- [Results](#Results)
-- [Whats Next](#Whats-Next)
+- [Results](#results)
+- [What's Next](#what's-next)
 # The Problem / Why I Built It
 Every day, before going to sleep and after waking up, I always manually opened and closed the blinds. It was a simple thing to most people, but I was different. I saw how the blinds could be used, their potential. For example, every day when I have to wake up for school at 7, I always struggle to wake up. I’ve always naturally woken up to light, as I can’t sleep with even a little light in the room, so I knew that making my room light up right before I had to wake up would be a much more natural, gentler way to wake up. But how would I do this? Automating my lights to turn on at a certain time would be too bright and abrupt; when I finally woke up, I would be staring into the bright light, and it would be uncomfortable. The solution was natural light! By automating my blinds to open at a certain time, I could catch the natural light flooding into my room slowly, waking me up gently and nicely.
 # What It Does
