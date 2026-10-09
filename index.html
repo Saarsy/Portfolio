@@ -33,7 +33,7 @@
     /* About page background */
     --about-bg: #0d131b;
 
-    /* Homepage "About me" button */
+    /* Homepage "About Me" button */
     --about-btn: #D97D4C;
   }
 
@@ -789,7 +789,7 @@
     margin-top: 36px;
     margin-bottom: 14px;
     line-height: 1.25;
-    scroll-margin-top: 18px; /* Smooth scroll offset for Table of Contents */
+    scroll-margin-top: 18px;
   }
 
   .doc-body h1 {
@@ -823,7 +823,6 @@
     color: #f19f74;
   }
 
-  /* Specific styling for Table of Contents links */
   .doc-body a.doc-toc-link {
     color: var(--green);
     text-decoration: none;
@@ -1054,6 +1053,7 @@
     color: var(--green);
     font-size: 13px;
     letter-spacing: 0.02em;
+    font-weight: 500;
   }
 
   .about-close {
@@ -1360,26 +1360,308 @@
 
   .about-cta a:hover { text-decoration: underline; }
 
+  /* ---------- TABLET BREAKPOINT ---------- */
+
   @media (max-width: 900px) {
-    .about-section {
+    .wrap { padding: 0 32px; }
+    .project { grid-template-columns: 200px 1fr; gap: 28px; padding: 28px; }
+    .other-build { padding: 28px; }
+    .other-build-thumb { width: 160px; }
+    .about-section { grid-template-columns: 1fr; gap: 22px; margin-top: 64px; }
+    .about-label { position: relative; top: auto; flex-direction: row; align-items: baseline; gap: 14px; }
+  }
+
+  /* ---------- PHONE BREAKPOINT: COMPACT, DENSE TEXT ---------- */
+
+  @media (max-width: 700px) {
+    body {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .wrap {
+      padding: 0 18px;
+    }
+
+    header {
+      padding: 70px 0 36px;
+    }
+
+    .kicker {
+      font-size: 11px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 10vw, 48px);
+    }
+
+    header p.sub {
+      margin-top: 14px;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    .hero-links {
+      margin-top: 24px;
+      gap: 16px;
+    }
+
+    .hero-links a,
+    .hero-links .link-btn {
+      font-size: 12.5px;
+    }
+
+    .hero-links .about-btn {
+      padding: 5px 14px;
+    }
+
+    .tier {
+      padding: 48px 0;
+    }
+
+    .tier-head {
+      margin-bottom: 24px;
+      gap: 12px;
+    }
+
+    .tier-num { font-size: 11px; }
+    .tier-title { font-size: 13px; }
+
+    .project-list {
+      gap: 18px;
+    }
+
+    .project {
       grid-template-columns: 1fr;
-      gap: 22px;
-      margin-top: 64px;
+      padding: 20px;
+      gap: 16px;
+    }
+
+    .project-name {
+      font-size: 22px;
+    }
+
+    .project-date {
+      font-size: 11.5px;
+    }
+
+    .project-tags {
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .project-tag {
+      font-size: 10px;
+      padding: 2px 9px;
+    }
+
+    .project-desc {
+      margin-top: 10px;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    .project-cta {
+      padding-top: 14px;
+      font-size: 11.5px;
+    }
+
+    .project-thumb {
+      aspect-ratio: 16/9;
+    }
+
+    .other-build {
+      padding: 20px;
+      flex-direction: column-reverse;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .other-build strong {
+      font-size: 22px;
+    }
+
+    .other-build .other-build-date {
+      font-size: 11.5px;
+    }
+
+    .other-build-desc {
+      margin-top: 10px;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    .other-build .project-cta {
+      margin-top: 14px;
+      font-size: 11.5px;
+    }
+
+    .other-build-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+    }
+
+    /* Modal compactness on phone */
+    .doc-overlay {
+      padding: 10px;
+    }
+
+    .doc-modal {
+      max-height: 94vh;
+      border-radius: 6px;
+    }
+
+    .doc-header {
+      padding: 14px 16px;
+      gap: 10px;
+    }
+
+    .doc-badge {
+      font-size: 9.5px;
+    }
+
+    .doc-title {
+      font-size: 18px;
+    }
+
+    .doc-tabs {
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .doc-tab-btn {
+      font-size: 11px;
+      padding: 3px 10px;
+    }
+
+    .doc-gh-btn,
+    .doc-close-btn {
+      font-size: 11px;
+      padding: 4px 10px;
+    }
+
+    .doc-body {
+      padding: 18px 16px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .doc-body h1 {
+      font-size: 20px;
+      margin-top: 22px;
+      padding-bottom: 6px;
+    }
+
+    .doc-body h2 {
+      font-size: 17px;
+      margin-top: 18px;
+    }
+
+    .doc-body h3 {
+      font-size: 14.5px;
+      margin-top: 16px;
+    }
+
+    .doc-body p {
+      margin-bottom: 12px;
+    }
+
+    .doc-body code {
+      font-size: 11.5px;
+      padding: 1px 5px;
+    }
+
+    .doc-body pre {
+      padding: 12px 14px;
+      font-size: 11.5px;
+      margin: 14px 0;
+    }
+
+    .doc-body table {
+      font-size: 11px;
+      margin: 14px 0;
+    }
+
+    .doc-body th, .doc-body td {
+      padding: 6px 8px;
+    }
+
+    /* About section compactness on phone */
+    .about-inner {
+      padding: 85px 18px 60px;
+    }
+
+    .about-hero {
+      padding: 24px 18px;
+    }
+
+    .about-title {
+      font-size: clamp(30px, 9vw, 42px);
+    }
+
+    .about-intro {
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 14px;
+    }
+
+    .about-section {
+      margin-top: 36px;
+      gap: 14px;
     }
 
     .about-label {
-      position: relative;
-      top: auto;
-      flex-direction: row;
-      align-items: baseline;
-      gap: 14px;
+      padding: 8px 12px;
+      font-size: 12px;
     }
-  }
 
-  @media (max-width: 700px) {
-    .about-inner { padding-top: 100px; }
-    .about-section { margin-top: 52px; }
-    .about-photos { grid-template-columns: 1fr; }
+    .about-card {
+      padding: 18px 16px;
+    }
+
+    .about-story p {
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .about-photos {
+      grid-template-columns: 1fr;
+    }
+
+    .step-title {
+      font-size: 17px;
+    }
+
+    .step-desc {
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .tool-group-label {
+      font-size: 11px;
+    }
+
+    .about-cta {
+      margin-top: 40px;
+      padding: 18px;
+      font-size: 12.5px;
+    }
+
+    /* Single doc-counter pill on phone */
+    .stat-pill {
+      font-size: 11px;
+      padding: 5px 11px;
+    }
+
+    footer {
+      padding: 40px 0 60px;
+      font-size: 11.5px;
+    }
+
+    .footer-links {
+      gap: 18px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1396,9 +1678,7 @@
     }
 
     .about-overlay.printed .about-layer { transition: background-color 0.25s ease; }
-
-    .about-top,
-    .about-overlay.open .about-top { transition: opacity 0.2s ease; }
+    .about-top, .about-overlay.open .about-top { transition: opacity 0.2s ease; }
 
     .about-box::before {
       background-size:
@@ -1418,75 +1698,13 @@
     .about-box.drawn::before,
     .about-overlay.closing .about-box::before { animation: none; }
   }
-
-  /* ---------- RESPONSIVE ---------- */
-
-  @media (max-width: 900px) {
-    .wrap {
-      padding: 0 32px;
-    }
-
-    .project {
-      grid-template-columns: 200px 1fr;
-      gap: 28px;
-      padding: 28px;
-    }
-
-    .other-build {
-      padding: 28px;
-    }
-
-    .other-build-thumb {
-      width: 160px;
-    }
-  }
-
-  @media (max-width: 700px) {
-    header {
-      padding: 90px 0 70px;
-    }
-
-    .wrap {
-      padding: 0 24px;
-    }
-
-    .project {
-      grid-template-columns: 1fr;
-    }
-
-    .project-thumb {
-      aspect-ratio: 16/9;
-    }
-
-    .other-build {
-      padding: 24px;
-      flex-direction: column-reverse;
-      align-items: flex-start;
-    }
-
-    .other-build-thumb {
-      width: 100%;
-      aspect-ratio: 16/9;
-    }
-
-    .doc-modal {
-      max-height: 96vh;
-    }
-
-    .doc-header {
-      padding: 16px 20px;
-    }
-  }
 </style>
 </head>
 
 <body>
 
+<!-- LIVE STATS: Documentations pill only (Word Count removed) -->
 <div class="live-stats" id="liveStats">
-  <div class="stat-pill">
-    <span class="stat-label">Word Count</span>
-    <span class="stat-num" id="wcNum">—</span>
-  </div>
   <div class="stat-pill">
     <span class="stat-label">Documentations</span>
     <span class="stat-num" id="docNum">—</span>
@@ -1507,7 +1725,7 @@
     </p>
 
     <div class="hero-links">
-      <button type="button" class="link-btn about-btn" data-about-open>About me</button>
+      <button type="button" class="link-btn about-btn" data-about-open>About Me</button>
       <a href="https://github.com/Saarsy/Portfolio" target="_blank" rel="noopener">GitHub</a>
       <a href="https://makrix.etsy.com" target="_blank" rel="noopener">Etsy Shop</a>
     </div>
@@ -1532,7 +1750,7 @@
     <div class="footer-links">
       <a href="https://github.com/Saarsy/Portfolio" target="_blank" rel="noopener">GitHub</a>
       <a href="https://makrix.etsy.com" target="_blank" rel="noopener">Etsy</a>
-      <button type="button" class="link-btn" data-about-open>About</button>
+      <button type="button" class="link-btn" data-about-open>About Me</button>
       <a href="mailto:saarthak1069@gmail.com">Email</a>
     </div>
   </footer>
@@ -1550,7 +1768,7 @@
       </div>
       <div class="doc-actions">
         <a href="#" class="doc-gh-btn" id="docModalGithub" target="_blank" rel="noopener">GitHub ↗</a>
-        <button type="button" class="doc-close-btn" id="docModalClose" aria-label="Close documentation">close ✕</button>
+        <button type="button" class="doc-close-btn" id="docModalClose" aria-label="Close documentation">Close ✕</button>
       </div>
     </div>
     <div class="doc-body" id="docModalBody">
@@ -1567,8 +1785,8 @@
   <div class="about-layers" id="aboutLayers"></div>
 
   <div class="about-top">
-    <span class="about-kicker">about me</span>
-    <button type="button" class="about-close" id="aboutClose" aria-label="Close about page">close ✕</button>
+    <span class="about-kicker">About Me</span>
+    <button type="button" class="about-close" id="aboutClose" aria-label="Close about page">Close ✕</button>
   </div>
 
   <div class="about-content" id="aboutContent">
@@ -1809,7 +2027,7 @@ const OTHER_PRINTS = [
 
 function projectCard(p) {
   const thumb = p.image
-    ? `<img class="project-thumb" src="${p.image}" alt="${p.name}">`
+    ? `<img class="project-thumb" src="${p.image}" alt="${p.name}" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/Saarsy/Portfolio/main/' + encodeURI(decodeURI(this.getAttribute('src')))">`
     : `<div class="project-thumb placeholder">no photo yet</div>`;
 
   const tags = p.tags
@@ -1877,7 +2095,7 @@ renderTier("tier-medium", "02", "Smaller Projects", MEDIUM_PROJECTS);
 document.getElementById("other-prints-list").innerHTML =
   OTHER_PRINTS.map(item => {
     const thumb = item.image
-      ? `<img class="other-build-thumb" src="${item.image}" alt="${item.name}">`
+      ? `<img class="other-build-thumb" src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/Saarsy/Portfolio/main/' + encodeURI(decodeURI(this.getAttribute('src')))">`
       : `<div class="other-build-thumb placeholder">no photo</div>`;
 
     const formattedDate = formatDate(item.date);
@@ -1936,22 +2154,21 @@ document
   .forEach(el => observer.observe(el));
 
 /* =========================================================
-   LIVE STATS
+   LIVE STATS: Documentations counter only
    ========================================================= */
 
 fetch("wordcount.json")
   .then(res => res.json())
   .then(data => {
-    document.getElementById("wcNum").textContent = data.words.toLocaleString();
-    document.getElementById("docNum").textContent = data.documentations;
+    const docEl = document.getElementById("docNum");
+    if (docEl && data.documentations !== undefined) {
+      docEl.textContent = data.documentations;
+    }
   })
   .catch(() => {});
 
 /* =========================================================
    PROJECT DOCUMENTATION IN-SITE VIEWER
-   - Automatic Table of Contents link handling & heading ID generation
-   - Comprehensive relative image path resolution (Raw GitHub fallback)
-   - Multi-doc tabs for projects with multiple write-ups
    ========================================================= */
 
 (function setupDocViewer() {
@@ -2076,7 +2293,6 @@ fetch("wordcount.json")
       if (!href) return;
 
       if (href.startsWith("#")) {
-        // Table of contents link: intercept and smooth-scroll inside the modal
         a.removeAttribute("target");
         a.removeAttribute("rel");
         a.classList.add("doc-toc-link");
@@ -2090,42 +2306,41 @@ fetch("wordcount.json")
           }
         });
       } else {
-        // External link: open in a new tab safely
         a.setAttribute("target", "_blank");
         a.setAttribute("rel", "noopener noreferrer");
       }
     });
 
-    // --- 3. FIX RELATIVE IMAGES SO THEY NEVER BREAK ---
+    // --- 3. FIX RELATIVE & ABSOLUTE REPO IMAGES (NO MARKDOWN CHANGES NEEDED) ---
     modalBody.querySelectorAll("img").forEach(img => {
       let src = img.getAttribute("src");
       if (!src) return;
 
-      // If user pasted a GitHub blob URL directly into markdown, convert to raw
       if (src.includes("github.com") && src.includes("/blob/")) {
         img.src = src.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("/blob/", "/");
         return;
       }
 
-      // If already an absolute web URL or base64, leave as is
       if (/^https?:\/\/|^\/\//i.test(src) || src.startsWith("data:")) return;
 
-      // Clean relative path syntax
       let cleanSrc = src.replace(/^\.?\//, "").replace(/^\.\.\//, "");
       try { cleanSrc = decodeURIComponent(cleanSrc); } catch(e) {}
 
       let decodedBase = baseFolder ? decodeURIComponent(baseFolder).replace(/\/$/, "") : "";
-      let fullPath = decodedBase ? `${decodedBase}/${cleanSrc}` : cleanSrc;
 
-      const rawGithubUrl = "https://raw.githubusercontent.com/Saarsy/Portfolio/main/" + encodeURI(fullPath);
-      const localRelativeUrl = encodeURI(fullPath);
+      let fullPath = cleanSrc;
+      if (decodedBase && !cleanSrc.toLowerCase().startsWith(decodedBase.toLowerCase())) {
+        fullPath = `${decodedBase}/${cleanSrc}`;
+      }
 
-      // Load from raw GitHub (reliable across GitHub Pages, custom domains, and local files)
-      img.src = rawGithubUrl;
+      const rawUrl = "https://raw.githubusercontent.com/Saarsy/Portfolio/main/" + encodeURI(fullPath);
+      const localUrl = encodeURI(fullPath);
+
+      img.src = rawUrl;
       img.onerror = function() {
         if (!this.dataset.triedLocal) {
           this.dataset.triedLocal = "true";
-          this.src = localRelativeUrl;
+          this.src = localUrl;
         }
       };
     });
@@ -2138,7 +2353,6 @@ fetch("wordcount.json")
 
     const baseFolder = getSubfolder(project.link || (project.docs && project.docs[0].link) || "");
 
-    // Multi-doc tabs handling
     if (project.docs && project.docs.length > 1) {
       project.docs.forEach((doc, idx) => {
         const btn = document.createElement("button");
@@ -2164,7 +2378,6 @@ fetch("wordcount.json")
     closeBtn.focus({ preventScroll: true });
   };
 
-  // Intercept click on project cards
   document.addEventListener("click", e => {
     const card = e.target.closest("[data-project-name]");
     if (!card) return;
@@ -2195,33 +2408,33 @@ const ABOUT = {
   ],
 
   workspace: [
-    { src: "", caption: "Design desk" },
+    { src: "", caption: "Design Desk" },
     { src: "", caption: "Printers" },
-    { src: "", caption: "Assembly & electronics" }
+    { src: "", caption: "Assembly & Electronics" }
   ],
 
   process: [
-    { title: "Spot the problem",  desc: "Most projects start as a small daily annoyance: a cluttered desk, a volume key that's too far away." },
-    { title: "Sketch & plan",     desc: "Quick sketches, real measurements, and a short list of what the thing has to do." },
+    { title: "Spot the Problem",  desc: "Most projects start as a small daily annoyance: a cluttered desk, a volume key that's too far away." },
+    { title: "Sketch & Plan",     desc: "Quick sketches, real measurements, and a short list of what the thing has to do." },
     { title: "Model in Onshape",  desc: "Parametric CAD, so a dimension is easy to change when something doesn't fit." },
-    { title: "Print & test fit",  desc: "PLA, PLA+ or TPU depending on the job. Test prints are cheap; guessing isn't." },
+    { title: "Print & Test Fit",  desc: "PLA, PLA+ or TPU depending on the job. Test prints are cheap; guessing isn't." },
     { title: "Iterate",           desc: "Parts rarely work the first time. The wall-mounted lotion holder became a two-piece mount to hide its screws." },
     { title: "Document",          desc: "Every project gets a write-up with dates, photos, and what went wrong." },
-    { title: "Ship & sell",       desc: "List it on Etsy, take custom orders, and learn from what customers say." }
+    { title: "Ship & Sell",       desc: "List it on Etsy, take custom orders, and learn from what customers say." }
   ],
 
   tools: [
     { label: "Design",              items: ["Onshape (CAD)", "Sketching & measuring"] },
     { label: "Making",              items: ["3D printing", "PLA", "PLA+", "TPU", "Wood"] },
-    { label: "Electronics & code",  items: ["RP2040", "Raspberry Pi", "Arduino", "CircuitPython", "Python", "Home Assistant"] },
+    { label: "Electronics & Code",  items: ["RP2040", "Raspberry Pi", "Arduino", "CircuitPython", "Python", "Home Assistant"] },
     { label: "Workflow",            items: ["VS Code", "Obsidian", "GitHub"] },
     { label: "Selling",             items: ["Etsy", "Product photography", "Custom orders"] },
-    { label: "Credentials & teams", items: ["Onshape certification", "FRC robotics"] }
+    { label: "Credentials & Teams", items: ["Onshape certification", "FRC robotics"] }
   ],
 
   contact: {
     text: "Want to talk about a build?",
-    label: "Email me",
+    label: "Email Me",
     href: "mailto:saarthak1069@gmail.com"
   }
 };
@@ -2289,22 +2502,22 @@ const ABOUT_CLOSE_MS = 340;
     </div>
 
     <section class="about-section">
-      ${label("01", "why I build")}
+      ${label("01", "Why I Build")}
       <div class="about-box about-card about-story">${story}</div>
     </section>
 
     <section class="about-section">
-      ${label("02", "where I work")}
+      ${label("02", "Where I Work")}
       <div class="about-box about-card about-photos">${photos}</div>
     </section>
 
     <section class="about-section">
-      ${label("03", "how I work")}
+      ${label("03", "How I Work")}
       <ol class="about-box about-card about-steps">${steps}</ol>
     </section>
 
     <section class="about-section">
-      ${label("04", "tools & credentials")}
+      ${label("04", "Tools & Credentials")}
       <div class="about-box about-card">${tools}</div>
     </section>
 

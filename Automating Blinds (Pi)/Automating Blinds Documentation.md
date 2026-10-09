@@ -1,4 +1,3 @@
-# The Problem
 # Contents
 - [The Problem](#the-problem--why-i-built-it)
 - [What It Does](#what-it-does)
