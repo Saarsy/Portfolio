@@ -29,7 +29,11 @@
 
     /* About page background. Change this one line to recolor it.
        Try: #0d131b (darker navy), #17120f (warm dark), #0e1a17 (deep green), #1a2331 (lighter) */
-    --about-bg: #1a3457;
+    --about-bg: #0d131b;
+
+    /* Homepage "About me" button only. Change this one color to recolor it.
+       Try: #D97D4C (copper), #4A9576 (green), #FFD166 (yellow), #6EC1FF (blue), #FF6B8A (pink) */
+    --about-btn: #D97D4C;
   }
 
   * {
@@ -600,6 +604,41 @@
   .footer-links .link-btn { color: var(--text-dim); }
   .footer-links .link-btn:hover { color: var(--copper); }
 
+  /* ---------- HOMEPAGE "ABOUT ME" BUTTON (hero only) ----------
+     Recolor it with --about-btn in :root. */
+
+  .hero-links { align-items: center; }
+
+  .hero-links .about-btn {
+    color: var(--about-btn);
+    border: 1px solid var(--about-btn);
+    border-radius: 20px;
+    padding: 7px 18px;
+    line-height: 1.2;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .hero-links .about-btn::after { display: none; }
+
+  /* soft tinted fill + glow, both derived from the one color */
+  @supports (background: color-mix(in srgb, red 50%, white)) {
+    .hero-links .about-btn {
+      background: color-mix(in srgb, var(--about-btn) 14%, transparent);
+      box-shadow: 0 0 18px color-mix(in srgb, var(--about-btn) 35%, transparent);
+    }
+  }
+
+  .hero-links .about-btn:hover,
+  .hero-links .about-btn:focus-visible {
+    background: var(--about-btn);
+    color: var(--bg);
+    transform: translateY(-1px);
+  }
+
   /* ---------- ABOUT PAGE: "printed" layer by layer ---------- */
 
   html.about-open { overflow: hidden; }
@@ -807,6 +846,32 @@
   .about-box.settled > * {
     opacity: 1;
     transition: none;
+  }
+
+  /* ---------- CLOSING, step 1: outlines erase backwards, text and bar fade ----------
+     (step 2 is the layers un-printing top to bottom, which happens when .open is removed) */
+
+  .about-overlay.closing .about-box::before {
+    animation: boxErase 0.32s linear both;
+  }
+
+  .about-overlay.closing .about-box > * {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .about-overlay.closing .about-top {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  /* the reverse of boxDraw: left edge goes first, then bottom, right, top */
+  @keyframes boxErase {
+    0%   { background-size: 100% var(--box-w), var(--box-w) 100%, 100% var(--box-w), var(--box-w) 100%; opacity: var(--box-rest, 0.55); }
+    25%  { background-size: 100% var(--box-w), var(--box-w) 100%, 100% var(--box-w), var(--box-w) 0;    opacity: var(--box-rest, 0.55); }
+    50%  { background-size: 100% var(--box-w), var(--box-w) 100%, 0 var(--box-w),    var(--box-w) 0;    opacity: var(--box-rest, 0.55); }
+    75%  { background-size: 100% var(--box-w), var(--box-w) 0,    0 var(--box-w),    var(--box-w) 0;    opacity: var(--box-rest, 0.55); }
+    100% { background-size: 0 var(--box-w),    var(--box-w) 0,    0 var(--box-w),    var(--box-w) 0;    opacity: var(--box-rest, 0.55); }
   }
 
   @keyframes boxDraw {
@@ -1053,7 +1118,8 @@
       transition: none;
     }
 
-    .about-box.drawn::before { animation: none; }
+    .about-box.drawn::before,
+    .about-overlay.closing .about-box::before { animation: none; }
   }
 
   /* ---------- RESPONSIVE ---------- */
@@ -1136,7 +1202,7 @@
     </p>
 
     <div class="hero-links">
-      <button type="button" class="link-btn" data-about-open>About me</button>
+      <button type="button" class="link-btn about-btn" data-about-open>About me</button>
       <a href="https://github.com/Saarsy/Portfolio">GitHub</a>
       <a href="https://makrix.etsy.com">Etsy Shop</a>
     </div>
@@ -1367,7 +1433,6 @@ const OTHER_PRINTS = [
     image: ""
   }
 ];
-
 
 
 /* =========================================================
@@ -1629,6 +1694,7 @@ const ABOUT = {
 
 const ABOUT_LAYERS = 14;  // how many "print layers" the animation uses
 const ABOUT_STEP = 38;    // ms between layers (lower = faster)
+const ABOUT_CLOSE_MS = 340;  // closing: how long the outlines erase before the layers un-print
 
 (function setupAbout() {
 
@@ -1641,6 +1707,8 @@ const ABOUT_STEP = 38;    // ms between layers (lower = faster)
   let lastFocus = null;
   let printedTimer = null;
   let drawTimer = null;
+  let closeTimer = null;
+  let closing = false;
 
   overlay.style.setProperty("--n", ABOUT_LAYERS);
   overlay.style.setProperty("--step", ABOUT_STEP + "ms");
@@ -1771,12 +1839,22 @@ const ABOUT_STEP = 38;    // ms between layers (lower = faster)
     try { history.replaceState(null, "", "#about"); } catch (e) {}
   }
 
+  /* closing happens in two steps:
+     1) outlines erase backwards + text fades (the .closing class)
+     2) the layers un-print top to bottom (removing .open) */
   function closeAbout() {
-    if (!isOpen()) return;
+    if (!isOpen() || closing) return;
+    closing = true;
     clearTimeout(printedTimer);
     clearTimeout(drawTimer);
+    overlay.classList.add("closing");
+    closeTimer = setTimeout(finishClose, ABOUT_CLOSE_MS);
+  }
+
+  function finishClose() {
+    closing = false;
     stopDrawing();
-    overlay.classList.remove("open", "printed");
+    overlay.classList.remove("open", "printed", "closing");
     document.documentElement.classList.remove("about-open", "about-printed");
     document.body.style.paddingRight = "";
 
