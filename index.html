@@ -16,6 +16,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
+<!-- Markdown parser for documentation preview -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
 <style>
   :root {
     --bg: #131a24;
@@ -27,12 +30,10 @@
     --green: #4A9576;
     --copper: #D97D4C;
 
-    /* About page background. Change this one line to recolor it.
-       Try: #0d131b (darker navy), #17120f (warm dark), #0e1a17 (deep green), #1a2331 (lighter) */
+    /* About page background */
     --about-bg: #0d131b;
 
-    /* Homepage "About me" button only. Change this one color to recolor it.
-       Try: #D97D4C (copper), #4A9576 (green), #FFD166 (yellow), #6EC1FF (blue), #FF6B8A (pink) */
+    /* Homepage "About me" button */
     --about-btn: #D97D4C;
   }
 
@@ -131,6 +132,7 @@
     display: flex;
     gap: 28px;
     flex-wrap: wrap;
+    align-items: center;
   }
 
   .hero-links a {
@@ -171,7 +173,6 @@
       opacity: 0;
       transform: translateY(18px);
     }
-
     to {
       opacity: 1;
       transform: translateY(0);
@@ -182,21 +183,10 @@
     animation: heroFade 0.7s ease both;
   }
 
-  header .kicker {
-    animation-delay: 0.05s;
-  }
-
-  header h1 {
-    animation-delay: 0.15s;
-  }
-
-  header .sub {
-    animation-delay: 0.25s;
-  }
-
-  header .hero-links {
-    animation-delay: 0.35s;
-  }
+  header .kicker { animation-delay: 0.05s; }
+  header h1 { animation-delay: 0.15s; }
+  header .sub { animation-delay: 0.25s; }
+  header .hero-links { animation-delay: 0.35s; }
 
   /* ---------- TIER SECTIONS ---------- */
 
@@ -210,12 +200,9 @@
     align-items: baseline;
     gap: 16px;
     margin-bottom: 48px;
-
     opacity: 0;
     transform: translateY(20px);
-    transition:
-      opacity 0.6s ease,
-      transform 0.6s ease;
+    transition: opacity 0.6s ease, transform 0.6s ease;
   }
 
   .tier-head.visible {
@@ -253,10 +240,9 @@
     padding: 36px;
     text-decoration: none;
     color: inherit;
-
+    cursor: pointer;
     opacity: 0;
     transform: translateY(20px);
-
     transition:
       background 0.2s ease,
       border-color 0.2s ease,
@@ -279,7 +265,6 @@
     cursor: default;
   }
 
-  /* dimmed at rest, brightens on hover (needs the extra selectors to beat .visible) */
   .project.project-wip.visible,
   .other-build.project-wip.visible {
     opacity: 0.65;
@@ -404,18 +389,15 @@
     align-items: start;
     justify-content: space-between;
     gap: 32px;
-
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 4px;
     padding: 36px;
-
     text-decoration: none;
     color: inherit;
-
+    cursor: pointer;
     opacity: 0;
     transform: translateY(20px);
-
     transition:
       background 0.2s ease,
       border-color 0.2s ease,
@@ -487,7 +469,6 @@
     color: var(--copper);
   }
 
-  /* Fixed 4:3 ratio rectangular thumbnail for Other Builds */
   .other-build-thumb {
     width: 200px;
     aspect-ratio: 4 / 3;
@@ -604,10 +585,7 @@
   .footer-links .link-btn { color: var(--text-dim); }
   .footer-links .link-btn:hover { color: var(--copper); }
 
-  /* ---------- HOMEPAGE "ABOUT ME" BUTTON (hero only) ----------
-     Recolor it with --about-btn in :root. */
-
-  .hero-links { align-items: center; }
+  /* ---------- HOMEPAGE "ABOUT ME" BUTTON (Clean, without glow) ---------- */
 
   .hero-links .about-btn {
     color: var(--about-btn);
@@ -623,7 +601,6 @@
 
   .hero-links .about-btn::after { display: none; }
 
-  /* soft tinted fill derived from the one color */
   @supports (background: color-mix(in srgb, red 50%, white)) {
     .hero-links .about-btn {
       background: color-mix(in srgb, var(--about-btn) 14%, transparent);
@@ -637,11 +614,305 @@
     transform: translateY(-1px);
   }
 
+  /* ---------- PROJECT DOCUMENTATION MODAL ---------- */
+
+  html.doc-open {
+    overflow: hidden;
+  }
+
+  .doc-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(10, 14, 20, 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(16px, 3vw, 40px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+
+  .doc-overlay.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .doc-modal {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    width: 100%;
+    max-width: 940px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    transform: translateY(16px) scale(0.98);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+  }
+
+  .doc-overlay.open .doc-modal {
+    transform: translateY(0) scale(1);
+  }
+
+  .doc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--line);
+    background: #14171B;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .doc-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .doc-badge {
+    color: var(--green);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .doc-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 500;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .doc-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .doc-gh-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 6px 14px;
+    text-decoration: none;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .doc-gh-btn:hover {
+    color: var(--copper);
+    border-color: var(--copper);
+  }
+
+  .doc-close-btn {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    font: inherit;
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .doc-close-btn:hover,
+  .doc-close-btn:focus-visible {
+    color: var(--copper);
+    border-color: var(--copper);
+    outline: none;
+  }
+
+  .doc-body {
+    padding: clamp(24px, 4vw, 44px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* Doc typography */
+  .doc-body h1,
+  .doc-body h2,
+  .doc-body h3,
+  .doc-body h4 {
+    font-family: 'Fraunces', serif;
+    color: var(--text);
+    margin-top: 36px;
+    margin-bottom: 14px;
+    line-height: 1.25;
+  }
+
+  .doc-body h1 {
+    font-size: 28px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    margin-top: 8px;
+  }
+
+  .doc-body h2 {
+    font-size: 22px;
+    color: var(--copper);
+  }
+
+  .doc-body h3 {
+    font-size: 18px;
+    color: var(--green);
+  }
+
+  .doc-body p {
+    margin-bottom: 18px;
+  }
+
+  .doc-body a {
+    color: var(--copper);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .doc-body a:hover {
+    color: #f19f74;
+  }
+
+  .doc-body code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: #0B0D10;
+    color: var(--copper);
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+
+  .doc-body pre {
+    background: #0B0D10;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    margin: 20px 0;
+  }
+
+  .doc-body pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text);
+  }
+
+  .doc-body ul,
+  .doc-body ol {
+    margin: 16px 0 22px 24px;
+  }
+
+  .doc-body li {
+    margin-bottom: 8px;
+  }
+
+  .doc-body blockquote {
+    border-left: 3px solid var(--copper);
+    padding-left: 18px;
+    margin: 22px 0;
+    color: var(--text-dim);
+  }
+
+  .doc-body hr {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 32px 0;
+  }
+
+  .doc-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 13px;
+  }
+
+  .doc-body th,
+  .doc-body td {
+    border: 1px solid var(--line);
+    padding: 10px 14px;
+    text-align: left;
+  }
+
+  .doc-body th {
+    background: #0B0D10;
+    color: var(--green);
+  }
+
+  .doc-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    background: #0B0D10;
+    display: block;
+    margin: 24px auto;
+  }
+
+  .doc-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    gap: 16px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  .doc-spinner {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--line);
+    border-top-color: var(--copper);
+    border-radius: 50%;
+    animation: docSpin 0.7s linear infinite;
+  }
+
+  @keyframes docSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  .doc-error {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-dim);
+  }
+
+  .doc-error p {
+    margin-bottom: 18px;
+  }
+
+  .doc-error a {
+    display: inline-block;
+    color: var(--copper);
+    border: 1px solid var(--copper);
+    padding: 8px 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 13px;
+  }
+
   /* ---------- ABOUT PAGE: "printed" layer by layer ---------- */
 
   html.about-open { overflow: hidden; }
 
-  /* once printed, hide the main page behind it so nothing can show through at the edges */
   html.about-printed,
   html.about-printed body { background: var(--about-bg); }
 
@@ -649,14 +920,14 @@
   html.about-printed .live-stats { visibility: hidden; }
 
   .about-overlay {
-    --n: 14;          /* layers (JS overrides) */
-    --step: 38ms;     /* delay between layers (JS overrides) */
-    --box-w: 2px;     /* thickness of the copper outline boxes */
-    --box-rest: 0.55; /* how bright outlines settle to after drawing (1 = full, 0 = invisible) */
+    --n: 14;
+    --step: 38ms;
+    --box-w: 2px;
+    --box-rest: 0.55;
     position: fixed;
     inset: 0;
     height: 100vh;
-    height: 100lvh;   /* full height even when phone toolbars collapse */
+    height: 100lvh;
     z-index: 100;
     visibility: hidden;
     pointer-events: none;
@@ -671,7 +942,6 @@
 
   .about-overlay.printed { background: var(--about-bg); }
 
-  /* the print layers */
   .about-layers {
     position: absolute;
     inset: 0;
@@ -687,16 +957,13 @@
     background: var(--about-bg);
     transform: scaleX(0);
     transform-origin: left;
-    /* closing: un-prints from the top down, quickly */
     transition:
       transform 0.26s cubic-bezier(0.5, 0, 0.75, 0) calc((var(--n) - 1 - var(--k)) * 20ms),
       background-color 0.2s ease;
   }
 
-  /* alternate direction each layer, like a real print path */
   .about-layer:nth-child(even) { transform-origin: right; }
 
-  /* every other layer is a touch lighter while printing so you can see the layers */
   @supports (background: color-mix(in srgb, red 50%, white)) {
     .about-layer:nth-child(odd) {
       background: color-mix(in srgb, var(--about-bg) 94%, #fff 6%);
@@ -705,19 +972,16 @@
 
   .about-overlay.open .about-layer {
     transform: scaleX(1);
-    /* opening: bottom layer first */
     transition:
       transform 0.38s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--k) * var(--step)),
       background-color 0.3s ease;
   }
 
-  /* when fully printed, the layer shades melt into one solid color */
   .about-overlay.printed .about-layer {
     background: var(--about-bg);
     transition: background-color 0.9s ease;
   }
 
-  /* top bar with close button */
   .about-top {
     position: absolute;
     top: 0;
@@ -763,7 +1027,6 @@
     outline: none;
   }
 
-  /* scrolling content */
   .about-content {
     position: absolute;
     inset: 0;
@@ -777,10 +1040,6 @@
     margin: 0 auto;
     padding: 130px clamp(22px, 5vw, 56px) 110px;
   }
-
-  /* ---------- COPPER OUTLINE BOXES (drawn like a printed line) ----------
-     Each box is four copper edges whose lengths grow in sequence:
-     top (left to right), right (down), bottom (right to left), left (up). */
 
   .about-box {
     position: relative;
@@ -805,7 +1064,6 @@
       var(--box-w) 0;
   }
 
-  /* text inside a box fades in just after its outline starts drawing */
   .about-box > * {
     opacity: 0;
     transition: opacity 0.15s ease;
@@ -819,7 +1077,6 @@
   .about-box > :nth-child(7) { --c: 6; }
   .about-box > :nth-child(8) { --c: 7; }
 
-  /* draws at full brightness (0.55s), then settles to a dimmer copper right after */
   .about-box.drawn::before {
     animation:
       boxDraw 0.55s linear var(--d, 0ms) both,
@@ -831,7 +1088,6 @@
     transition: opacity 0.5s ease calc(var(--d, 0ms) + 380ms + var(--c, 0) * 70ms);
   }
 
-  /* boxes below the first screen are already fully drawn: no animation while scrolling */
   .about-box.settled::before {
     background-size:
       100% var(--box-w),
@@ -845,9 +1101,6 @@
     opacity: 1;
     transition: none;
   }
-
-  /* ---------- CLOSING, step 1: outlines erase backwards, text and bar fade ----------
-     (step 2 is the layers un-printing top to bottom, which happens when .open is removed) */
 
   .about-overlay.closing .about-box::before {
     animation: boxErase 0.32s linear both;
@@ -863,7 +1116,6 @@
     transition: opacity 0.25s ease;
   }
 
-  /* the reverse of boxDraw: left edge goes first, then bottom, right, top */
   @keyframes boxErase {
     0%   { background-size: 100% var(--box-w), var(--box-w) 100%, 100% var(--box-w), var(--box-w) 100%; opacity: var(--box-rest, 0.55); }
     25%  { background-size: 100% var(--box-w), var(--box-w) 100%, 100% var(--box-w), var(--box-w) 0;    opacity: var(--box-rest, 0.55); }
@@ -1100,7 +1352,6 @@
     .about-top,
     .about-overlay.open .about-top { transition: opacity 0.2s ease; }
 
-    /* boxes just appear fully drawn */
     .about-box::before {
       background-size:
         100% var(--box-w),
@@ -1169,6 +1420,14 @@
       width: 100%;
       aspect-ratio: 16/9;
     }
+
+    .doc-modal {
+      max-height: 96vh;
+    }
+
+    .doc-header {
+      padding: 16px 20px;
+    }
   }
 </style>
 </head>
@@ -1201,8 +1460,8 @@
 
     <div class="hero-links">
       <button type="button" class="link-btn about-btn" data-about-open>About me</button>
-      <a href="https://github.com/Saarsy/Portfolio">GitHub</a>
-      <a href="https://makrix.etsy.com">Etsy Shop</a>
+      <a href="https://github.com/Saarsy/Portfolio" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://makrix.etsy.com" target="_blank" rel="noopener">Etsy Shop</a>
     </div>
   </header>
   
@@ -1223,26 +1482,38 @@
     <span>Updated as new projects are made</span>
 
     <div class="footer-links">
-      <a
-        href="https://github.com/Saarsy/Portfolio"
-        target="_blank"
-        rel="noopener"
-      >GitHub</a>
-
-      <a
-        href="https://makrix.etsy.com"
-        target="_blank"
-        rel="noopener"
-      >Etsy</a>
-
+      <a href="https://github.com/Saarsy/Portfolio" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://makrix.etsy.com" target="_blank" rel="noopener">Etsy</a>
       <button type="button" class="link-btn" data-about-open>About</button>
-
       <a href="mailto:saarthak1069@gmail.com">Email</a>
     </div>
   </footer>
 
 </div>
 
+<!-- IN-SITE PROJECT DOCUMENTATION MODAL -->
+<div class="doc-overlay" id="docOverlay" role="dialog" aria-modal="true" aria-labelledby="docModalTitle" tabindex="-1">
+  <div class="doc-modal">
+    <div class="doc-header">
+      <div class="doc-header-info">
+        <span class="doc-badge">Project Documentation</span>
+        <h2 class="doc-title" id="docModalTitle">Loading...</h2>
+      </div>
+      <div class="doc-actions">
+        <a href="#" class="doc-gh-btn" id="docModalGithub" target="_blank" rel="noopener">GitHub ↗</a>
+        <button type="button" class="doc-close-btn" id="docModalClose" aria-label="Close documentation">close ✕</button>
+      </div>
+    </div>
+    <div class="doc-body" id="docModalBody">
+      <div class="doc-loading">
+        <div class="doc-spinner"></div>
+        <span>Fetching documentation from GitHub...</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT PAGE OVERLAY -->
 <div class="about-overlay" id="aboutOverlay" role="dialog" aria-modal="true" aria-labelledby="aboutTitle" tabindex="-1">
   <div class="about-layers" id="aboutLayers"></div>
 
@@ -1259,13 +1530,47 @@
 <script>
 
 /* =========================================================
+   DATE FORMATTER
+   Converts dates like "1/18/26" to "Jan of 2026",
+   handles date ranges ("3/9/25 - 8/19/26"),
+   and leaves already-formatted strings as-is.
+   ========================================================= */
+
+function formatSingleDate(dStr) {
+  if (!dStr) return "";
+  const trimmed = dStr.trim();
+  const m = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+  if (m) {
+    const monthNum = parseInt(m[1], 10);
+    let year = parseInt(m[3], 10);
+    if (year < 100) year += 2000;
+    const months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    if (monthNum >= 1 && monthNum <= 12) {
+      return `${months[monthNum - 1]} of ${year}`;
+    }
+  }
+  return trimmed;
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return "";
+  if (dateStr.includes(" - ")) {
+    return dateStr.split(" - ").map(formatSingleDate).join(" - ");
+  }
+  return formatSingleDate(dateStr);
+}
+
+/* =========================================================
    PROJECT DATA
    ========================================================= */
 
 const BIG_PROJECTS = [
   {
     name: "Home Server",
-    date: "6/11/26",
+    date: "Jun of 2026",
     tags: [
       "Master Project",
       "Software",
@@ -1278,7 +1583,7 @@ const BIG_PROJECTS = [
   },
   {
     name: "Sofa Pad",
-    date: "3/9/25 - 8/19/26",
+    date: "Mar of 2025 - Aug of 2026",
     tags: [
       "WFH",
       "Convenient",
@@ -1291,7 +1596,7 @@ const BIG_PROJECTS = [
   },
   {
     name: "DialZero",
-    date: "7/13/26",
+    date: "Jul of 2026",
     tags: [
       "RP2040",
       "CircuitPython",
@@ -1304,7 +1609,7 @@ const BIG_PROJECTS = [
   },
   {
     name: "Automating Blinds (Pi)",
-    date: "5/22/26",
+    date: "May of 2026",
     tags: [
       "HA",
       "Automated",
@@ -1317,11 +1622,10 @@ const BIG_PROJECTS = [
   }
 ];
 
-
 const MEDIUM_PROJECTS = [
   {
     name: "Door Sentry (Pi)",
-    date: "3/28/25",
+    date: "Mar of 2025",
     tags: [
       "Experimental",
       "Alarm",
@@ -1359,7 +1663,7 @@ const MEDIUM_PROJECTS = [
   },
   {
     name: "Wall Mounted Lotion Holder",
-    date: "7/24/26",
+    date: "Jul of 2026",
     tags: [
       "Mounted",
       "Minimalistic",
@@ -1372,39 +1676,38 @@ const MEDIUM_PROJECTS = [
   },
 ];
 
-
 const OTHER_PRINTS = [
   {
     name: "Cable Peg",
-    date: "1/7/26",
+    date: "Jan of 2026",
     desc: "A tiny print to organize the cables behind my desk for clean cable management",
     link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Cable%20Peg/Cable%20Peg%20Documentation.md",
     image: "Other%20Builds/Cable%20Peg/In%20Use.jpeg"
   },
   {
     name: "Headphone Hanger",
-    date: "8/11/26",
+    date: "Aug of 2026",
     desc: "Underside shelf mounted headphone holder to hang your headphones, and not take up space on your desk",
     link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Headphone%20Hanger/Headphone%20Hanger%20Documentation.md",
     image: "Other%20Builds/Headphone%20Hanger/Hanger.jpeg"
   },
   {
     name: "Countertop Protector",
-    date: "6/24/26",
+    date: "Jun of 2026",
     desc: "A TPU material print that provides protection to a countertop from things like spinning bar stools or foot opening trash cans",
     link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Countertop%20Protector/Countertop%20Protector%20Documentation.md",
     image: "Other%20Builds/Countertop%20Protector/Protector.jpeg"
   },
   {
     name: "Wall Extension Cord Mount",
-    date: "1/12/26",
+    date: "Jan of 2026",
     desc: "A mounting plate to attach an extension cord to for cable management",
     link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Wall%20Extension%20Cord%20Mount/Wall%20Extension%20Cord%20Mount%20Documentation.md",
     image: "Other%20Builds/Wall%20Extension%20Cord%20Mount/Full.jpeg"
   },
   {
     name: "Shelf Katana Holder",
-    date: "12/12/25",
+    date: "Dec of 2025",
     desc: "A shelf mount that provides easy placement for a katana",
     link: "",
     image: ""
@@ -1418,27 +1721,25 @@ const OTHER_PRINTS = [
   },
   {
     name: "USB C to USB A Adapter Holder",
-    date: "1/26/26",
+    date: "Jan of 2026",
     desc: "Used for a place to put adapters to stay organized",
     link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/USB%20Adapter%20Holder/USB%20Adapter%20Holder%20Documentation.md",
     image: "Other%20Builds/USB%20Adapter%20Holder/Holder.jpeg"
   },
   {
     name: "Tofu Press Holder",
-    date: "7/25/26",
+    date: "Jul of 2026",
     desc: "A holder for oversized tofu holders which take more space than they should",
     link: "",
     image: ""
   }
 ];
 
-
 /* =========================================================
    PROJECT CARD RENDERING
    ========================================================= */
 
 function projectCard(p) {
-
   const thumb = p.image
     ? `<img class="project-thumb" src="${p.image}" alt="${p.name}">`
     : `<div class="project-thumb placeholder">no photo yet</div>`;
@@ -1448,11 +1749,14 @@ function projectCard(p) {
     .map(t => `<span class="project-tag">${t}</span>`)
     .join("");
 
-  const dateHtml = p.date ? `<span class="project-date">${p.date}</span>` : "";
+  const formattedDate = formatDate(p.date);
+  const dateHtml = formattedDate ? `<span class="project-date">${formattedDate}</span>` : "";
 
   const hasLink = p.link && p.link.trim().length > 0;
   const tag = hasLink ? "a" : "div";
-  const linkAttrs = hasLink ? `href="${p.link}" target="_blank" rel="noopener"` : "";
+  const linkAttrs = hasLink
+    ? `href="${p.link}" data-doc-link="${p.link}" data-doc-name="${p.name}"`
+    : "";
   const ctaText = hasLink ? "View Project →" : "In progress — check back soon!";
 
   return `
@@ -1463,11 +1767,8 @@ function projectCard(p) {
       ${thumb}
 
       <div class="project-body">
-
         <div class="project-header">
-          <div class="project-name">
-            ${p.name}
-          </div>
+          <div class="project-name">${p.name}</div>
           ${dateHtml}
         </div>
 
@@ -1475,66 +1776,29 @@ function projectCard(p) {
           ${tags}
         </div>
 
-        <p class="project-desc">
-          ${p.desc}
-        </p>
+        <p class="project-desc">${p.desc}</p>
 
-        <div class="project-cta">
-          ${ctaText}
-        </div>
-
+        <div class="project-cta">${ctaText}</div>
       </div>
     </${tag}>
   `;
 }
 
-
-/* =========================================================
-   TIER RENDERING
-   ========================================================= */
-
 function renderTier(sectionId, num, title, projects) {
-
   const section = document.getElementById(sectionId);
-
   section.innerHTML = `
     <div class="tier-head">
-
-      <span class="tier-num">
-        ${num}
-      </span>
-
-      <span class="tier-title">
-        ${title}
-      </span>
-
+      <span class="tier-num">${num}</span>
+      <span class="tier-title">${title}</span>
     </div>
-
     <div class="project-list">
       ${projects.map(projectCard).join("")}
     </div>
   `;
 }
 
-
-/* =========================================================
-   RENDER BIG + MEDIUM PROJECTS
-   ========================================================= */
-
-renderTier(
-  "tier-big",
-  "01",
-  "Big Projects",
-  BIG_PROJECTS
-);
-
-renderTier(
-  "tier-medium",
-  "02",
-  "Smaller Projects",
-  MEDIUM_PROJECTS
-);
-
+renderTier("tier-big", "01", "Big Projects", BIG_PROJECTS);
+renderTier("tier-medium", "02", "Smaller Projects", MEDIUM_PROJECTS);
 
 /* =========================================================
    RENDER OTHER BUILDS
@@ -1546,46 +1810,38 @@ document.getElementById("other-prints-list").innerHTML =
       ? `<img class="other-build-thumb" src="${item.image}" alt="${item.name}">`
       : `<div class="other-build-thumb placeholder">no photo</div>`;
 
-    const dateHtml = item.date ? `<span class="other-build-date">${item.date}</span>` : "";
+    const formattedDate = formatDate(item.date);
+    const dateHtml = formattedDate ? `<span class="other-build-date">${formattedDate}</span>` : "";
 
     const hasLink = item.link && item.link.trim().length > 0;
     const tag = hasLink ? "a" : "div";
-    const linkAttrs = hasLink ? `href="${item.link}" target="_blank" rel="noopener"` : "";
+    const linkAttrs = hasLink
+      ? `href="${item.link}" data-doc-link="${item.link}" data-doc-name="${item.name}"`
+      : "";
     const ctaText = hasLink ? "View Project →" : "In progress — check back soon!";
 
     return `
       <li>
-
         <${tag}
           class="other-build${hasLink ? "" : " project-wip"}"
           ${linkAttrs}
         >
-
           <div class="other-build-body">
             <div class="other-build-header">
-              <strong>
-                ${item.name}
-              </strong>
+              <strong>${item.name}</strong>
               ${dateHtml}
             </div>
 
-            <p class="other-build-desc">
-              ${item.desc}
-            </p>
+            <p class="other-build-desc">${item.desc}</p>
 
-            <div class="project-cta">
-              ${ctaText}
-            </div>
+            <div class="project-cta">${ctaText}</div>
           </div>
 
           ${thumb}
-
         </${tag}>
-
       </li>
     `;
   }).join("");
-
 
 /* =========================================================
    SCROLL REVEAL
@@ -1593,36 +1849,22 @@ document.getElementById("other-prints-list").innerHTML =
 
 const observer = new IntersectionObserver(
   entries => {
-
     entries.forEach(entry => {
-
       if (entry.isIntersecting) {
-
         entry.target.classList.add("visible");
-
         observer.unobserve(entry.target);
-
       }
-
     });
-
   },
-  {
-    threshold: 0.15
-  }
+  { threshold: 0.15 }
 );
-
-
-/* Observe all animated elements */
 
 document
   .querySelectorAll(".project, .tier-head, .other-build")
   .forEach(el => observer.observe(el));
 
-
 /* =========================================================
-   LIVE STATS — fetched from wordcount.json, generated
-   automatically by the GitHub Action on every push to main
+   LIVE STATS
    ========================================================= */
 
 fetch("wordcount.json")
@@ -1631,27 +1873,180 @@ fetch("wordcount.json")
     document.getElementById("wcNum").textContent = data.words.toLocaleString();
     document.getElementById("docNum").textContent = data.documentations;
   })
-  .catch(() => {
-
-    // Keep "—" placeholders if the file isn't there yet or the fetch fails
-  });
-
+  .catch(() => {});
 
 /* =========================================================
-   ABOUT PAGE — "prints" in layer by layer.
-   ALL the text lives in ABOUT below. Edit it freely:
-   - story:     paragraphs (rewrite these in your own voice!)
-   - workspace: add a photo path in `src` (leave "" for a placeholder box)
-   - process:   the steps of how you make things
-   - tools:     groups of tags
+   PROJECT DOCUMENTATION IN-SITE VIEWER
+   Fetches markdown directly from GitHub and renders it with
+   marked.js without navigating away to a new tab.
+   ========================================================= */
+
+(function setupDocViewer() {
+  const overlay   = document.getElementById("docOverlay");
+  const modalTitle = document.getElementById("docModalTitle");
+  const modalBody  = document.getElementById("docModalBody");
+  const modalGh    = document.getElementById("docModalGithub");
+  const closeBtn   = document.getElementById("docModalClose");
+
+  let activeFetchId = 0;
+
+  function closeDoc() {
+    overlay.classList.remove("open");
+    document.documentElement.classList.remove("doc-open");
+  }
+
+  closeBtn.addEventListener("click", closeDoc);
+
+  overlay.addEventListener("click", e => {
+    if (e.target === overlay) closeDoc();
+  });
+
+  document.addEventListener("keydown", e => {
+    if (overlay.classList.contains("open") && e.key === "Escape") {
+      closeDoc();
+    }
+  });
+
+  async function openDoc(name, ghLink) {
+    if (!ghLink) return;
+
+    modalTitle.textContent = name;
+    modalGh.href = ghLink;
+    modalBody.innerHTML = `
+      <div class="doc-loading">
+        <div class="doc-spinner"></div>
+        <span>Fetching documentation for ${name}...</span>
+      </div>
+    `;
+
+    overlay.classList.add("open");
+    document.documentElement.classList.add("doc-open");
+    closeBtn.focus({ preventScroll: true });
+
+    const thisFetchId = ++activeFetchId;
+
+    // Determine paths from the GitHub link
+    // Examples:
+    // https://github.com/Saarsy/Portfolio/blob/main/DialZero%20(Big%20project)/DialZero%20Documentation.md
+    // https://github.com/Saarsy/Portfolio/tree/main/Home%20Server%20(Big%20Project)
+    let repoSubPath = ghLink.replace(/^https:\/\/github\.com\/[^/]+\/[^/]+\/(blob|tree)\/[^/]+\//, "");
+    repoSubPath = decodeURIComponent(repoSubPath).replace(/\/$/, "");
+
+    let docPathsToTry = [];
+    let baseFolder = "";
+
+    if (repoSubPath.toLowerCase().endsWith(".md")) {
+      docPathsToTry.push(repoSubPath);
+      const lastSlash = repoSubPath.lastIndexOf("/");
+      baseFolder = lastSlash !== -1 ? repoSubPath.slice(0, lastSlash) : "";
+    } else {
+      baseFolder = repoSubPath;
+      docPathsToTry.push(`${repoSubPath}/README.md`);
+      docPathsToTry.push(`${repoSubPath}/${name} Documentation.md`);
+      docPathsToTry.push(`${repoSubPath}/Documentation.md`);
+    }
+
+    let markdown = null;
+    let successfulPath = "";
+
+    for (const relPath of docPathsToTry) {
+      const rawUrl = `https://raw.githubusercontent.com/Saarsy/Portfolio/main/${encodeURI(relPath)}`;
+      const localUrl = relPath;
+
+      // Try local/relative first if on http(s), then fall back to GitHub raw
+      const candidates = window.location.protocol.startsWith("http")
+        ? [localUrl, rawUrl]
+        : [rawUrl, localUrl];
+
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url);
+          if (res.ok) {
+            const txt = await res.text();
+            if (!txt.trim().startsWith("<!DOCTYPE html") && !txt.trim().startsWith("<html")) {
+              markdown = txt;
+              successfulPath = relPath;
+              break;
+            }
+          }
+        } catch (e) {}
+      }
+      if (markdown) break;
+    }
+
+    if (thisFetchId !== activeFetchId) return;
+
+    if (!markdown) {
+      modalBody.innerHTML = `
+        <div class="doc-error">
+          <p>Couldn't load a documentation preview for this project directly.</p>
+          <a href="${ghLink}" target="_blank" rel="noopener">Open project folder on GitHub →</a>
+        </div>
+      `;
+      return;
+    }
+
+    // Parse Markdown using marked.js
+    let html = "";
+    if (window.marked && typeof window.marked.parse === "function") {
+      html = window.marked.parse(markdown);
+    } else {
+      html = `<pre>${markdown}</pre>`;
+    }
+
+    modalBody.innerHTML = html;
+
+    // Resolve relative image paths inside markdown so they load from the project's folder
+    const folderEncoded = encodeURI(baseFolder);
+    modalBody.querySelectorAll("img").forEach(img => {
+      const src = img.getAttribute("src");
+      if (src && !/^https?:\/\/|^\/\//.test(src)) {
+        const clean = src.replace(/^\.\//, "");
+        const localSrc = baseFolder ? `${folderEncoded}/${clean}` : clean;
+        const rawSrc = `https://raw.githubusercontent.com/Saarsy/Portfolio/main/${baseFolder ? folderEncoded + "/" : ""}${clean}`;
+
+        if (window.location.protocol.startsWith("http")) {
+          img.src = localSrc;
+          img.onerror = () => { img.src = rawSrc; };
+        } else {
+          img.src = rawSrc;
+        }
+      }
+    });
+
+    // Make all markdown links open safely in a new tab
+    modalBody.querySelectorAll("a").forEach(a => {
+      a.setAttribute("target", "_blank");
+      a.setAttribute("rel", "noopener noreferrer");
+    });
+  }
+
+  // Intercept clicks on project cards
+  document.addEventListener("click", e => {
+    const cardLink = e.target.closest("[data-doc-link]");
+    if (!cardLink) return;
+
+    // Allow user to Ctrl/Cmd-click or middle-click to open GitHub in a new tab if desired
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+
+    const link = cardLink.getAttribute("data-doc-link");
+    const name = cardLink.getAttribute("data-doc-name") || "Project";
+
+    if (link.includes("github.com")) {
+      e.preventDefault();
+      openDoc(name, link);
+    }
+  });
+})();
+
+/* =========================================================
+   ABOUT PAGE
    ========================================================= */
 
 const ABOUT = {
   title: "Hi, I'm Saarthak.",
-
   intro: "I'm a maker from Kirkland, WA. I design, print, wire up, and sell small products that fix problems I run into.",
 
-  /* EDIT ME: this is a draft based on your DialZero write-up. */
   story: [
     "It usually starts with a small annoyance. DialZero began because changing the volume meant stretching a finger across the keyboard for Fn + F2. I knew I could make something faster and more satisfying, so I built it.",
     "The first attempt is almost never the one that ships. DialZero went through three ways of letting customers configure it (QMK/Vial, a browser-based tool, and finally a plain text file) before one held up. I write down what broke and why, so the next project starts from a better place."
@@ -1661,7 +2056,6 @@ const ABOUT = {
     { src: "", caption: "Design desk" },
     { src: "", caption: "Printers" },
     { src: "", caption: "Assembly & electronics" }
-    /* e.g. { src: "About/Desk.jpeg", caption: "Where I design" } */
   ],
 
   process: [
@@ -1690,12 +2084,11 @@ const ABOUT = {
   }
 };
 
-const ABOUT_LAYERS = 14;  // how many "print layers" the animation uses
-const ABOUT_STEP = 38;    // ms between layers (lower = faster)
-const ABOUT_CLOSE_MS = 340;  // closing: how long the outlines erase before the layers un-print
+const ABOUT_LAYERS = 14;
+const ABOUT_STEP = 38;
+const ABOUT_CLOSE_MS = 340;
 
 (function setupAbout() {
-
   const overlay  = document.getElementById("aboutOverlay");
   const layersEl = document.getElementById("aboutLayers");
   const content  = document.getElementById("aboutContent");
@@ -1711,12 +2104,10 @@ const ABOUT_CLOSE_MS = 340;  // closing: how long the outlines erase before the 
   overlay.style.setProperty("--n", ABOUT_LAYERS);
   overlay.style.setProperty("--step", ABOUT_STEP + "ms");
 
-  /* --- build the print layers --- */
   layersEl.innerHTML = Array.from({ length: ABOUT_LAYERS }, (_, i) =>
     `<div class="about-layer" style="--i:${i};--k:${ABOUT_LAYERS - 1 - i}"></div>`
   ).join("");
 
-  /* --- build the content (every .about-box gets a copper outline) --- */
   const label = (num, text) => `
     <div class="about-box about-label">
       <span class="tier-num">${num}</span>
@@ -1783,9 +2174,6 @@ const ABOUT_CLOSE_MS = 340;  // closing: how long the outlines erase before the 
 
   const boxes = inner.querySelectorAll(".about-box");
 
-  /* --- draw the outline boxes ---
-     Boxes on the first screen are drawn (staggered) as the page opens.
-     Everything below is already drawn, so scrolling has no animation. */
   function startDrawing() {
     stopDrawing();
     const view = content.getBoundingClientRect();
@@ -1810,7 +2198,6 @@ const ABOUT_CLOSE_MS = 340;  // closing: how long the outlines erase before the 
     });
   }
 
-  /* --- open / close --- */
   function isOpen() { return overlay.classList.contains("open"); }
 
   function openAbout() {
@@ -1837,9 +2224,6 @@ const ABOUT_CLOSE_MS = 340;  // closing: how long the outlines erase before the 
     try { history.replaceState(null, "", "#about"); } catch (e) {}
   }
 
-  /* closing happens in two steps:
-     1) outlines erase backwards + text fades (the .closing class)
-     2) the layers un-print top to bottom (removing .open) */
   function closeAbout() {
     if (!isOpen() || closing) return;
     closing = true;
@@ -1890,9 +2274,7 @@ const ABOUT_CLOSE_MS = 340;  // closing: how long the outlines erase before the 
     }
   });
 
-  /* yoursite/#about opens the page directly */
   if (location.hash === "#about") openAbout();
-
 })();
 
 </script>
