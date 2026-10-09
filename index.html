@@ -618,17 +618,15 @@
     transition:
       background-color 0.2s ease,
       color 0.2s ease,
-      box-shadow 0.2s ease,
       transform 0.2s ease;
   }
 
   .hero-links .about-btn::after { display: none; }
 
-  /* soft tinted fill + glow, both derived from the one color */
+  /* soft tinted fill derived from the one color */
   @supports (background: color-mix(in srgb, red 50%, white)) {
     .hero-links .about-btn {
       background: color-mix(in srgb, var(--about-btn) 14%, transparent);
-      box-shadow: 0 0 18px color-mix(in srgb, var(--about-btn) 35%, transparent);
     }
   }
 
