@@ -2,8 +2,8 @@
 - [Why I Built It](#why-i-built-it)
 - [What I Did](#what-i-did)
 - [Learnings](#what-i-learned)
-- [Results](#Results)
-- [Whats Next](#Whats-Next)
+- [Results](#results)
+- [Whats Next](#whats-next)
 # Why I Built It
 Growing up, all my stuff revolved around the cloud, all my pictures, all my files, literally everything, and the price for those just kept going up. How much money would I allow myself and my family to spend on monthly subscriptions? I knew the answer to this: a home server. But I always hesitated to actually get started, as this was an entirely new field for me, in which I had no prior experience. But then, this was my time to build experience, so I took on the daunting task of researching and making a home server. This would turn out a bigger project then I first imagined.
 
@@ -52,4 +52,4 @@ The next steps for me included:
 - Setting up Immich for photos: [Immich Documentation](/Home%20Server%20(Big%20Project)/Immich%20Setup.md)
 - Setting up Home Assistant for my smart home: [Home Assistant Documentation](/Home%20Server%20(Big%20Project)/Home%20Assistant%20Setup.md)
 - Making a Server Laptop holder to mount the server to the wall: [Laptop Wall Mount Documentation](/Home%20Server%20(Big%20Project)/Laptop%20Wall%20Mount%20Documentation.md)
-- Allow access to the server from outside local network: [Taiscale Setup](/Home%20Server%20(Big%20Project)/Tailscale%20Setup.md)
+- Allow access to the server from outside local network: [Tailscale Setup](/Home%20Server%20(Big%20Project)/Tailscale%20Setup.md)
