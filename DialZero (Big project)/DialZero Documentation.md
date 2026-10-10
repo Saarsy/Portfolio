@@ -51,12 +51,12 @@ I probably spent the most time on this, as I wanted it to look really clean and 
 ![Poster](/DialZero%20(Big%20project)/Images/Drawing.jpeg)
 
 ## Code / Customer Config
-After designing it, I knew that I wanted to sell this as a product on Etsy, so I needed to make this as customer-friendly as possible. So I experimented with Vial and QMK configurations, but in the end I wasn't able to do these. Next, I tried to create a website on GitHub that could be opened on any browser and could easily configure the DialZero to whatever the user wanted. But mysteriously, it only worked every second time you plugged in DialZero, which was really frustrating and after spending a few hours on it, I knew that it wasn't gonna work out. I resorted to a CircuitPython script that could be edited by the customer. This was extremely time consuming, as I had to put support for Windows and Mac and make shortcuts so that the customer could easily set their DialZero to do whatever they wanted it to. Code file that I ended up on: [DialZero.py](/DialZero%20(Big%20project)/DialZero.py)
+After designing it, I knew that I wanted to sell this as a product on Etsy, so I needed to make this as customer-friendly as possible. So I experimented with Vial and QMK configurations, but in the end I wasn't able to do these. Next, I developed a browser-based configuration utility that allowed a zero-install experience to remap the DialZero, however, it struggled to consistently keep a connection between plug-ins, which was a major reliability concern, so I had to think of something else. I resorted to a CircuitPython script that could be edited by the customer. This was extremely time consuming, as I had to put support for Windows and Mac and make shortcuts so that the customer could easily set their DialZero to do whatever they wanted it to. Code file that I ended up on: [DialZero.py](/DialZero%20(Big%20project)/DialZero.py)
 
 # Results
 I had a working product that could control all my media, and using it was as seamless as clicking space bar on your keyboard between every word. 
 
-I also had a strong Etsy listing that I have just recently made and already had a custom order for DialZero. On my Etsy shop, looking at the stats, I see that this product gets the most views too averaging around 30 per week.
+I also had a strong Etsy listing that I have just recently made and already had a few custom orders for DialZero. On my Etsy shop, looking at the stats, I see that this product gets the most views too averaging around 30 per week.
 Link to listing: https://makrix.etsy.com/listing/4556098632
 
 ![Poster](/DialZero%20(Big%20project)/Images/SS3.jpeg)

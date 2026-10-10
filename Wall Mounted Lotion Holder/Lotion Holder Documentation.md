@@ -4,14 +4,14 @@ The wall mounted lotion holder is a simple minimalistic holder for your lotion o
 First why didn't I like the old setup?
 - My lotion was always jumping around my room: side table, main table, or on the ground because it fell
 - It limited my desk space and didn’t stay where I wanted it to
-- I had to use two hands to open it (holding the bottom container while twisting the lid) which was twice the struggle I could have it be
-- My siblings just stole it and never put it back
+- Opening the container required two hands (stabilizing the container while untightening the lid), adding extra time and subconscious thought of it being a bigger burden
+- In my household, my sibling often took the container and rarely put it back
 # Design Process
 I wanted the design to be elegant, minimalistic, and functional. I went through a few thought designs and finally thought of this one: a pipe-shaped circular object that held my lotion container perfectly.
 
 So now that I had a vision, I had to think of a way to make it executable; how am I actually going to make this?
 
-My problem was how I was going to get it mounted. I first thought of making it one whole piece and having holes come out of the side for me to drill in the screws. But after starting the design on this, I realized that it would look horrific if there were just two eyeball holes sticking out of the whole thing; it would destroy the minimalist and elegant design I imagined. 
+My problem was how I was going to get it mounted. I first thought of making it one whole piece and having holes come out of the side for me to drill in the screws. But after starting the design on this, I recognized that exposed screw holes on the exterior would ruin the minimalist, clean look, rendering the vision that I had not possible. 
 So finally I landed on the more complex, but best option: I would divide the whole thing into two parts and have one be the mounting plate and one be the piece that holds the lotion. This worked out brilliantly; I had a solid mounting bracket with no holes and a clean, elegant, minimalistic product.
 ![Poster](/Wall%20Mounted%20Lotion%20Holder/Images/Drawing1.jpeg)
 ![Poster](/Wall%20Mounted%20Lotion%20Holder/Images/Drawing2.jpeg)

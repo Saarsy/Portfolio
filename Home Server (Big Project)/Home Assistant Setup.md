@@ -19,7 +19,7 @@ When thinking about this idea, I knew that I needed to mount it to the wall, so 
 ![Poster](/Home%20Server%20(Big%20Project)/Images/Front%20iPad.jpeg)
 ![Poster](/Home%20Server%20(Big%20Project)/Images/SS7.png)
 # The Hard Parts 
-This was supposed to be a quick project but turned out to be the single biggest thing I use the home server for, with this came hard parts (those I can remember at least): 
+Home Assistant transitioned from an experiment to the center of my home, introducing many automations; with this came hurdles:
 ## Feit Electric
 Now mostly all devices were supported by HA, but the ones that weren't were harder to add than the others. For example, Feit Electric wasn't supported fully by the Feit Electric app, so to add the smart plug I had to first connect it via Tuya Smart or Smart Life on my phone and then use some developer mode on one of them to connect them to HA.
 ## NFC Tags

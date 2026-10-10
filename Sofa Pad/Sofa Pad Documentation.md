@@ -17,7 +17,7 @@ After consulting with my dad and bringing my thoughts, my dad felt the same, so 
 - A smooth surface that also looked cool
 Filling out all these requirements would lead to a very good product.
 # Prototype 1
-I had modeled my first version; at that time, I had an A1 Mini, so I had to split the model into 2 parts and then print. The print took around 300 grams and 6 hours to print for both of the parts combined. 
+I had modeled my first version; at that time, I had an A1 Mini, so I had to split the model into 2 parts and then print. The total for the 2 parts’ material usage was about 300 g with a duration of 6 hours to print. It took an hour more for post-processing, so the 2 parts fit together cleanly.
 
 ![Poster](/Sofa%20Pad/Images/Before.jpeg) ![Poster](/Sofa%20Pad/Images/Before%20Top.jpeg)
 
@@ -52,7 +52,7 @@ This prototype consisted of the changes that led it to being sellable: the new b
 ![Poster](/Sofa%20Pad/Images/Drawing.jpeg)
 
 # Results
-I had a polished product rather than an in progress build that my dad used every day for even things other than using his mouse. It felt good seeing something I built getting used every day and becoming a weird conversation starter. This product has also had a few sales on etsy.
+I had a polished product rather than an in progress build that my dad used every day for even things other than using his mouse. Seeing my custom design solve a problem and get used as a daily tool and become a unique conversation starter makes me want to try harder to solve other problems. This product has a few sales on Etsy too.
 # What's Next
 - Use PETG for withstanding higher temperatures
 - Grow Etsy sales for this product
