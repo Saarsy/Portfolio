@@ -25,6 +25,7 @@ Now, for the one of the hard parts. Actually, thinking about how it's gonna work
 - Touch sensor
 - RP2040-zero (Microchip)
 - RGB LED (Visual feedback)
+- 220K Resistors
 
 Visualizing it, I could see a design that incorporated the touch sensor and encoder to make combinations that could make me achieve the list of things that I wanted it to do. I mapped out my thoughts and assigned a combination for the things on my list.
 - Encoder spin = Volume control
