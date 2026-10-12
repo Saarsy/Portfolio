@@ -64,7 +64,7 @@
     padding: 0 48px;
   }
 
-  /* ---------- LIVE STATS (fixed, stays put while scrolling) ---------- */
+  /* ---------- LIVE STATS ---------- */
 
   .live-stats {
     position: fixed;
@@ -585,7 +585,7 @@
   .footer-links .link-btn { color: var(--text-dim); }
   .footer-links .link-btn:hover { color: var(--copper); }
 
-  /* ---------- HOMEPAGE "ABOUT ME" BUTTON ---------- */
+  /* ---------- HOMEPAGE "ABOUT ME" BUTTON (Clean, crisp) ---------- */
 
   .hero-links .about-btn {
     color: var(--about-btn);
@@ -616,7 +616,8 @@
 
   /* ---------- IN-SITE PROJECT DOCUMENTATION MODAL ---------- */
 
-  html.doc-open {
+  html.doc-open,
+  html.cert-open {
     overflow: hidden;
   }
 
@@ -823,7 +824,6 @@
     color: #f19f74;
   }
 
-  /* Specific styling for Table of Contents links */
   .doc-body a.doc-toc-link {
     color: var(--green);
     text-decoration: none;
@@ -836,7 +836,6 @@
     border-color: var(--copper);
   }
 
-  /* In-document markdown links that open within the website modal */
   .doc-body a.doc-internal-link {
     color: var(--copper);
     text-decoration: none;
@@ -968,6 +967,275 @@
     border-radius: 20px;
     text-decoration: none;
     font-size: 13px;
+  }
+
+  /* ---------- CERTIFICATIONS SECTION & MODAL ---------- */
+
+  .cert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .cert-card {
+    background: #0B0D10;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 24px 26px;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      transform 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .cert-card:hover,
+  .cert-card:focus-visible {
+    border-color: var(--copper);
+    background: #10141a;
+    transform: translateY(-2px);
+    outline: none;
+  }
+
+  .cert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .cert-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .cert-title {
+    font-family: 'Fraunces', serif;
+    font-size: 21px;
+    font-weight: 500;
+    color: var(--text);
+    transition: color 0.15s ease;
+  }
+
+  .cert-card:hover .cert-title {
+    color: var(--copper);
+  }
+
+  .cert-issuer {
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .cert-date {
+    font-size: 12.5px;
+    color: var(--text-dim);
+  }
+
+  .cert-desc {
+    margin-top: 10px;
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.65;
+    max-width: 60ch;
+  }
+
+  .cert-footer {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--copper);
+  }
+
+  /* In-site Certificate Preview Overlay (z-index 250 sits above About page 100) */
+  .cert-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 250;
+    background: rgba(10, 14, 20, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(16px, 3vw, 40px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+
+  .cert-overlay.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cert-modal {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    width: 100%;
+    max-width: 860px;
+    max-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+    transform: translateY(16px) scale(0.98);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+  }
+
+  .cert-overlay.open .cert-modal {
+    transform: translateY(0) scale(1);
+  }
+
+  .cert-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 26px;
+    border-bottom: 1px solid var(--line);
+    background: #14171B;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .cert-modal-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .cert-modal-badge {
+    color: var(--green);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .cert-modal-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(19px, 2.8vw, 24px);
+    font-weight: 500;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .cert-modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cert-verify-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--copper);
+    color: var(--bg);
+    font-weight: 600;
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 7px 16px;
+    text-decoration: none;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+  }
+
+  .cert-verify-btn:hover {
+    background: #f19f74;
+    transform: translateY(-1px);
+  }
+
+  .cert-close-btn {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    font: inherit;
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .cert-close-btn:hover,
+  .cert-close-btn:focus-visible {
+    color: var(--copper);
+    border-color: var(--copper);
+    outline: none;
+  }
+
+  .cert-modal-body {
+    padding: clamp(20px, 3.5vw, 36px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .cert-img-wrap {
+    width: 100%;
+    max-width: 760px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    background: #0B0D10;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cert-img-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .cert-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border: 1px dashed var(--line);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    text-align: center;
+    color: var(--text-dim);
+    gap: 10px;
+    font-size: 13px;
+  }
+
+  .cert-placeholder span {
+    color: var(--copper);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .cert-bottom-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .cert-bottom-action a {
+    color: var(--copper);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-size: 13.5px;
+  }
+
+  .cert-bottom-action a:hover {
+    color: #f19f74;
   }
 
   /* ---------- ABOUT PAGE: "printed" layer by layer ---------- */
@@ -1517,25 +1785,30 @@
     }
 
     /* Modal compactness on phone */
-    .doc-overlay {
+    .doc-overlay,
+    .cert-overlay {
       padding: 10px;
     }
 
-    .doc-modal {
+    .doc-modal,
+    .cert-modal {
       max-height: 94vh;
       border-radius: 6px;
     }
 
-    .doc-header {
+    .doc-header,
+    .cert-modal-header {
       padding: 14px 16px;
       gap: 10px;
     }
 
-    .doc-badge {
+    .doc-badge,
+    .cert-modal-badge {
       font-size: 9.5px;
     }
 
-    .doc-title {
+    .doc-title,
+    .cert-modal-title {
       font-size: 18px;
     }
 
@@ -1550,7 +1823,9 @@
     }
 
     .doc-gh-btn,
-    .doc-close-btn {
+    .doc-close-btn,
+    .cert-verify-btn,
+    .cert-close-btn {
       font-size: 11px;
       padding: 4px 10px;
     }
@@ -1599,6 +1874,23 @@
 
     .doc-body th, .doc-body td {
       padding: 6px 8px;
+    }
+
+    .cert-card {
+      padding: 16px 16px;
+    }
+
+    .cert-title {
+      font-size: 18px;
+    }
+
+    .cert-desc {
+      font-size: 12px;
+    }
+
+    .cert-modal-body {
+      padding: 16px 14px;
+      gap: 14px;
     }
 
     /* About section compactness on phone */
@@ -1662,7 +1954,6 @@
       font-size: 12.5px;
     }
 
-    /* Single doc-counter pill on phone */
     .stat-pill {
       font-size: 11px;
       padding: 5px 11px;
@@ -1789,6 +2080,34 @@
       <div class="doc-loading">
         <div class="doc-spinner"></div>
         <span>Fetching documentation from GitHub...</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IN-SITE CERTIFICATE PREVIEW MODAL -->
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-modal="true" aria-labelledby="certModalTitle" tabindex="-1">
+  <div class="cert-modal">
+    <div class="cert-modal-header">
+      <div class="cert-modal-info">
+        <span class="cert-modal-badge" id="certModalIssuer">Certification</span>
+        <h2 class="cert-modal-title" id="certModalTitle">Certificate Preview</h2>
+      </div>
+      <div class="cert-modal-actions">
+        <a href="#" class="cert-verify-btn" id="certModalVerifyBtn" target="_blank" rel="noopener">Verify Credential ↗</a>
+        <button type="button" class="cert-close-btn" id="certModalClose" aria-label="Close certificate preview">Close ✕</button>
+      </div>
+    </div>
+    <div class="cert-modal-body">
+      <div class="cert-img-wrap" id="certImgWrap">
+        <img id="certModalImg" src="" alt="Certificate Preview" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/Saarsy/Portfolio/main/' + encodeURI(decodeURI(this.getAttribute('src')))">
+      </div>
+      <div class="cert-placeholder" id="certPlaceholder" style="display: none;">
+        <span>Certificate Image Placeholder</span>
+        <p>No preview image found. Add an image path to <code>image: "..."</code> in <code>ABOUT.certifications</code>.</p>
+      </div>
+      <div class="cert-bottom-action">
+        <a href="#" id="certBottomVerifyLink" target="_blank" rel="noopener">Open official verification / credential page ↗</a>
       </div>
     </div>
   </div>
@@ -2305,12 +2624,11 @@ fetch("wordcount.json")
       heading.id = slug;
     });
 
-    // --- 2. HANDLE IN-PAGE TOC (#) AND IN-SITE (.md) LINKS (SAME & CROSS-PROJECT) ---
+    // --- 2. HANDLE IN-PAGE TOC (#) AND IN-SITE (.md) LINKS ---
     modalBody.querySelectorAll("a").forEach(a => {
       const href = a.getAttribute("href");
       if (!href) return;
 
-      // A: Table of Contents anchor link (#section)
       if (href.startsWith("#")) {
         a.removeAttribute("target");
         a.removeAttribute("rel");
@@ -2327,7 +2645,6 @@ fetch("wordcount.json")
         return;
       }
 
-      // B: Link to another documentation (.md) file -> KEEP IN MODAL!
       let rawHref = href.split("?")[0];
       const hashPart = rawHref.includes("#") ? rawHref.split("#")[1] : null;
       let cleanHref = rawHref.split("#")[0];
@@ -2340,7 +2657,6 @@ fetch("wordcount.json")
         a.addEventListener("click", e => {
           e.preventDefault();
 
-          // Strip GitHub prefix if it's a full URL
           let repoPath = cleanHref.replace(/^https:\/\/github\.com\/[^/]+\/[^/]+\/(blob|tree)\/[^/]+\//, "");
           const isRepoRoot = href.startsWith("/") || href.startsWith("../") || href.includes("github.com");
 
@@ -2350,7 +2666,6 @@ fetch("wordcount.json")
           const allProjects = [...BIG_PROJECTS, ...MEDIUM_PROJECTS, ...OTHER_PRINTS];
           const decodedBase = baseFolder ? decodeURIComponent(baseFolder).replace(/\/$/, "") : "";
 
-          // Check if path already starts with any known project root folder
           const startsWithKnownFolder = allProjects.some(p => {
             const pFolder = getSubfolder(p.link || (p.docs && p.docs[0] ? p.docs[0].link : ""));
             return pFolder && clean.toLowerCase().startsWith(pFolder.toLowerCase());
@@ -2363,7 +2678,7 @@ fetch("wordcount.json")
 
           const targetFileName = clean.split("/").pop().toLowerCase();
 
-          // Check 1: Does this match one of the tabs in currentProject.docs?
+          // Check if link matches a tab in the current project
           let matchedTabBtn = null;
           if (currentProject && currentProject.docs) {
             currentProject.docs.forEach((doc, idx) => {
@@ -2386,7 +2701,7 @@ fetch("wordcount.json")
             return;
           }
 
-          // Check 2: Does this point to a DIFFERENT project in the portfolio?
+          // Check if link matches another project
           const matchedProject = allProjects.find(p => {
             const pFolder = getSubfolder(p.link || (p.docs && p.docs[0] ? p.docs[0].link : ""));
             if (pFolder && fullRelPath.toLowerCase().startsWith(pFolder.toLowerCase())) return true;
@@ -2397,7 +2712,6 @@ fetch("wordcount.json")
           });
 
           if (matchedProject && matchedProject !== currentProject) {
-            // Switch project context seamlessly!
             openDocProject(matchedProject, fullRelPath);
             if (hashPart) {
               setTimeout(() => {
@@ -2408,7 +2722,7 @@ fetch("wordcount.json")
             return;
           }
 
-          // Check 3: Load the standalone markdown file directly
+          // Load standalone markdown
           const targetGhLink = `https://github.com/Saarsy/Portfolio/blob/main/${encodeURI(fullRelPath)}`;
           const targetBase = fullRelPath.includes("/") ? fullRelPath.slice(0, fullRelPath.lastIndexOf("/")) : baseFolder;
           const targetTitle = clean.split("/").pop().replace(/\.md$/i, "");
@@ -2428,7 +2742,6 @@ fetch("wordcount.json")
         return;
       }
 
-      // C: Standard external link -> Open in new tab
       a.setAttribute("target", "_blank");
       a.setAttribute("rel", "noopener noreferrer");
     });
@@ -2525,7 +2838,7 @@ fetch("wordcount.json")
 })();
 
 /* =========================================================
-   ABOUT PAGE
+   ABOUT PAGE DATA
    ========================================================= */
 
 const ABOUT = {
@@ -2535,6 +2848,20 @@ const ABOUT = {
   story: [
     "It usually starts with a small annoyance. DialZero began because changing the volume meant stretching a finger across the keyboard for Fn + F2. I knew I could make something faster and more satisfying, so I built it.",
     "The first attempt is almost never the one that ships. DialZero went through three ways of letting customers configure it (QMK/Vial, a browser-based tool, and finally a plain text file) before one held up. I write down what broke and why, so the next project starts from a better place."
+  ],
+
+  // 02: Certifications section (Between 'Why I Build' and 'Where I Work')
+  certifications: [
+    {
+      title: "Onshape Certified Associate",
+      issuer: "PTC / Onshape",
+      date: "2024",
+      desc: "Industry-standard certification validating competency in parametric 3D CAD modeling, multi-part design, mate connectors, assemblies, and engineering drawings.",
+      // Put your certificate image file path here (e.g. "Website Images/Onshape-Cert.png"):
+      image: "Website%20Images/Onshape-Cert.png",
+      // Link to your verification page or credential badge:
+      verifyUrl: "https://www.credly.com"
+    }
   ],
 
   workspace: [
@@ -2580,6 +2907,17 @@ const ABOUT_CLOSE_MS = 340;
   const inner    = document.getElementById("aboutInner");
   const closeBtn = document.getElementById("aboutClose");
 
+  // Certificate Preview Elements
+  const certOverlay        = document.getElementById("certOverlay");
+  const certModalTitle     = document.getElementById("certModalTitle");
+  const certModalIssuer    = document.getElementById("certModalIssuer");
+  const certModalImg       = document.getElementById("certModalImg");
+  const certImgWrap        = document.getElementById("certImgWrap");
+  const certPlaceholder    = document.getElementById("certPlaceholder");
+  const certModalVerifyBtn = document.getElementById("certModalVerifyBtn");
+  const certBottomVerify   = document.getElementById("certBottomVerifyLink");
+  const certModalClose     = document.getElementById("certModalClose");
+
   let lastFocus = null;
   let printedTimer = null;
   let drawTimer = null;
@@ -2600,6 +2938,27 @@ const ABOUT_CLOSE_MS = 340;
     </div>`;
 
   const story = ABOUT.story.map(p => `<p>${p}</p>`).join("");
+
+  // Build Certifications Cards
+  const certsHtml = `
+    <div class="cert-list">
+      ${ABOUT.certifications.map((c, idx) => `
+        <div class="cert-card" role="button" tabindex="0" data-cert-index="${idx}">
+          <div class="cert-header">
+            <div class="cert-title-group">
+              <h3 class="cert-title">${c.title}</h3>
+              <span class="cert-issuer">${c.issuer}</span>
+            </div>
+            ${c.date ? `<span class="cert-date">${c.date}</span>` : ""}
+          </div>
+          <p class="cert-desc">${c.desc}</p>
+          <div class="cert-footer">
+            <span>Preview Certificate →</span>
+          </div>
+        </div>
+      `).join("")}
+    </div>
+  `;
 
   const photos = ABOUT.workspace.map(w => {
     const media = w.src
@@ -2625,6 +2984,7 @@ const ABOUT_CLOSE_MS = 340;
       </div>
     </div>`).join("");
 
+  // As requested: Certifications is placed between "Why I Build" and "Where I Work"
   inner.innerHTML = `
     <div class="about-box about-hero">
       <h2 class="about-title" id="aboutTitle">${ABOUT.title}</h2>
@@ -2637,17 +2997,22 @@ const ABOUT_CLOSE_MS = 340;
     </section>
 
     <section class="about-section">
-      ${label("02", "Where I Work")}
+      ${label("02", "Certifications")}
+      <div class="about-box about-card">${certsHtml}</div>
+    </section>
+
+    <section class="about-section">
+      ${label("03", "Where I Work")}
       <div class="about-box about-card about-photos">${photos}</div>
     </section>
 
     <section class="about-section">
-      ${label("03", "How I Work")}
+      ${label("04", "How I Work")}
       <ol class="about-box about-card about-steps">${steps}</ol>
     </section>
 
     <section class="about-section">
-      ${label("04", "Tools & Credentials")}
+      ${label("05", "Tools & Credentials")}
       <div class="about-box about-card">${tools}</div>
     </section>
 
@@ -2658,6 +3023,60 @@ const ABOUT_CLOSE_MS = 340;
   `;
 
   const boxes = inner.querySelectorAll(".about-box");
+
+  /* --- Certificate Preview Modal handlers --- */
+  function openCertPreview(cert) {
+    certModalTitle.textContent = cert.title;
+    certModalIssuer.textContent = cert.issuer || "Certification";
+
+    if (cert.image && cert.image.trim().length > 0) {
+      certModalImg.src = cert.image;
+      certImgWrap.style.display = "flex";
+      certPlaceholder.style.display = "none";
+    } else {
+      certImgWrap.style.display = "none";
+      certPlaceholder.style.display = "flex";
+    }
+
+    if (cert.verifyUrl && cert.verifyUrl.trim().length > 0) {
+      certModalVerifyBtn.href = cert.verifyUrl;
+      certModalVerifyBtn.style.display = "inline-flex";
+      certBottomVerify.href = cert.verifyUrl;
+      certBottomVerify.style.display = "inline";
+    } else {
+      certModalVerifyBtn.style.display = "none";
+      certBottomVerify.style.display = "none";
+    }
+
+    certOverlay.classList.add("open");
+    document.documentElement.classList.add("cert-open");
+    certModalClose.focus({ preventScroll: true });
+  }
+
+  function closeCertPreview() {
+    certOverlay.classList.remove("open");
+    document.documentElement.classList.remove("cert-open");
+  }
+
+  certModalClose.addEventListener("click", closeCertPreview);
+  certOverlay.addEventListener("click", e => {
+    if (e.target === certOverlay) closeCertPreview();
+  });
+
+  // Attach click & enter key to cert cards
+  inner.querySelectorAll(".cert-card").forEach(card => {
+    const idx = parseInt(card.getAttribute("data-cert-index"), 10);
+    const cert = ABOUT.certifications[idx];
+    if (!cert) return;
+
+    card.addEventListener("click", () => openCertPreview(cert));
+    card.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openCertPreview(cert);
+      }
+    });
+  });
 
   function startDrawing() {
     stopDrawing();
@@ -2736,6 +3155,13 @@ const ABOUT_CLOSE_MS = 340;
   closeBtn.addEventListener("click", closeAbout);
 
   document.addEventListener("keydown", e => {
+    // If cert preview is open, close only the preview on Escape
+    if (certOverlay.classList.contains("open") && e.key === "Escape") {
+      closeCertPreview();
+      e.stopPropagation();
+      return;
+    }
+
     if (!isOpen()) return;
 
     if (e.key === "Escape") {
@@ -2743,7 +3169,7 @@ const ABOUT_CLOSE_MS = 340;
       return;
     }
 
-    if (e.key === "Tab") {
+    if (e.key === "Tab" && !certOverlay.classList.contains("open")) {
       const f = overlay.querySelectorAll("a[href], button");
       if (!f.length) return;
       const first = f[0];
