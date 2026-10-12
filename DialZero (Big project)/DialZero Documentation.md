@@ -34,6 +34,7 @@ Visualizing it, I could see a design that incorporated the touch sensor and enco
 - Double touch = RGB LED on/off
 
 ![Poster](/DialZero%20(Big%20project)/Images/Wiring.jpeg)
+![Poster](/DialZero%20(Big%20project)/Images/Wiring%20Schematic.jpeg)
 
 
 # The Hard Parts 
