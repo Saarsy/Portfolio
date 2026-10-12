@@ -585,7 +585,7 @@
   .footer-links .link-btn { color: var(--text-dim); }
   .footer-links .link-btn:hover { color: var(--copper); }
 
-  /* ---------- HOMEPAGE "ABOUT ME" BUTTON (Clean, without blurry glow) ---------- */
+  /* ---------- HOMEPAGE "ABOUT ME" BUTTON ---------- */
 
   .hero-links .about-btn {
     color: var(--about-btn);
@@ -823,6 +823,7 @@
     color: #f19f74;
   }
 
+  /* Specific styling for Table of Contents links */
   .doc-body a.doc-toc-link {
     color: var(--green);
     text-decoration: none;
@@ -833,6 +834,19 @@
   .doc-body a.doc-toc-link:hover {
     color: var(--copper);
     border-color: var(--copper);
+  }
+
+  /* In-document markdown links that open within the website modal */
+  .doc-body a.doc-internal-link {
+    color: var(--copper);
+    text-decoration: none;
+    border-bottom: 1px solid var(--copper);
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .doc-body a.doc-internal-link:hover {
+    color: #f19f74;
+    border-bottom-color: #f19f74;
   }
 
   .doc-body code {
@@ -1703,7 +1717,7 @@
 
 <body>
 
-<!-- LIVE STATS: Documentations pill only (Word Count removed) -->
+<!-- LIVE STATS: Documentations counter only -->
 <div class="live-stats" id="liveStats">
   <div class="stat-pill">
     <span class="stat-label">Documentations</span>
@@ -2169,6 +2183,9 @@ fetch("wordcount.json")
 
 /* =========================================================
    PROJECT DOCUMENTATION IN-SITE VIEWER
+   - Automatic image resolving (local + raw fallback)
+   - In-page Table of Contents smooth scrolling
+   - Same-project tab switching & Cross-project doc navigation
    ========================================================= */
 
 (function setupDocViewer() {
@@ -2180,6 +2197,7 @@ fetch("wordcount.json")
   const closeBtn   = document.getElementById("docModalClose");
 
   let activeFetchId = 0;
+  let currentProject = null;
 
   function closeDoc() {
     overlay.classList.remove("open");
@@ -2287,11 +2305,12 @@ fetch("wordcount.json")
       heading.id = slug;
     });
 
-    // --- 2. FIX TABLE OF CONTENTS ANCHOR LINKS (PREVENT OPENING NEW TABS) ---
+    // --- 2. HANDLE IN-PAGE TOC (#) AND IN-SITE (.md) LINKS (SAME & CROSS-PROJECT) ---
     modalBody.querySelectorAll("a").forEach(a => {
       const href = a.getAttribute("href");
       if (!href) return;
 
+      // A: Table of Contents anchor link (#section)
       if (href.startsWith("#")) {
         a.removeAttribute("target");
         a.removeAttribute("rel");
@@ -2305,13 +2324,116 @@ fetch("wordcount.json")
             targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
           }
         });
-      } else {
-        a.setAttribute("target", "_blank");
-        a.setAttribute("rel", "noopener noreferrer");
+        return;
       }
+
+      // B: Link to another documentation (.md) file -> KEEP IN MODAL!
+      let rawHref = href.split("?")[0];
+      const hashPart = rawHref.includes("#") ? rawHref.split("#")[1] : null;
+      let cleanHref = rawHref.split("#")[0];
+
+      if (cleanHref.toLowerCase().endsWith(".md")) {
+        a.removeAttribute("target");
+        a.removeAttribute("rel");
+        a.classList.add("doc-internal-link");
+
+        a.addEventListener("click", e => {
+          e.preventDefault();
+
+          // Strip GitHub prefix if it's a full URL
+          let repoPath = cleanHref.replace(/^https:\/\/github\.com\/[^/]+\/[^/]+\/(blob|tree)\/[^/]+\//, "");
+          const isRepoRoot = href.startsWith("/") || href.startsWith("../") || href.includes("github.com");
+
+          let clean = repoPath.replace(/^\/+/, "").replace(/^(\.\.\/)+/, "").replace(/^\.\//, "");
+          try { clean = decodeURIComponent(clean); } catch(err) {}
+
+          const allProjects = [...BIG_PROJECTS, ...MEDIUM_PROJECTS, ...OTHER_PRINTS];
+          const decodedBase = baseFolder ? decodeURIComponent(baseFolder).replace(/\/$/, "") : "";
+
+          // Check if path already starts with any known project root folder
+          const startsWithKnownFolder = allProjects.some(p => {
+            const pFolder = getSubfolder(p.link || (p.docs && p.docs[0] ? p.docs[0].link : ""));
+            return pFolder && clean.toLowerCase().startsWith(pFolder.toLowerCase());
+          });
+
+          let fullRelPath = clean;
+          if (!isRepoRoot && !startsWithKnownFolder && decodedBase && !clean.toLowerCase().startsWith(decodedBase.toLowerCase())) {
+            fullRelPath = `${decodedBase}/${clean}`;
+          }
+
+          const targetFileName = clean.split("/").pop().toLowerCase();
+
+          // Check 1: Does this match one of the tabs in currentProject.docs?
+          let matchedTabBtn = null;
+          if (currentProject && currentProject.docs) {
+            currentProject.docs.forEach((doc, idx) => {
+              const docFile = decodeURIComponent(doc.link).split("/").pop().toLowerCase();
+              if (docFile === targetFileName) {
+                const buttons = modalTabs.querySelectorAll(".doc-tab-btn");
+                if (buttons[idx]) matchedTabBtn = buttons[idx];
+              }
+            });
+          }
+
+          if (matchedTabBtn) {
+            matchedTabBtn.click();
+            if (hashPart) {
+              setTimeout(() => {
+                const targetEl = document.getElementById(hashPart.toLowerCase()) || modalBody.querySelector(`[id="${hashPart.toLowerCase()}"]`);
+                if (targetEl) targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+              }, 250);
+            }
+            return;
+          }
+
+          // Check 2: Does this point to a DIFFERENT project in the portfolio?
+          const matchedProject = allProjects.find(p => {
+            const pFolder = getSubfolder(p.link || (p.docs && p.docs[0] ? p.docs[0].link : ""));
+            if (pFolder && fullRelPath.toLowerCase().startsWith(pFolder.toLowerCase())) return true;
+            if (p.docs) {
+              return p.docs.some(d => decodeURIComponent(d.link).toLowerCase().includes(targetFileName));
+            }
+            return p.link && decodeURIComponent(p.link).toLowerCase().includes(targetFileName);
+          });
+
+          if (matchedProject && matchedProject !== currentProject) {
+            // Switch project context seamlessly!
+            openDocProject(matchedProject, fullRelPath);
+            if (hashPart) {
+              setTimeout(() => {
+                const targetEl = document.getElementById(hashPart.toLowerCase()) || modalBody.querySelector(`[id="${hashPart.toLowerCase()}"]`);
+                if (targetEl) targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+              }, 300);
+            }
+            return;
+          }
+
+          // Check 3: Load the standalone markdown file directly
+          const targetGhLink = `https://github.com/Saarsy/Portfolio/blob/main/${encodeURI(fullRelPath)}`;
+          const targetBase = fullRelPath.includes("/") ? fullRelPath.slice(0, fullRelPath.lastIndexOf("/")) : baseFolder;
+          const targetTitle = clean.split("/").pop().replace(/\.md$/i, "");
+
+          modalTabs.querySelectorAll(".doc-tab-btn").forEach(b => b.classList.remove("active"));
+          modalGh.href = targetGhLink;
+
+          loadMarkdownContent(targetGhLink, targetBase, targetTitle).then(() => {
+            if (hashPart) {
+              setTimeout(() => {
+                const targetEl = document.getElementById(hashPart.toLowerCase()) || modalBody.querySelector(`[id="${hashPart.toLowerCase()}"]`);
+                if (targetEl) targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+              }, 100);
+            }
+          });
+        });
+        return;
+      }
+
+      // C: Standard external link -> Open in new tab
+      a.setAttribute("target", "_blank");
+      a.setAttribute("rel", "noopener noreferrer");
     });
 
-    // --- 3. FIX RELATIVE & ABSOLUTE REPO IMAGES (NO MARKDOWN CHANGES NEEDED) ---
+    // --- 3. FIX RELATIVE & ABSOLUTE REPO IMAGES AUTOMATICALLY ---
     modalBody.querySelectorAll("img").forEach(img => {
       let src = img.getAttribute("src");
       if (!src) return;
@@ -2346,7 +2468,8 @@ fetch("wordcount.json")
     });
   }
 
-  window.openDocProject = function(project) {
+  window.openDocProject = function(project, specificFilePath) {
+    currentProject = project;
     modalTitle.textContent = project.name;
     modalGh.href = project.link || (project.docs && project.docs[0] ? project.docs[0].link : "https://github.com/Saarsy/Portfolio");
     modalTabs.innerHTML = "";
@@ -2354,10 +2477,17 @@ fetch("wordcount.json")
     const baseFolder = getSubfolder(project.link || (project.docs && project.docs[0].link) || "");
 
     if (project.docs && project.docs.length > 1) {
+      let activeDocIdx = 0;
+      if (specificFilePath) {
+        const specificName = specificFilePath.split("/").pop().toLowerCase();
+        const foundIdx = project.docs.findIndex(d => decodeURIComponent(d.link).toLowerCase().includes(specificName));
+        if (foundIdx !== -1) activeDocIdx = foundIdx;
+      }
+
       project.docs.forEach((doc, idx) => {
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.className = `doc-tab-btn ${idx === 0 ? "active" : ""}`;
+        btn.className = `doc-tab-btn ${idx === activeDocIdx ? "active" : ""}`;
         btn.textContent = doc.title;
         btn.addEventListener("click", () => {
           modalTabs.querySelectorAll(".doc-tab-btn").forEach(b => b.classList.remove("active"));
@@ -2367,7 +2497,7 @@ fetch("wordcount.json")
         });
         modalTabs.appendChild(btn);
       });
-      loadMarkdownContent(project.docs[0].link, baseFolder, project.name);
+      loadMarkdownContent(project.docs[activeDocIdx].link, baseFolder, project.name);
     } else {
       const activeLink = (project.docs && project.docs[0]) ? project.docs[0].link : project.link;
       loadMarkdownContent(activeLink, baseFolder, project.name);
