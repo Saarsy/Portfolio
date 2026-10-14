@@ -719,7 +719,7 @@
 
   .timeline-view.is-active .timeline-line {
     /* Linear timing keeps each text reveal synchronized with the line's position. */
-    animation: timelineLineDraw 4s linear 80ms both;
+    animation: timelineLineDraw 2s linear 80ms both;
   }
 
   @keyframes timelineLineDraw {
@@ -2794,7 +2794,7 @@ document
     jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12
   };
   const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const lineDrawDuration = 4000;
+  const lineDrawDuration = 2000;
   const lineStartDelay = reducedMotion ? 0 : 80;
   let active = false;
   let records = [];
