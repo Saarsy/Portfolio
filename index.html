@@ -587,6 +587,3571 @@
 
   /* ---------- HOMEPAGE "ABOUT ME" BUTTON (Clean, crisp) ---------- */
 
+  .hero-links .about-btn,
+  .hero-links .timeline-btn {
+    color: var(--about-btn);
+    border: 1px solid var(--about-btn);
+    border-radius: 20px;
+    padding: 8px 20px;
+    line-height: 1.2;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  /* Keep Timeline View secondary so About Me remains the main action. */
+  .hero-links .timeline-btn {
+    font-size: 12.5px;
+    padding: 6px 16px;
+  }
+
+  .hero-links .about-btn::after,
+  .hero-links .timeline-btn::after { display: none; }
+
+  @supports (background: color-mix(in srgb, red 50%, white)) {
+    .hero-links .about-btn,
+    .hero-links .timeline-btn {
+      background: color-mix(in srgb, var(--about-btn) 14%, transparent);
+    }
+  }
+
+  .hero-links .about-btn:hover,
+  .hero-links .about-btn:focus-visible,
+  .hero-links .timeline-btn:hover,
+  .hero-links .timeline-btn:focus-visible,
+  .hero-links .timeline-btn[aria-pressed="true"] {
+    background: var(--about-btn);
+    color: var(--bg);
+    transform: translateY(-1px);
+  }
+
+  .hero-links .about-btn:focus-visible,
+  .hero-links .timeline-btn:focus-visible {
+    outline: 2px solid var(--copper);
+    outline-offset: 3px;
+  }
+
+  .hero-links .timeline-btn:disabled {
+    cursor: wait;
+    opacity: 0.8;
+  }
+
+  /* ---------- PROJECT TIMELINE VIEW ---------- */
+
+  .timeline-view {
+    display: none;
+    position: relative;
+    isolation: isolate;
+    padding: 58px 0 84px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  body.timeline-mode .timeline-view { display: block; }
+
+  body.timeline-mode #tier-big,
+  body.timeline-mode #tier-medium,
+  body.timeline-mode .other-prints { display: none; }
+
+  .timeline-head {
+    position: relative;
+    z-index: 1;
+    padding-left: 48px;
+    margin-bottom: 38px;
+  }
+
+  .timeline-kicker {
+    color: var(--green);
+    font-size: clamp(15px, 1.4vw, 17px);
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    line-height: 1.35;
+    margin-bottom: 9px;
+  }
+
+  .timeline-sweep {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .timeline-sweep::before,
+  .timeline-sweep::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--copper));
+    transform: scaleX(0);
+    transition: transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .timeline-sweep::before {
+    left: 0;
+    transform-origin: left center;
+  }
+
+  .timeline-sweep::after {
+    right: 0;
+    transform-origin: right center;
+    background: linear-gradient(270deg, transparent, var(--copper));
+  }
+
+  .timeline-view.is-active .timeline-sweep::before,
+  .timeline-view.is-active .timeline-sweep::after { transform: scaleX(1); }
+
+  .timeline-line {
+    position: absolute;
+    z-index: 0;
+    top: 124px;
+    bottom: 82px;
+    left: 15px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--copper), color-mix(in srgb, var(--copper) 18%, transparent));
+    transform: scaleY(0);
+    transform-origin: top center;
+    opacity: 0.95;
+  }
+
+  .timeline-view.is-active .timeline-line {
+    /* Linear timing keeps each text reveal synchronized with the line's position. */
+    animation: timelineLineDraw 4s linear 80ms both;
+  }
+
+  @keyframes timelineLineDraw {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
+
+  .timeline-list { position: relative; z-index: 1; }
+
+  /* Reveal each date and project content as the copper line reaches its entry. */
+  .timeline-entry-meta,
+  body.timeline-mode .timeline-entry .project-name,
+  body.timeline-mode .timeline-entry .project-tags,
+  body.timeline-mode .timeline-entry .project-desc,
+  body.timeline-mode .timeline-entry .project-cta,
+  body.timeline-mode .timeline-entry .other-build-header,
+  body.timeline-mode .timeline-entry .other-build-desc {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+
+  .timeline-view.is-active .timeline-entry-meta,
+  body.timeline-mode .timeline-view.is-active .timeline-entry .project-name,
+  body.timeline-mode .timeline-view.is-active .timeline-entry .project-tags,
+  body.timeline-mode .timeline-view.is-active .timeline-entry .project-desc,
+  body.timeline-mode .timeline-view.is-active .timeline-entry .project-cta,
+  body.timeline-mode .timeline-view.is-active .timeline-entry .other-build-header,
+  body.timeline-mode .timeline-view.is-active .timeline-entry .other-build-desc {
+    animation: timelineContentReveal 520ms cubic-bezier(0.22, 1, 0.36, 1) var(--content-delay, 80ms) both;
+  }
+
+  @keyframes timelineContentReveal {
+    from { opacity: 0; clip-path: inset(0 0 100% 0); }
+    to { opacity: 1; clip-path: inset(0 0 0 0); }
+  }
+
+  .timeline-entry {
+    position: relative;
+    padding-left: 48px;
+    margin-bottom: 26px;
+    min-width: 0;
+  }
+
+  .timeline-entry:last-child { margin-bottom: 0; }
+
+  .timeline-entry::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid var(--copper);
+    background: var(--bg);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--copper) 9%, transparent);
+    transform: scale(0.25);
+    opacity: 0;
+    transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1), opacity 220ms ease;
+    transition-delay: var(--entry-delay, 0ms);
+  }
+
+  .timeline-view.is-active .timeline-entry::before {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .timeline-entry-meta {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 10px 2px;
+    min-height: 18px;
+  }
+
+  .timeline-entry-date {
+    color: var(--copper);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .timeline-entry-type {
+    color: var(--text-dim);
+    font-size: 10px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1px 8px;
+  }
+
+  body.timeline-mode .timeline-entry .project {
+    grid-template-columns: 112px minmax(0, 1fr);
+    align-items: center;
+    gap: 20px;
+    padding: 16px 20px;
+    opacity: 1;
+    transform: none;
+  }
+
+  body.timeline-mode .timeline-entry .project-thumb {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  body.timeline-mode .timeline-entry .project-name { font-size: 23px; }
+  body.timeline-mode .timeline-entry .project-date { display: none; }
+  body.timeline-mode .timeline-entry .project-tags { gap: 6px; margin-top: 6px; }
+  body.timeline-mode .timeline-entry .project-tag { font-size: 10px; padding: 2px 9px; }
+  body.timeline-mode .timeline-entry .project-desc { max-width: none; margin-top: 8px; font-size: 13px; line-height: 1.6; }
+  body.timeline-mode .timeline-entry .project-cta { padding-top: 8px; font-size: 11px; }
+
+  body.timeline-mode .timeline-entry .other-build {
+    align-items: center;
+    gap: 20px;
+    padding: 16px 20px;
+    opacity: 1;
+    transform: none;
+  }
+
+  body.timeline-mode .timeline-entry .other-build strong { font-size: 23px; }
+  body.timeline-mode .timeline-entry .other-build-date { display: none; }
+  body.timeline-mode .timeline-entry .other-build-desc { max-width: none; margin-top: 8px; font-size: 13px; line-height: 1.6; }
+  body.timeline-mode .timeline-entry .other-build .project-cta { margin-top: 8px; font-size: 11px; }
+  body.timeline-mode .timeline-entry .other-build-thumb { width: 112px; }
+
+  .timeline-empty-date { color: var(--text-dim); font-style: italic; }
+
+  /* ---------- IN-SITE PROJECT DOCUMENTATION MODAL ---------- */
+
+  html.doc-open,
+  html.cert-open {
+    overflow: hidden;
+  }
+
+  .doc-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(10, 14, 20, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(16px, 3vw, 40px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+
+  .doc-overlay.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .doc-modal {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    width: 100%;
+    max-width: 960px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    transform: translateY(16px) scale(0.98);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+  }
+
+  .doc-overlay.open .doc-modal {
+    transform: translateY(0) scale(1);
+  }
+
+  .doc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 22px 28px;
+    border-bottom: 1px solid var(--line);
+    background: #14171B;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .doc-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 240px;
+  }
+
+  .doc-badge {
+    color: var(--green);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .doc-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 500;
+    color: var(--text);
+    margin: 0;
+  }
+
+  /* Multi-document tabs */
+  .doc-tabs {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .doc-tab-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    padding: 5px 14px;
+    border-radius: 16px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .doc-tab-btn:hover {
+    border-color: var(--copper);
+    color: var(--copper);
+  }
+
+  .doc-tab-btn.active {
+    background: var(--copper);
+    border-color: var(--copper);
+    color: var(--bg);
+    font-weight: 600;
+  }
+
+  .doc-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .doc-gh-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 6px 14px;
+    text-decoration: none;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .doc-gh-btn:hover {
+    color: var(--copper);
+    border-color: var(--copper);
+  }
+
+  .doc-close-btn {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    font: inherit;
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .doc-close-btn:hover,
+  .doc-close-btn:focus-visible {
+    color: var(--copper);
+    border-color: var(--copper);
+    outline: none;
+  }
+
+  .doc-body {
+    padding: clamp(24px, 4vw, 44px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* Doc typography */
+  .doc-body h1,
+  .doc-body h2,
+  .doc-body h3,
+  .doc-body h4 {
+    font-family: 'Fraunces', serif;
+    color: var(--text);
+    margin-top: 36px;
+    margin-bottom: 14px;
+    line-height: 1.25;
+    scroll-margin-top: 18px;
+  }
+
+  .doc-body h1 {
+    font-size: 28px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    margin-top: 8px;
+  }
+
+  .doc-body h2 {
+    font-size: 22px;
+    color: var(--copper);
+  }
+
+  .doc-body h3 {
+    font-size: 18px;
+    color: var(--green);
+  }
+
+  .doc-body p {
+    margin-bottom: 18px;
+  }
+
+  .doc-body a {
+    color: var(--copper);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .doc-body a:hover {
+    color: #f19f74;
+  }
+
+  .doc-body a.doc-toc-link {
+    color: var(--green);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--line);
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .doc-body a.doc-toc-link:hover {
+    color: var(--copper);
+    border-color: var(--copper);
+  }
+
+  .doc-body a.doc-internal-link {
+    color: var(--copper);
+    text-decoration: none;
+    border-bottom: 1px solid var(--copper);
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .doc-body a.doc-internal-link:hover {
+    color: #f19f74;
+    border-bottom-color: #f19f74;
+  }
+
+  .doc-body code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: #0B0D10;
+    color: var(--copper);
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+
+  .doc-body pre {
+    background: #0B0D10;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    margin: 20px 0;
+  }
+
+  .doc-body pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text);
+  }
+
+  .doc-body ul,
+  .doc-body ol {
+    margin: 16px 0 22px 24px;
+  }
+
+  .doc-body li {
+    margin-bottom: 8px;
+  }
+
+  .doc-body blockquote {
+    border-left: 3px solid var(--copper);
+    padding-left: 18px;
+    margin: 22px 0;
+    color: var(--text-dim);
+  }
+
+  .doc-body hr {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 32px 0;
+  }
+
+  .doc-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 13px;
+  }
+
+  .doc-body th,
+  .doc-body td {
+    border: 1px solid var(--line);
+    padding: 10px 14px;
+    text-align: left;
+  }
+
+  .doc-body th {
+    background: #0B0D10;
+    color: var(--green);
+  }
+
+  .doc-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    background: #0B0D10;
+    display: block;
+    margin: 24px auto;
+  }
+
+  .doc-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    gap: 16px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  .doc-spinner {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--line);
+    border-top-color: var(--copper);
+    border-radius: 50%;
+    animation: docSpin 0.7s linear infinite;
+  }
+
+  @keyframes docSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  .doc-error {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-dim);
+  }
+
+  .doc-error p {
+    margin-bottom: 18px;
+  }
+
+  .doc-error a {
+    display: inline-block;
+    color: var(--copper);
+    border: 1px solid var(--copper);
+    padding: 8px 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 13px;
+  }
+
+  /* ---------- CERTIFICATIONS SECTION & MODAL ---------- */
+
+  .cert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .cert-card {
+    background: #0B0D10;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 24px 26px;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      transform 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .cert-card:hover,
+  .cert-card:focus-visible {
+    border-color: var(--copper);
+    background: #10141a;
+    transform: translateY(-2px);
+    outline: none;
+  }
+
+  .cert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .cert-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .cert-title {
+    font-family: 'Fraunces', serif;
+    font-size: 21px;
+    font-weight: 500;
+    color: var(--text);
+    transition: color 0.15s ease;
+  }
+
+  .cert-card:hover .cert-title {
+    color: var(--copper);
+  }
+
+  .cert-issuer {
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .cert-date {
+    font-size: 12.5px;
+    color: var(--text-dim);
+  }
+
+  .cert-desc {
+    margin-top: 10px;
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.65;
+    max-width: 60ch;
+  }
+
+  .cert-footer {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--copper);
+  }
+
+  /* In-site Certificate Preview Overlay (z-index 250 sits above About page 100) */
+  .cert-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 250;
+    background: rgba(10, 14, 20, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(16px, 3vw, 40px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+
+  .cert-overlay.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cert-modal {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    width: 100%;
+    max-width: 860px;
+    max-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+    transform: translateY(16px) scale(0.98);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+  }
+
+  .cert-overlay.open .cert-modal {
+    transform: translateY(0) scale(1);
+  }
+
+  .cert-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 26px;
+    border-bottom: 1px solid var(--line);
+    background: #14171B;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .cert-modal-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .cert-modal-badge {
+    color: var(--green);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .cert-modal-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(19px, 2.8vw, 24px);
+    font-weight: 500;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .cert-modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cert-verify-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--copper);
+    color: var(--bg);
+    font-weight: 600;
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 7px 16px;
+    text-decoration: none;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+  }
+
+  .cert-verify-btn:hover {
+    background: #f19f74;
+    transform: translateY(-1px);
+  }
+
+  .cert-close-btn {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    font: inherit;
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .cert-close-btn:hover,
+  .cert-close-btn:focus-visible {
+    color: var(--copper);
+    border-color: var(--copper);
+    outline: none;
+  }
+
+  .cert-modal-body {
+    padding: clamp(20px, 3.5vw, 36px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .cert-img-wrap {
+    width: 100%;
+    max-width: 760px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    background: #0B0D10;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cert-img-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .cert-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border: 1px dashed var(--line);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    text-align: center;
+    color: var(--text-dim);
+    gap: 10px;
+    font-size: 13px;
+  }
+
+  .cert-placeholder span {
+    color: var(--copper);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .cert-bottom-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .cert-bottom-action a {
+    color: var(--copper);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-size: 13.5px;
+  }
+
+  .cert-bottom-action a:hover {
+    color: #f19f74;
+  }
+
+  /* ---------- ABOUT PAGE: "printed" layer by layer ---------- */
+
+  html.about-open { overflow: hidden; }
+
+  html.about-printed,
+  html.about-printed body { background: var(--about-bg); }
+
+  html.about-printed .wrap,
+  html.about-printed .live-stats { visibility: hidden; }
+
+  .about-overlay {
+    --n: 14;
+    --step: 38ms;
+    --box-w: 2px;
+    --box-rest: 0.55;
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    height: 100lvh;
+    z-index: 100;
+    visibility: hidden;
+    pointer-events: none;
+    transition: visibility 0s linear 0.75s;
+  }
+
+  .about-overlay.open {
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+
+  .about-overlay.printed { background: var(--about-bg); }
+
+  .about-layers {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .about-layer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(var(--i) * 100% / var(--n));
+    height: calc(100% / var(--n) + 2px);
+    background: var(--about-bg);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition:
+      transform 0.26s cubic-bezier(0.5, 0, 0.75, 0) calc((var(--n) - 1 - var(--k)) * 20ms),
+      background-color 0.2s ease;
+  }
+
+  .about-layer:nth-child(even) { transform-origin: right; }
+
+  @supports (background: color-mix(in srgb, red 50%, white)) {
+    .about-layer:nth-child(odd) {
+      background: color-mix(in srgb, var(--about-bg) 94%, #fff 6%);
+    }
+  }
+
+  .about-overlay.open .about-layer {
+    transform: scaleX(1);
+    transition:
+      transform 0.38s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--k) * var(--step)),
+      background-color 0.3s ease;
+  }
+
+  .about-overlay.printed .about-layer {
+    background: var(--about-bg);
+    transition: background-color 0.9s ease;
+  }
+
+  .about-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px clamp(20px, 4vw, 48px) 34px;
+    background: linear-gradient(to bottom, var(--about-bg) 55%, transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .about-overlay.open .about-top {
+    opacity: 1;
+    transition: opacity 0.5s ease calc(var(--n) * var(--step) * 0.6);
+  }
+
+  .about-kicker {
+    color: var(--green);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    font-weight: 500;
+  }
+
+  .about-close {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    font: inherit;
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 7px 16px;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .about-close:hover,
+  .about-close:focus-visible {
+    color: var(--copper);
+    border-color: var(--copper);
+    outline: none;
+  }
+
+  .about-content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .about-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 130px clamp(22px, 5vw, 56px) 110px;
+  }
+
+  .about-box {
+    position: relative;
+  }
+
+  .about-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--copper), var(--copper)),
+      linear-gradient(var(--copper), var(--copper)),
+      linear-gradient(var(--copper), var(--copper)),
+      linear-gradient(var(--copper), var(--copper));
+    background-repeat: no-repeat;
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    background-size:
+      0 var(--box-w),
+      var(--box-w) 0,
+      0 var(--box-w),
+      var(--box-w) 0;
+  }
+
+  .about-box > * {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .about-box > :nth-child(2) { --c: 1; }
+  .about-box > :nth-child(3) { --c: 2; }
+  .about-box > :nth-child(4) { --c: 3; }
+  .about-box > :nth-child(5) { --c: 4; }
+  .about-box > :nth-child(6) { --c: 5; }
+  .about-box > :nth-child(7) { --c: 6; }
+  .about-box > :nth-child(8) { --c: 7; }
+
+  .about-box.drawn::before {
+    animation:
+      boxDraw 0.55s linear var(--d, 0ms) both,
+      boxDim 0.8s ease calc(var(--d, 0ms) + 0.55s) both;
+  }
+
+  .about-box.drawn > * {
+    opacity: 1;
+    transition: opacity 0.5s ease calc(var(--d, 0ms) + 380ms + var(--c, 0) * 70ms);
+  }
+
+  .about-box.settled::before {
+    background-size:
+      100% var(--box-w),
+      var(--box-w) 100%,
+      100% var(--box-w),
+      var(--box-w) 100%;
+    opacity: var(--box-rest, 0.55);
+  }
+
+  .about-box.settled > * {
+    opacity: 1;
+    transition: none;
+  }
+
+  .about-overlay.closing .about-box::before {
+    animation: boxErase 0.32s linear both;
+  }
+
+  .about-overlay.closing .about-box > * {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .about-overlay.closing .about-top {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  @keyframes boxErase {
+    0%   { background-size: 100% var(--box-w), var(--box-w) 100%, 100% var(--box-w), var(--box-w) 100%; opacity: var(--box-rest, 0.55); }
+    25%  { background-size: 100% var(--box-w), var(--box-w) 100%, 100% var(--box-w), var(--box-w) 0;    opacity: var(--box-rest, 0.55); }
+    50%  { background-size: 100% var(--box-w), var(--box-w) 100%, 0 var(--box-w),    var(--box-w) 0;    opacity: var(--box-rest, 0.55); }
+    75%  { background-size: 100% var(--box-w), var(--box-w) 0,    0 var(--box-w),    var(--box-w) 0;    opacity: var(--box-rest, 0.55); }
+    100% { background-size: 0 var(--box-w),    var(--box-w) 0,    0 var(--box-w),    var(--box-w) 0;    opacity: var(--box-rest, 0.55); }
+  }
+
+  @keyframes boxDraw {
+    0%   { background-size: 0 var(--box-w),    var(--box-w) 0,    0 var(--box-w),    var(--box-w) 0; }
+    25%  { background-size: 100% var(--box-w), var(--box-w) 0,    0 var(--box-w),    var(--box-w) 0; }
+    50%  { background-size: 100% var(--box-w), var(--box-w) 100%, 0 var(--box-w),    var(--box-w) 0; }
+    75%  { background-size: 100% var(--box-w), var(--box-w) 100%, 100% var(--box-w), var(--box-w) 0; }
+    100% { background-size: 100% var(--box-w), var(--box-w) 100%, 100% var(--box-w), var(--box-w) 100%; }
+  }
+
+  @keyframes boxDim {
+    from { opacity: 1; }
+    to   { opacity: var(--box-rest, 0.55); }
+  }
+
+  .about-hero {
+    padding: 44px clamp(24px, 4vw, 52px) 48px;
+  }
+
+  .about-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(44px, 8vw, 92px);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    max-width: 14ch;
+  }
+
+  .about-intro {
+    margin-top: 28px;
+    color: var(--text-dim);
+    font-size: 17px;
+    line-height: 1.75;
+    max-width: 56ch;
+  }
+
+  .about-section {
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    gap: 40px;
+    margin-top: 88px;
+  }
+
+  .about-label {
+    position: sticky;
+    top: 96px;
+    align-self: start;
+    justify-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 16px;
+  }
+
+  .about-card {
+    padding: 30px clamp(22px, 3vw, 36px);
+  }
+
+  .about-story p {
+    font-size: 16px;
+    line-height: 1.85;
+    max-width: 60ch;
+  }
+
+  .about-story p + p { margin-top: 18px; }
+
+  .about-photos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .about-photos figure:first-child { grid-column: 1 / -1; }
+
+  .about-photos img,
+  .about-photo-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 3px;
+    display: block;
+  }
+
+  .about-photos img {
+    border: 1px solid var(--line);
+    background: #0B0D10;
+  }
+
+  .about-photos figure:first-child img,
+  .about-photos figure:first-child .about-photo-placeholder {
+    aspect-ratio: 16 / 9;
+  }
+
+  .about-photo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed var(--line);
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+
+  .about-photos figcaption {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .about-steps {
+    list-style: none;
+  }
+
+  .about-steps li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 18px;
+    padding-bottom: 30px;
+  }
+
+  .about-steps li:last-child { padding-bottom: 0; }
+
+  .about-steps li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 34px;
+    bottom: 2px;
+    width: 1px;
+    background: var(--line);
+  }
+
+  .step-num {
+    position: relative;
+    z-index: 1;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--about-bg);
+    color: var(--copper);
+    font-size: 12px;
+  }
+
+  .step-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  .step-desc {
+    margin-top: 4px;
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 56ch;
+  }
+
+  .about-cta {
+    margin-top: 96px;
+    padding: 26px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  .about-cta a {
+    color: var(--copper);
+    text-decoration: none;
+  }
+
+  .about-cta a:hover { text-decoration: underline; }
+
+  /* ---------- TABLET BREAKPOINT ---------- */
+
+  @media (max-width: 900px) {
+    .wrap { padding: 0 32px; }
+    .project { grid-template-columns: 200px 1fr; gap: 28px; padding: 28px; }
+    .other-build { padding: 28px; }
+    .other-build-thumb { width: 160px; }
+    .about-section { grid-template-columns: 1fr; gap: 22px; margin-top: 64px; }
+    .about-label { position: relative; top: auto; flex-direction: row; align-items: baseline; gap: 14px; }
+  }
+
+  /* ---------- PHONE BREAKPOINT: COMPACT, DENSE TEXT ---------- */
+
+  @media (max-width: 700px) {
+    body {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .wrap {
+      padding: 0 18px;
+    }
+
+    header {
+      padding: 70px 0 36px;
+    }
+
+    .kicker {
+      font-size: 11px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 10vw, 48px);
+    }
+
+    header p.sub {
+      margin-top: 14px;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    .hero-links {
+      margin-top: 24px;
+      gap: 16px;
+    }
+
+    .timeline-view { padding: 38px 0 54px; }
+    .timeline-head { padding-left: 32px; margin-bottom: 28px; }
+    .timeline-kicker { font-size: 13px; letter-spacing: 0.075em; }
+    .timeline-sweep::before,
+    .timeline-sweep::after { top: 0; }
+    .timeline-line { top: 97px; bottom: 52px; left: 9px; }
+    .timeline-entry { padding-left: 30px; margin-bottom: 19px; }
+    .timeline-entry::before { left: 3px; width: 13px; height: 13px; }
+    .timeline-entry-meta { gap: 7px; margin-bottom: 7px; }
+    .timeline-entry-date { font-size: 10.5px; }
+    .timeline-entry-type { font-size: 8px; }
+
+    body.timeline-mode .timeline-entry .project {
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 12px;
+      padding: 12px;
+    }
+    body.timeline-mode .timeline-entry .project-name { font-size: 18px; }
+    body.timeline-mode .timeline-entry .project-tags { gap: 4px; }
+    body.timeline-mode .timeline-entry .project-tag { font-size: 8.5px; padding: 2px 6px; }
+    body.timeline-mode .timeline-entry .project-desc { margin-top: 6px; font-size: 11px; line-height: 1.45; }
+    body.timeline-mode .timeline-entry .project-cta { padding-top: 7px; font-size: 9.5px; }
+    body.timeline-mode .timeline-entry .other-build {
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+    }
+    body.timeline-mode .timeline-entry .other-build strong { font-size: 18px; }
+    body.timeline-mode .timeline-entry .other-build-desc { margin-top: 6px; font-size: 11px; line-height: 1.45; }
+    body.timeline-mode .timeline-entry .other-build .project-cta { margin-top: 7px; font-size: 9.5px; }
+    body.timeline-mode .timeline-entry .other-build-thumb { width: 72px; aspect-ratio: 4 / 3; }
+
+    .hero-links a,
+    .hero-links .link-btn {
+      font-size: 12.5px;
+    }
+
+    .hero-links .about-btn {
+      padding: 6px 15px;
+    }
+
+    .hero-links .timeline-btn {
+      font-size: 11.5px;
+      padding: 4px 11px;
+    }
+
+    .tier {
+      padding: 48px 0;
+    }
+
+    .tier-head {
+      margin-bottom: 24px;
+      gap: 12px;
+    }
+
+    .tier-num { font-size: 11px; }
+    .tier-title { font-size: 13px; }
+
+    .project-list {
+      gap: 18px;
+    }
+
+    .project {
+      grid-template-columns: 1fr;
+      padding: 20px;
+      gap: 16px;
+    }
+
+    .project-name {
+      font-size: 22px;
+    }
+
+    .project-date {
+      font-size: 11.5px;
+    }
+
+    .project-tags {
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .project-tag {
+      font-size: 10px;
+      padding: 2px 9px;
+    }
+
+    .project-desc {
+      margin-top: 10px;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    .project-cta {
+      padding-top: 14px;
+      font-size: 11.5px;
+    }
+
+    .project-thumb {
+      aspect-ratio: 16/9;
+    }
+
+    .other-build {
+      padding: 20px;
+      flex-direction: column-reverse;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .other-build strong {
+      font-size: 22px;
+    }
+
+    .other-build .other-build-date {
+      font-size: 11.5px;
+    }
+
+    .other-build-desc {
+      margin-top: 10px;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    .other-build .project-cta {
+      margin-top: 14px;
+      font-size: 11.5px;
+    }
+
+    .other-build-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+    }
+
+    /* Modal compactness on phone */
+    .doc-overlay,
+    .cert-overlay {
+      padding: 10px;
+    }
+
+    .doc-modal,
+    .cert-modal {
+      max-height: 94vh;
+      border-radius: 6px;
+    }
+
+    .doc-header,
+    .cert-modal-header {
+      padding: 14px 16px;
+      gap: 10px;
+    }
+
+    .doc-badge,
+    .cert-modal-badge {
+      font-size: 9.5px;
+    }
+
+    .doc-title,
+    .cert-modal-title {
+      font-size: 18px;
+    }
+
+    .doc-tabs {
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .doc-tab-btn {
+      font-size: 11px;
+      padding: 3px 10px;
+    }
+
+    .doc-gh-btn,
+    .doc-close-btn,
+    .cert-verify-btn,
+    .cert-close-btn {
+      font-size: 11px;
+      padding: 4px 10px;
+    }
+
+    .doc-body {
+      padding: 18px 16px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .doc-body h1 {
+      font-size: 20px;
+      margin-top: 22px;
+      padding-bottom: 6px;
+    }
+
+    .doc-body h2 {
+      font-size: 17px;
+      margin-top: 18px;
+    }
+
+    .doc-body h3 {
+      font-size: 14.5px;
+      margin-top: 16px;
+    }
+
+    .doc-body p {
+      margin-bottom: 12px;
+    }
+
+    .doc-body code {
+      font-size: 11.5px;
+      padding: 1px 5px;
+    }
+
+    .doc-body pre {
+      padding: 12px 14px;
+      font-size: 11.5px;
+      margin: 14px 0;
+    }
+
+    .doc-body table {
+      font-size: 11px;
+      margin: 14px 0;
+    }
+
+    .doc-body th, .doc-body td {
+      padding: 6px 8px;
+    }
+
+    .cert-card {
+      padding: 16px 16px;
+    }
+
+    .cert-title {
+      font-size: 18px;
+    }
+
+    .cert-desc {
+      font-size: 12px;
+    }
+
+    .cert-modal-body {
+      padding: 16px 14px;
+      gap: 14px;
+    }
+
+    /* About section compactness on phone */
+    .about-inner {
+      padding: 85px 18px 60px;
+    }
+
+    .about-hero {
+      padding: 24px 18px;
+    }
+
+    .about-title {
+      font-size: clamp(30px, 9vw, 42px);
+    }
+
+    .about-intro {
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 14px;
+    }
+
+    .about-section {
+      margin-top: 36px;
+      gap: 14px;
+    }
+
+    .about-label {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+
+    .about-card {
+      padding: 18px 16px;
+    }
+
+    .about-story p {
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .about-photos {
+      grid-template-columns: 1fr;
+    }
+
+    .step-title {
+      font-size: 17px;
+    }
+
+    .step-desc {
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .about-cta {
+      margin-top: 40px;
+      padding: 18px;
+      font-size: 12.5px;
+    }
+
+    .stat-pill {
+      font-size: 11px;
+      padding: 5px 11px;
+    }
+
+    footer {
+      padding: 40px 0 60px;
+      font-size: 11.5px;
+    }
+
+    .footer-links {
+      gap: 18px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .timeline-sweep::before,
+    .timeline-sweep::after,
+    .timeline-line,
+    .timeline-entry::before { transition: none; animation: none !important; }
+    .timeline-view.is-active .timeline-line { transform: scaleY(1); }
+    .timeline-entry-meta,
+    body.timeline-mode .timeline-entry .project-name,
+    body.timeline-mode .timeline-entry .project-tags,
+    body.timeline-mode .timeline-entry .project-desc,
+    body.timeline-mode .timeline-entry .project-cta,
+    body.timeline-mode .timeline-entry .other-build-header,
+    body.timeline-mode .timeline-entry .other-build-desc {
+      opacity: 1;
+      clip-path: none;
+      animation: none !important;
+    }
+
+    .about-layer {
+      transform: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .about-overlay.open .about-layer {
+      transform: none;
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+
+    .about-overlay.printed .about-layer { transition: background-color 0.25s ease; }
+    .about-top, .about-overlay.open .about-top { transition: opacity 0.2s ease; }
+
+    .about-box::before {
+      background-size:
+        100% var(--box-w),
+        var(--box-w) 100%,
+        100% var(--box-w),
+        var(--box-w) 100%;
+      opacity: var(--box-rest, 0.55);
+    }
+
+    .about-box > *,
+    .about-box.drawn > * {
+      opacity: 1;
+      transition: none;
+    }
+
+    .about-box.drawn::before,
+    .about-overlay.closing .about-box::before { animation: none; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- LIVE STATS: Documentations counter only -->
+<div class="live-stats" id="liveStats">
+  <div class="stat-pill">
+    <span class="stat-label">Documentations</span>
+    <span class="stat-num" id="docNum">—</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <div class="kicker">Saarthak Gupta — Kirkland, WA</div>
+
+    <h1>Stuff I've made.</h1>
+
+    <p class="sub">
+      I like building things! From CAD and 3D printing, to software and electronics,
+      to polished, sellable products.
+      Here are some of the projects I've worked on:
+    </p>
+
+    <div class="hero-links">
+      <button type="button" class="link-btn about-btn" data-about-open>About Me</button>
+      <button type="button" class="link-btn timeline-btn" id="timelineToggle" aria-pressed="false">Timeline View</button>
+      <a href="https://github.com/Saarsy/Portfolio" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://makrix.etsy.com" target="_blank" rel="noopener">Etsy Shop</a>
+    </div>
+  </header>
+  
+  <section class="timeline-view" id="timelineView" aria-label="Projects sorted by date" aria-hidden="true">
+    <div class="timeline-sweep" aria-hidden="true"></div>
+    <div class="timeline-line" aria-hidden="true"></div>
+    <div class="timeline-head">
+      <div class="timeline-kicker">PROJECT TIMELINE</div>
+    </div>
+    <div class="timeline-list" id="timelineList"></div>
+  </section>
+
+  <section class="tier" id="tier-big"></section>
+
+  <section class="tier" id="tier-medium"></section>
+
+  <section class="tier other-prints">
+    <div class="tier-head">
+      <span class="tier-num">03</span>
+      <span class="tier-title">Other Builds</span>
+    </div>
+
+    <ul id="other-prints-list"></ul>
+  </section>
+
+  <footer>
+    <span>Updated as new projects are made</span>
+
+    <div class="footer-links">
+      <a href="https://github.com/Saarsy/Portfolio" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://makrix.etsy.com" target="_blank" rel="noopener">Etsy</a>
+      <button type="button" class="link-btn" data-about-open>About Me</button>
+      <a href="mailto:saarthak1069@gmail.com">Email</a>
+    </div>
+  </footer>
+
+</div>
+
+<!-- IN-SITE PROJECT DOCUMENTATION MODAL -->
+<div class="doc-overlay" id="docOverlay" role="dialog" aria-modal="true" aria-labelledby="docModalTitle" tabindex="-1">
+  <div class="doc-modal">
+    <div class="doc-header">
+      <div class="doc-header-info">
+        <span class="doc-badge">Project Documentation</span>
+        <h2 class="doc-title" id="docModalTitle">Documentation</h2>
+        <div class="doc-tabs" id="docModalTabs"></div>
+      </div>
+      <div class="doc-actions">
+        <a href="#" class="doc-gh-btn" id="docModalGithub" target="_blank" rel="noopener">GitHub ↗</a>
+        <button type="button" class="doc-close-btn" id="docModalClose" aria-label="Close documentation">Close ✕</button>
+      </div>
+    </div>
+    <div class="doc-body" id="docModalBody">
+      <div class="doc-loading">
+        <div class="doc-spinner"></div>
+        <span>Fetching documentation from GitHub...</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IN-SITE CERTIFICATE PREVIEW MODAL -->
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-modal="true" aria-labelledby="certModalTitle" tabindex="-1">
+  <div class="cert-modal">
+    <div class="cert-modal-header">
+      <div class="cert-modal-info">
+        <span class="cert-modal-badge" id="certModalIssuer">Certification</span>
+        <h2 class="cert-modal-title" id="certModalTitle">Certificate Preview</h2>
+      </div>
+      <div class="cert-modal-actions">
+        <a href="#" class="cert-verify-btn" id="certModalVerifyBtn" target="_blank" rel="noopener">Verify Credential ↗</a>
+        <button type="button" class="cert-close-btn" id="certModalClose" aria-label="Close certificate preview">Close ✕</button>
+      </div>
+    </div>
+    <div class="cert-modal-body">
+      <div class="cert-img-wrap" id="certImgWrap">
+        <img id="certModalImg" src="" alt="Certificate Preview" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/Saarsy/Portfolio/main/' + encodeURI(decodeURI(this.getAttribute('src')))">
+      </div>
+      <div class="cert-placeholder" id="certPlaceholder" style="display: none;">
+        <span>Certificate Image Placeholder</span>
+        <p>No preview image found. Add an image path to <code>image: "..."</code> in <code>ABOUT.certifications</code>.</p>
+      </div>
+      <div class="cert-bottom-action">
+        <a href="#" id="certBottomVerifyLink" target="_blank" rel="noopener">Open official verification / credential page ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT PAGE OVERLAY -->
+<div class="about-overlay" id="aboutOverlay" role="dialog" aria-modal="true" aria-labelledby="aboutTitle" tabindex="-1">
+  <div class="about-layers" id="aboutLayers"></div>
+
+  <div class="about-top">
+    <span class="about-kicker">About Me</span>
+    <button type="button" class="about-close" id="aboutClose" aria-label="Close about page">Close ✕</button>
+  </div>
+
+  <div class="about-content" id="aboutContent">
+    <div class="about-inner" id="aboutInner"></div>
+  </div>
+</div>
+
+<script>
+
+/* =========================================================
+   DATE FORMATTER
+   ========================================================= */
+
+function formatSingleDate(dStr) {
+  if (!dStr) return "";
+  const trimmed = dStr.trim();
+  const m = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+  if (m) {
+    const monthNum = parseInt(m[1], 10);
+    let year = parseInt(m[3], 10);
+    if (year < 100) year += 2000;
+    const months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    if (monthNum >= 1 && monthNum <= 12) {
+      return `${months[monthNum - 1]} of ${year}`;
+    }
+  }
+  return trimmed;
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return "";
+  if (dateStr.includes(" - ")) {
+    return dateStr.split(" - ").map(formatSingleDate).join(" - ");
+  }
+  return formatSingleDate(dateStr);
+}
+
+/* =========================================================
+   PROJECT DATA
+   ========================================================= */
+
+const BIG_PROJECTS = [
+  {
+    name: "Home Server",
+    date: "June of 2026",
+    tags: [
+      "Master Project",
+      "Software",
+      "Growing",
+      "High Potential",
+    ],
+    desc: "A self-hosted server for personal storage and managing all smart home devices",
+    docs: [
+      {
+        title: "Base Server",
+        link: "https://github.com/Saarsy/Portfolio/blob/main/Home%20Server%20(Big%20Project)/Base%20Server%20Setup.md"
+      },
+      {
+        title: "Home Assistant",
+        link: "https://github.com/Saarsy/Portfolio/blob/main/Home%20Server%20(Big%20Project)/Home%20Assistant%20Setup.md"
+      },
+      {
+        title: "Immich",
+        link: "https://github.com/Saarsy/Portfolio/blob/main/Home%20Server%20(Big%20Project)/Immich%20Setup.md"
+      },
+      {
+        title: "Laptop Wall Mount",
+        link: "https://github.com/Saarsy/Portfolio/blob/main/Home%20Server%20(Big%20Project)/Laptop%20Wall%20Mount%20Documentation.md"
+      },
+      {
+        title: "Tailscale",
+        link: "https://github.com/Saarsy/Portfolio/blob/main/Home%20Server%20(Big%20Project)/Tailscale%20Setup.md"
+      }
+    ],
+    link: "https://github.com/Saarsy/Portfolio/tree/main/Home%20Server%20(Big%20Project)",
+    image: "Home%20Server%20(Big%20Project)/Images/Server.jpeg"
+  },
+  {
+    name: "DialZero",
+    date: "July of 2026",
+    tags: [
+      "RP2040",
+      "CircuitPython",
+      "Customizable",
+      "Macropad",
+    ],
+    desc: "A customizable macropad with a rotary encoder and touch sensor | six control combos, RGB LED feedback, and integration with Home Assistant",
+    link: "https://github.com/Saarsy/Portfolio/blob/main/DialZero%20(Big%20project)/DialZero%20Documentation.md",
+    image: "DialZero%20(Big%20project)/Images/Ground%20Shot.jpeg"
+  },
+  {
+    name: "Sofa Pad",
+    date: "Mar of 2025 - Aug of 2026",
+    tags: [
+      "WFH",
+      "Convenient",
+      "Custom",
+      "Simple"
+    ],
+    desc: "Customizable trey for mousepads and food | Support for cupholders through 70mm to 100mm",
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Sofa%20Pad/Sofa%20Pad%20Documentation.md",
+    image: "Sofa%20Pad/Images/After.jpeg"
+  },
+  {
+    name: "Automating Blinds (Pi)",
+    date: "May of 2026",
+    tags: [
+      "HA",
+      "Automated",
+      "Arduino",
+      "Life-Changer",
+    ],
+    desc: "A project utilizing Raspberry Pi and Home Assistant to open and close room blinds automatically",
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Automating%20Blinds%20(Pi)/Automating%20Blinds%20Documentation.md",
+    image: "Automating%20Blinds%20(Pi)/Image/Mech.jpeg"
+  }
+];
+
+const MEDIUM_PROJECTS = [
+  {
+    name: "Door Sentry (Pi)",
+    date: "Mar of 2025",
+    tags: [
+      "Experimental",
+      "Alarm",
+      "Safety",
+      "Growable",
+    ],
+    desc: "In Progress",
+    link: "",
+    image: ""
+  },
+  {
+    name: "GoPro Case With Charging",
+    date: "",
+    tags: [
+      "Convenient",
+      "Travel Use",
+      "Magnets",
+      "Accessory"
+    ],
+    desc: "In Progress",
+    link: "",
+    image: ""
+  },
+  {
+    name: "Wood Monitor Riser",
+    date: "",
+    tags: [
+      "High Quality",
+      "Multi-Material",
+      "Desk Setup",
+    ],
+    desc: "In Progress",
+    link: "",
+    image: ""
+  },
+  {
+    name: "Wall Mounted Lotion Holder",
+    date: "July of 2026",
+    tags: [
+      "Mounted",
+      "Minimalistic",
+      "Modern",
+      "Custom"
+    ],
+    desc: "A two piece mount that hides its screws, easy to install and use",
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Wall%20Mounted%20Lotion%20Holder/Lotion%20Holder%20Documentation.md",
+    image: "Wall%20Mounted%20Lotion%20Holder/Images/In%20Use.jpeg"
+  },
+];
+
+const OTHER_PRINTS = [
+  {
+    name: "Cable Peg",
+    date: "Jan of 2026",
+    desc: "A tiny print to organize the cables behind my desk for clean cable management",
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Cable%20Peg/Cable%20Peg%20Documentation.md",
+    image: "Other%20Builds/Cable%20Peg/In%20Use.jpeg"
+  },
+  {
+    name: "Headphone Hanger",
+    date: "Aug of 2026",
+    desc: "Underside shelf mounted headphone holder to hang your headphones, and not take up space on your desk",
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Headphone%20Hanger/Headphone%20Hanger%20Documentation.md",
+    image: "Other%20Builds/Headphone%20Hanger/Hanger.jpeg"
+  },
+  {
+    name: "Countertop Protector",
+    date: "June of 2026",
+    desc: "A TPU material print that provides protection to a countertop from things like spinning bar stools or foot opening trash cans",
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Countertop%20Protector/Countertop%20Protector%20Documentation.md",
+    image: "Other%20Builds/Countertop%20Protector/Protector.jpeg"
+  },
+  {
+    name: "Wall Extension Cord Mount",
+    date: "Jan of 2026",
+    desc: "A mounting plate to attach an extension cord to for cable management",
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/Wall%20Extension%20Cord%20Mount/Wall%20Extension%20Cord%20Mount%20Documentation.md",
+    image: "Other%20Builds/Wall%20Extension%20Cord%20Mount/Full.jpeg"
+  },
+  {
+    name: "Shelf Katana Holder",
+    date: "Dec of 2025",
+    desc: "A shelf mount that provides easy placement for a katana",
+    link: "",
+    image: ""
+  },
+  {
+    name: "Table Risers",
+    date: "",
+    desc: "A simple TPU build that provides around a inch of raise to any table its attached to",
+    link: "",
+    image: ""
+  },
+  {
+    name: "USB C to USB A Adapter Holder",
+    date: "Jan of 2026",
+    desc: "Used for a place to put adapters to stay organized",
+    link: "https://github.com/Saarsy/Portfolio/blob/main/Other%20Builds/USB%20Adapter%20Holder/USB%20Adapter%20Holder%20Documentation.md",
+    image: "Other%20Builds/USB%20Adapter%20Holder/Holder.jpeg"
+  },
+  {
+    name: "Tofu Press Holder",
+    date: "July of 2026",
+    desc: "A holder for oversized tofu holders which take more space than they should",
+    link: "",
+    image: ""
+  }
+];
+
+/* =========================================================
+   PROJECT CARD RENDERING
+   ========================================================= */
+
+function projectCard(p) {
+  const thumb = p.image
+    ? `<img class="project-thumb" src="${p.image}" alt="${p.name}" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/Saarsy/Portfolio/main/' + encodeURI(decodeURI(this.getAttribute('src')))">`
+    : `<div class="project-thumb placeholder">no photo yet</div>`;
+
+  const tags = p.tags
+    .filter(t => t && t.trim() !== "")
+    .map(t => `<span class="project-tag">${t}</span>`)
+    .join("");
+
+  const formattedDate = formatDate(p.date);
+  const dateHtml = formattedDate ? `<span class="project-date">${formattedDate}</span>` : "";
+
+  const hasDocs = p.docs && p.docs.length > 0;
+  const hasLink = (p.link && p.link.trim().length > 0) || hasDocs;
+  const tag = hasLink ? "a" : "div";
+  const defaultLink = (p.link && p.link.trim().length > 0) ? p.link : (hasDocs ? p.docs[0].link : "");
+  const linkAttrs = hasLink
+    ? `href="${defaultLink}" data-project-name="${p.name}"`
+    : "";
+  const ctaText = hasLink ? "View Project →" : "In progress — check back soon!";
+
+  return `
+    <${tag}
+      class="project${hasLink ? "" : " project-wip"}"
+      ${linkAttrs}
+    >
+      ${thumb}
+
+      <div class="project-body">
+        <div class="project-header">
+          <div class="project-name">${p.name}</div>
+          ${dateHtml}
+        </div>
+
+        <div class="project-tags">
+          ${tags}
+        </div>
+
+        <p class="project-desc">${p.desc}</p>
+
+        <div class="project-cta">${ctaText}</div>
+      </div>
+    </${tag}>
+  `;
+}
+
+function renderTier(sectionId, num, title, projects) {
+  const section = document.getElementById(sectionId);
+  section.innerHTML = `
+    <div class="tier-head">
+      <span class="tier-num">${num}</span>
+      <span class="tier-title">${title}</span>
+    </div>
+    <div class="project-list">
+      ${projects.map(projectCard).join("")}
+    </div>
+  `;
+}
+
+renderTier("tier-big", "01", "Big Projects", BIG_PROJECTS);
+renderTier("tier-medium", "02", "Smaller Projects", MEDIUM_PROJECTS);
+
+/* =========================================================
+   RENDER OTHER BUILDS
+   ========================================================= */
+
+document.getElementById("other-prints-list").innerHTML =
+  OTHER_PRINTS.map(item => {
+    const thumb = item.image
+      ? `<img class="other-build-thumb" src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/Saarsy/Portfolio/main/' + encodeURI(decodeURI(this.getAttribute('src')))">`
+      : `<div class="other-build-thumb placeholder">no photo</div>`;
+
+    const formattedDate = formatDate(item.date);
+    const dateHtml = formattedDate ? `<span class="other-build-date">${formattedDate}</span>` : "";
+
+    const hasDocs = item.docs && item.docs.length > 0;
+    const hasLink = (item.link && item.link.trim().length > 0) || hasDocs;
+    const tag = hasLink ? "a" : "div";
+    const defaultLink = (item.link && item.link.trim().length > 0) ? item.link : (hasDocs ? item.docs[0].link : "");
+    const linkAttrs = hasLink
+      ? `href="${defaultLink}" data-project-name="${item.name}"`
+      : "";
+    const ctaText = hasLink ? "View Project →" : "In progress — check back soon!";
+
+    return `
+      <li>
+        <${tag}
+          class="other-build${hasLink ? "" : " project-wip"}"
+          ${linkAttrs}
+        >
+          <div class="other-build-body">
+            <div class="other-build-header">
+              <strong>${item.name}</strong>
+              ${dateHtml}
+            </div>
+
+            <p class="other-build-desc">${item.desc}</p>
+
+            <div class="project-cta">${ctaText}</div>
+          </div>
+
+          ${thumb}
+        </${tag}>
+      </li>
+    `;
+  }).join("");
+
+/* =========================================================
+   SCROLL REVEAL
+   ========================================================= */
+
+const observer = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.15 }
+);
+
+document
+  .querySelectorAll(".project, .tier-head, .other-build")
+  .forEach(el => observer.observe(el));
+
+/* =========================================================
+   TIMELINE TOGGLE
+   - Reuses the original project cards and links
+   - Sorts by the latest month in each entered date (ranges included)
+   - Keeps undated projects at the bottom and preserves order for ties
+   ========================================================= */
+
+(function setupProjectTimeline() {
+  const toggle = document.getElementById("timelineToggle");
+  const view = document.getElementById("timelineView");
+  const list = document.getElementById("timelineList");
+  if (!toggle || !view || !list) return;
+
+  const projectData = [
+    ...BIG_PROJECTS.map(project => ({ ...project, category: "Big Projects" })),
+    ...MEDIUM_PROJECTS.map(project => ({ ...project, category: "Smaller Projects" })),
+    ...OTHER_PRINTS.map(project => ({ ...project, category: "Other Builds" }))
+  ];
+  const dataByName = new Map(projectData.map((project, index) => [project.name, { ...project, customOrder: index }]));
+  const monthNumbers = {
+    jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6,
+    jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12
+  };
+  const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const lineDrawDuration = 4000;
+  const lineStartDelay = reducedMotion ? 0 : 80;
+  let active = false;
+  let records = [];
+  let activationFrame = 0;
+
+  function latestDateValue(dateString) {
+    if (!dateString) return -Infinity;
+    const matches = [...String(dateString).matchAll(/\b(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)\.?\s+(?:of\s+)?(\d{4})\b/gi)];
+    if (!matches.length) return -Infinity;
+    return Math.max(...matches.map(match => {
+      const month = monthNumbers[match[1].slice(0, 3).toLowerCase()];
+      return Number(match[2]) * 12 + month;
+    }));
+  }
+
+  function cardsInCustomOrder() {
+    return [...document.querySelectorAll("#tier-big .project, #tier-medium .project, #other-prints-list .other-build")];
+  }
+
+  function enterTimeline() {
+    if (active) return;
+    toggle.textContent = "Custom Order";
+    toggle.setAttribute("aria-pressed", "true");
+
+    const allCards = cardsInCustomOrder();
+    records = allCards.map(card => {
+      const name = card.querySelector(".project-name")?.textContent.trim()
+        || card.querySelector("strong")?.textContent.trim()
+        || "Project";
+      const meta = dataByName.get(name) || {};
+      const placeholder = document.createComment(` original position: ${name} `);
+      const parent = card.parentNode;
+      parent.insertBefore(placeholder, card);
+      card.classList.add("visible");
+      return { card, name, meta, placeholder, parent };
+    });
+
+    const sorted = [...records].sort((a, b) => {
+      const aDate = latestDateValue(a.meta.date);
+      const bDate = latestDateValue(b.meta.date);
+      if (aDate !== bDate) return bDate - aDate;
+      return (a.meta.customOrder ?? 0) - (b.meta.customOrder ?? 0);
+    });
+
+    sorted.forEach((record, index) => {
+      const entry = document.createElement("article");
+      entry.className = "timeline-entry";
+
+      const meta = document.createElement("div");
+      meta.className = "timeline-entry-meta";
+      const date = document.createElement("span");
+      date.className = "timeline-entry-date";
+      const formatted = formatDate(record.meta.date || "");
+      date.textContent = formatted || "Date not added";
+      if (!formatted) date.classList.add("timeline-empty-date");
+      const category = document.createElement("span");
+      category.className = "timeline-entry-type";
+      category.textContent = record.meta.category || "Project";
+      meta.append(date, category);
+      entry.append(meta, record.card);
+      list.appendChild(entry);
+    });
+
+    active = true;
+    document.body.classList.add("timeline-mode");
+    view.setAttribute("aria-hidden", "false");
+
+    // Schedule each entry's date/text reveal for when the line reaches its marker.
+    // Measure untransformed layout dimensions so the timing follows the full line length.
+    const line = view.querySelector(".timeline-line");
+    const viewTop = view.getBoundingClientRect().top;
+    const lineTop = line ? line.offsetTop : 0;
+    const lineHeight = line ? Math.max(line.offsetHeight, 1) : 1;
+    [...list.querySelectorAll(".timeline-entry")].forEach(entry => {
+      const entryTop = entry.getBoundingClientRect().top - viewTop;
+      const markerCenter = entryTop + 11;
+      const progress = Math.max(0, Math.min(1, (markerCenter - lineTop) / lineHeight));
+      const delay = reducedMotion ? 0 : Math.round(lineStartDelay + progress * lineDrawDuration);
+      entry.style.setProperty("--entry-delay", `${delay}ms`);
+      entry.style.setProperty("--content-delay", `${delay}ms`);
+    });
+
+    // The cards stay in place; only the copper line, markers, and content reveals animate.
+    view.classList.remove("is-active");
+    void view.offsetHeight;
+    cancelAnimationFrame(activationFrame);
+    activationFrame = requestAnimationFrame(() => {
+      if (active) view.classList.add("is-active");
+    });
+  }
+
+  function leaveTimeline() {
+    if (!active) return;
+    active = false;
+    cancelAnimationFrame(activationFrame);
+
+    toggle.textContent = "Timeline View";
+    toggle.setAttribute("aria-pressed", "false");
+    view.classList.remove("is-active");
+    view.setAttribute("aria-hidden", "true");
+
+    // Restore every card to its exact original custom-order position without card motion.
+    records.forEach(record => {
+      if (record.placeholder.parentNode) {
+        record.placeholder.parentNode.insertBefore(record.card, record.placeholder);
+        record.placeholder.remove();
+      }
+    });
+
+    document.body.classList.remove("timeline-mode");
+    list.replaceChildren();
+    records = [];
+  }
+
+  toggle.addEventListener("click", () => {
+    if (active) leaveTimeline();
+    else enterTimeline();
+  });
+})();
+
+/* =========================================================
+   LIVE STATS: Documentations counter only
+   ========================================================= */
+
+fetch("wordcount.json")
+  .then(res => res.json())
+  .then(data => {
+    const docEl = document.getElementById("docNum");
+    if (docEl && data.documentations !== undefined) {
+      docEl.textContent = data.documentations;
+    }
+  })
+  .catch(() => {});
+
+/* =========================================================
+   PROJECT DOCUMENTATION IN-SITE VIEWER
+   - Automatic image resolving (local + raw fallback)
+   - In-page Table of Contents smooth scrolling
+   - Same-project tab switching & Cross-project doc navigation
+   ========================================================= */
+
+(function setupDocViewer() {
+  const overlay    = document.getElementById("docOverlay");
+  const modalTitle = document.getElementById("docModalTitle");
+  const modalTabs  = document.getElementById("docModalTabs");
+  const modalBody  = document.getElementById("docModalBody");
+  const modalGh    = document.getElementById("docModalGithub");
+  const closeBtn   = document.getElementById("docModalClose");
+
+  let activeFetchId = 0;
+  let currentProject = null;
+
+  function closeDoc() {
+    overlay.classList.remove("open");
+    document.documentElement.classList.remove("doc-open");
+  }
+
+  closeBtn.addEventListener("click", closeDoc);
+  overlay.addEventListener("click", e => { if (e.target === overlay) closeDoc(); });
+  document.addEventListener("keydown", e => {
+    if (overlay.classList.contains("open") && e.key === "Escape") closeDoc();
+  });
+
+  function getSubfolder(link) {
+    if (!link) return "";
+    let path = link.replace(/^https:\/\/github\.com\/[^/]+\/[^/]+\/(blob|tree)\/[^/]+\//, "");
+    path = decodeURIComponent(path).replace(/\/$/, "");
+    if (path.toLowerCase().endsWith(".md")) {
+      const idx = path.lastIndexOf("/");
+      return idx !== -1 ? path.slice(0, idx) : "";
+    }
+    return path;
+  }
+
+  async function loadMarkdownContent(targetLink, baseFolder, projectName) {
+    modalBody.innerHTML = `
+      <div class="doc-loading">
+        <div class="doc-spinner"></div>
+        <span>Loading documentation...</span>
+      </div>
+    `;
+
+    modalBody.scrollTop = 0;
+    const thisFetchId = ++activeFetchId;
+    let repoPath = targetLink.replace(/^https:\/\/github\.com\/[^/]+\/[^/]+\/(blob|tree)\/[^/]+\//, "");
+    repoPath = decodeURIComponent(repoPath).replace(/\/$/, "");
+
+    let candidatePaths = [];
+    if (repoPath.toLowerCase().endsWith(".md")) {
+      candidatePaths.push(repoPath);
+    } else {
+      candidatePaths.push(`${repoPath}/README.md`);
+      candidatePaths.push(`${repoPath}/${projectName} Documentation.md`);
+      candidatePaths.push(`${repoPath}/Home Server Documentation.md`);
+      candidatePaths.push(`${repoPath}/Documentation.md`);
+    }
+
+    let markdown = null;
+
+    for (const relPath of candidatePaths) {
+      const rawUrl = `https://raw.githubusercontent.com/Saarsy/Portfolio/main/${encodeURI(relPath)}`;
+      const localUrl = relPath;
+
+      const urlsToTry = window.location.protocol.startsWith("http")
+        ? [localUrl, rawUrl]
+        : [rawUrl, localUrl];
+
+      for (const url of urlsToTry) {
+        try {
+          const res = await fetch(url);
+          if (res.ok) {
+            const text = await res.text();
+            if (!text.trim().startsWith("<!DOCTYPE html") && !text.trim().startsWith("<html")) {
+              markdown = text;
+              break;
+            }
+          }
+        } catch (err) {}
+      }
+      if (markdown) break;
+    }
+
+    if (thisFetchId !== activeFetchId) return;
+
+    if (!markdown) {
+      modalBody.innerHTML = `
+        <div class="doc-error">
+          <p>Couldn't load this documentation file directly.</p>
+          <a href="${targetLink}" target="_blank" rel="noopener">Open on GitHub →</a>
+        </div>
+      `;
+      return;
+    }
+
+    modalBody.innerHTML = window.marked ? marked.parse(markdown) : `<pre>${markdown}</pre>`;
+
+    // --- 1. GENERATE HEADING IDs FOR TABLE OF CONTENTS ---
+    const headingCounts = {};
+    modalBody.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach(heading => {
+      const text = heading.textContent.trim();
+      let slug = text
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
+
+      if (!slug) slug = "section";
+
+      if (headingCounts[slug] !== undefined) {
+        headingCounts[slug]++;
+        slug = `${slug}-${headingCounts[slug]}`;
+      } else {
+        headingCounts[slug] = 0;
+      }
+
+      heading.id = slug;
+    });
+
+    // --- 2. HANDLE IN-PAGE TOC (#) AND IN-SITE (.md) LINKS ---
+    modalBody.querySelectorAll("a").forEach(a => {
+      const href = a.getAttribute("href");
+      if (!href) return;
+
+      if (href.startsWith("#")) {
+        a.removeAttribute("target");
+        a.removeAttribute("rel");
+        a.classList.add("doc-toc-link");
+
+        a.addEventListener("click", e => {
+          e.preventDefault();
+          const targetId = href.slice(1).toLowerCase();
+          const targetEl = document.getElementById(targetId) || modalBody.querySelector(`[id="${targetId}"]`);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+        return;
+      }
+
+      let rawHref = href.split("?")[0];
+      const hashPart = rawHref.includes("#") ? rawHref.split("#")[1] : null;
+      let cleanHref = rawHref.split("#")[0];
+
+      if (cleanHref.toLowerCase().endsWith(".md")) {
+        a.removeAttribute("target");
+        a.removeAttribute("rel");
+        a.classList.add("doc-internal-link");
+
+        a.addEventListener("click", e => {
+          e.preventDefault();
+
+          let repoPath = cleanHref.replace(/^https:\/\/github\.com\/[^/]+\/[^/]+\/(blob|tree)\/[^/]+\//, "");
+          const isRepoRoot = href.startsWith("/") || href.startsWith("../") || href.includes("github.com");
+
+          let clean = repoPath.replace(/^\/+/, "").replace(/^(\.\.\/)+/, "").replace(/^\.\//, "");
+          try { clean = decodeURIComponent(clean); } catch(err) {}
+
+          const allProjects = [...BIG_PROJECTS, ...MEDIUM_PROJECTS, ...OTHER_PRINTS];
+          const decodedBase = baseFolder ? decodeURIComponent(baseFolder).replace(/\/$/, "") : "";
+
+          const startsWithKnownFolder = allProjects.some(p => {
+            const pFolder = getSubfolder(p.link || (p.docs && p.docs[0] ? p.docs[0].link : ""));
+            return pFolder && clean.toLowerCase().startsWith(pFolder.toLowerCase());
+          });
+
+          let fullRelPath = clean;
+          if (!isRepoRoot && !startsWithKnownFolder && decodedBase && !clean.toLowerCase().startsWith(decodedBase.toLowerCase())) {
+            fullRelPath = `${decodedBase}/${clean}`;
+          }
+
+          const targetFileName = clean.split("/").pop().toLowerCase();
+
+          // Check if link matches a tab in the current project
+          let matchedTabBtn = null;
+          if (currentProject && currentProject.docs) {
+            currentProject.docs.forEach((doc, idx) => {
+              const docFile = decodeURIComponent(doc.link).split("/").pop().toLowerCase();
+              if (docFile === targetFileName) {
+                const buttons = modalTabs.querySelectorAll(".doc-tab-btn");
+                if (buttons[idx]) matchedTabBtn = buttons[idx];
+              }
+            });
+          }
+
+          if (matchedTabBtn) {
+            matchedTabBtn.click();
+            if (hashPart) {
+              setTimeout(() => {
+                const targetEl = document.getElementById(hashPart.toLowerCase()) || modalBody.querySelector(`[id="${hashPart.toLowerCase()}"]`);
+                if (targetEl) targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+              }, 250);
+            }
+            return;
+          }
+
+          // Check if link matches another project
+          const matchedProject = allProjects.find(p => {
+            const pFolder = getSubfolder(p.link || (p.docs && p.docs[0] ? p.docs[0].link : ""));
+            if (pFolder && fullRelPath.toLowerCase().startsWith(pFolder.toLowerCase())) return true;
+            if (p.docs) {
+              return p.docs.some(d => decodeURIComponent(d.link).toLowerCase().includes(targetFileName));
+            }
+            return p.link && decodeURIComponent(p.link).toLowerCase().includes(targetFileName);
+          });
+
+          if (matchedProject && matchedProject !== currentProject) {
+            openDocProject(matchedProject, fullRelPath);
+            if (hashPart) {
+              setTimeout(() => {
+                const targetEl = document.getElementById(hashPart.toLowerCase()) || modalBody.querySelector(`[id="${hashPart.toLowerCase()}"]`);
+                if (targetEl) targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+              }, 300);
+            }
+            return;
+          }
+
+          // Load standalone markdown
+          const targetGhLink = `https://github.com/Saarsy/Portfolio/blob/main/${encodeURI(fullRelPath)}`;
+          const targetBase = fullRelPath.includes("/") ? fullRelPath.slice(0, fullRelPath.lastIndexOf("/")) : baseFolder;
+          const targetTitle = clean.split("/").pop().replace(/\.md$/i, "");
+
+          modalTabs.querySelectorAll(".doc-tab-btn").forEach(b => b.classList.remove("active"));
+          modalGh.href = targetGhLink;
+
+          loadMarkdownContent(targetGhLink, targetBase, targetTitle).then(() => {
+            if (hashPart) {
+              setTimeout(() => {
+                const targetEl = document.getElementById(hashPart.toLowerCase()) || modalBody.querySelector(`[id="${hashPart.toLowerCase()}"]`);
+                if (targetEl) targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+              }, 100);
+            }
+          });
+        });
+        return;
+      }
+
+      a.setAttribute("target", "_blank");
+      a.setAttribute("rel", "noopener noreferrer");
+    });
+
+    // --- 3. FIX RELATIVE & ABSOLUTE REPO IMAGES AUTOMATICALLY ---
+    modalBody.querySelectorAll("img").forEach(img => {
+      let src = img.getAttribute("src");
+      if (!src) return;
+
+      if (src.includes("github.com") && src.includes("/blob/")) {
+        img.src = src.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("/blob/", "/");
+        return;
+      }
+
+      if (/^https?:\/\/|^\/\//i.test(src) || src.startsWith("data:")) return;
+
+      let cleanSrc = src.replace(/^\.?\//, "").replace(/^\.\.\//, "");
+      try { cleanSrc = decodeURIComponent(cleanSrc); } catch(e) {}
+
+      let decodedBase = baseFolder ? decodeURIComponent(baseFolder).replace(/\/$/, "") : "";
+
+      let fullPath = cleanSrc;
+      if (decodedBase && !cleanSrc.toLowerCase().startsWith(decodedBase.toLowerCase())) {
+        fullPath = `${decodedBase}/${cleanSrc}`;
+      }
+
+      const rawUrl = "https://raw.githubusercontent.com/Saarsy/Portfolio/main/" + encodeURI(fullPath);
+      const localUrl = encodeURI(fullPath);
+
+      img.src = rawUrl;
+      img.onerror = function() {
+        if (!this.dataset.triedLocal) {
+          this.dataset.triedLocal = "true";
+          this.src = localUrl;
+        }
+      };
+    });
+  }
+
+  window.openDocProject = function(project, specificFilePath) {
+    currentProject = project;
+    modalTitle.textContent = project.name;
+    modalGh.href = project.link || (project.docs && project.docs[0] ? project.docs[0].link : "https://github.com/Saarsy/Portfolio");
+    modalTabs.innerHTML = "";
+
+    const baseFolder = getSubfolder(project.link || (project.docs && project.docs[0].link) || "");
+
+    if (project.docs && project.docs.length > 1) {
+      let activeDocIdx = 0;
+      if (specificFilePath) {
+        const specificName = specificFilePath.split("/").pop().toLowerCase();
+        const foundIdx = project.docs.findIndex(d => decodeURIComponent(d.link).toLowerCase().includes(specificName));
+        if (foundIdx !== -1) activeDocIdx = foundIdx;
+      }
+
+      project.docs.forEach((doc, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = `doc-tab-btn ${idx === activeDocIdx ? "active" : ""}`;
+        btn.textContent = doc.title;
+        btn.addEventListener("click", () => {
+          modalTabs.querySelectorAll(".doc-tab-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          modalGh.href = doc.link;
+          loadMarkdownContent(doc.link, baseFolder, project.name);
+        });
+        modalTabs.appendChild(btn);
+      });
+      loadMarkdownContent(project.docs[activeDocIdx].link, baseFolder, project.name);
+    } else {
+      const activeLink = (project.docs && project.docs[0]) ? project.docs[0].link : project.link;
+      loadMarkdownContent(activeLink, baseFolder, project.name);
+    }
+
+    overlay.classList.add("open");
+    document.documentElement.classList.add("doc-open");
+    closeBtn.focus({ preventScroll: true });
+  };
+
+  document.addEventListener("click", e => {
+    const card = e.target.closest("[data-project-name]");
+    if (!card) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+
+    const name = card.getAttribute("data-project-name");
+    const all = [...BIG_PROJECTS, ...MEDIUM_PROJECTS, ...OTHER_PRINTS];
+    const found = all.find(p => p.name === name);
+
+    if (found && (found.link || (found.docs && found.docs.length))) {
+      e.preventDefault();
+      openDocProject(found);
+    }
+  });
+})();
+
+/* =========================================================
+   ABOUT PAGE DATA
+   ========================================================= */
+
+const ABOUT = {
+  title: "Hi, I'm Saarthak.",
+  intro: "I am a high schooler from Kirkland, WA. I design, print, program, and sell a variety of products that fix problems I run into in my daily life.",
+
+  story: [
+    "It all started with my sixth grade STEM teacher. The printers in that room seemed to amaze me, how something digital could be transformed into something physical. After that moment, my journey started:",
+    "3D printing -> CAD design -> Solving problems -> Incorporating electronics -> Soldering -> Programming -> Selling products",
+    "I build because, once I have an idea, I can automatically spend hours designing a solution, and not even know how many hours have passed. The whole design process is what motivates me to build, the process of iterating a model to perfection is something I will never get tired of."
+  ],
+
+  // 02: Certifications section (Between 'Why I Build' and 'Where I Work')
+  certifications: [
+    {
+      title: "Onshape Associate Certified",
+      issuer: "PTC / Onshape",
+      date: "Aug 2025",
+      desc: "Industry standard certification showing ability in 3D CAD modeling, multi-part design, assemblies, and engineering drawings",
+      // Put your certificate image file path here (e.g. "Website Images/Onshape-Cert.png"):
+      image: "Website%20Images/Onshape%20score_91%25%20.pdf",
+      // Link to your verification page or credential badge:
+      verifyUrl: "https://learn.onshape.com/c/s/Lui_t83wCVeHYpLM_PbeCbe2K83x83uVvCqEt-extPiZPqfRvCATSL22yl_uKBCc"
+    }
+  ],
+
+  workspace: [
+    { src: "Website%20Images/Setup.jpeg",   caption: "Where Everything Happens" },
+    { src: "Website%20Images/Printer.jpeg", caption: "My Printer" },
+    { src: "Website%20Images/Tools.jpeg",   caption: "Tools I've Learned To Use" },
+  ],
+
+  process: [
+    { title: "Spot the Problem",  desc: "Most projects start with a small problem that I know my skills can help to fix" },
+    { title: "Sketch & Plan",     desc: "I find myself taking a paper, and drawing my thoughts out. This helps organize my ideas and find the best one" },
+    { title: "Model in CAD",      desc: "I model my ideas in a software/website like Onshape, making a digital prototype" },
+    { title: "Print & Test",      desc: "I choose the best material for the print, and print a lower infill model, so it uses less filament but provides insight into what needs improvement" },
+    { title: "Iterate",           desc: "Prints rarely work the first time, DialZero went through roughly 7 inirations to the final product" },
+    { title: "Document",          desc: "Every project gets a documentation with dates, photos, and the story of the project" },
+    { title: "Ship & Sell",       desc: "If the product is part of a shared problem, I list it on Etsy or Ebay to expand the use of my model, and making some pocket change" }
+  ],
+  contact: {
+    text: "Want to talk about a project?",
+    label: "Email Me",
+    href: "mailto:saarthak1069@gmail.com"
+  }
+};
+
+const ABOUT_LAYERS = 14;
+const ABOUT_STEP = 38;
+const ABOUT_CLOSE_MS = 340;
+
+(function setupAbout() {
+  const overlay  = document.getElementById("aboutOverlay");
+  const layersEl = document.getElementById("aboutLayers");
+  const content  = document.getElementById("aboutContent");
+  const inner    = document.getElementById("aboutInner");
+  const closeBtn = document.getElementById("aboutClose");
+
+  // Certificate Preview Elements
+  const certOverlay        = document.getElementById("certOverlay");
+  const certModalTitle     = document.getElementById("certModalTitle");
+  const certModalIssuer    = document.getElementById("certModalIssuer");
+  const certModalImg       = document.getElementById("certModalImg");
+  const certImgWrap        = document.getElementById("certImgWrap");
+  const certPlaceholder    = document.getElementById("certPlaceholder");
+  const certModalVerifyBtn = document.getElementById("certModalVerifyBtn");
+  const certBottomVerify   = document.getElementById("certBottomVerifyLink");
+  const certModalClose     = document.getElementById("certModalClose");
+
+  let lastFocus = null;
+  let printedTimer = null;
+  let drawTimer = null;
+  let closeTimer = null;
+  let closing = false;
+
+  overlay.style.setProperty("--n", ABOUT_LAYERS);
+  overlay.style.setProperty("--step", ABOUT_STEP + "ms");
+
+  layersEl.innerHTML = Array.from({ length: ABOUT_LAYERS }, (_, i) =>
+    `<div class="about-layer" style="--i:${i};--k:${ABOUT_LAYERS - 1 - i}"></div>`
+  ).join("");
+
+  const label = (num, text) => `
+    <div class="about-box about-label">
+      <span class="tier-num">${num}</span>
+      <span class="tier-title">${text}</span>
+    </div>`;
+
+  const story = ABOUT.story.map(p => `<p>${p}</p>`).join("");
+
+  // Build Certifications Cards
+  const certsHtml = `
+    <div class="cert-list">
+      ${ABOUT.certifications.map((c, idx) => `
+        <div class="cert-card" role="button" tabindex="0" data-cert-index="${idx}">
+          <div class="cert-header">
+            <div class="cert-title-group">
+              <h3 class="cert-title">${c.title}</h3>
+              <span class="cert-issuer">${c.issuer}</span>
+            </div>
+            ${c.date ? `<span class="cert-date">${c.date}</span>` : ""}
+          </div>
+          <p class="cert-desc">${c.desc}</p>
+          <div class="cert-footer">
+            <span>Preview Certificate →</span>
+          </div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+
+  const photos = ABOUT.workspace.map(w => {
+    const media = w.src
+      ? `<img src="${w.src}" alt="${w.caption}">`
+      : `<div class="about-photo-placeholder">add a photo</div>`;
+    return `<figure>${media}<figcaption>${w.caption}</figcaption></figure>`;
+  }).join("");
+
+  const steps = ABOUT.process.map((s, n) => `
+    <li>
+      <span class="step-num">${n + 1}</span>
+      <div>
+        <div class="step-title">${s.title}</div>
+        <p class="step-desc">${s.desc}</p>
+      </div>
+    </li>`).join("");
+
+  // As requested: Certifications is placed between "Why I Build" and "Where I Work"
+  inner.innerHTML = `
+    <div class="about-box about-hero">
+      <h2 class="about-title" id="aboutTitle">${ABOUT.title}</h2>
+      <p class="about-intro">${ABOUT.intro}</p>
+    </div>
+
+    <section class="about-section">
+      ${label("01", "Why I Build")}
+      <div class="about-box about-card about-story">${story}</div>
+    </section>
+
+    <section class="about-section">
+      ${label("02", "Certifications")}
+      <div class="about-box about-card">${certsHtml}</div>
+    </section>
+
+    <section class="about-section">
+      ${label("03", "Where I Work")}
+      <div class="about-box about-card about-photos">${photos}</div>
+    </section>
+
+    <section class="about-section">
+      ${label("04", "How I Work")}
+      <ol class="about-box about-card about-steps">${steps}</ol>
+    </section>
+
+    <div class="about-box about-cta">
+      <span>${ABOUT.contact.text}</span>
+      <a href="${ABOUT.contact.href}">${ABOUT.contact.label} →</a>
+    </div>
+  `;
+
+  const boxes = inner.querySelectorAll(".about-box");
+
+  /* --- Certificate Preview Modal handlers --- */
+  function openCertPreview(cert) {
+    certModalTitle.textContent = cert.title;
+    certModalIssuer.textContent = cert.issuer || "Certification";
+
+    if (cert.image && cert.image.trim().length > 0) {
+      certModalImg.src = cert.image;
+      certImgWrap.style.display = "flex";
+      certPlaceholder.style.display = "none";
+    } else {
+      certImgWrap.style.display = "none";
+      certPlaceholder.style.display = "flex";
+    }
+
+    if (cert.verifyUrl && cert.verifyUrl.trim().length > 0) {
+      certModalVerifyBtn.href = cert.verifyUrl;
+      certModalVerifyBtn.style.display = "inline-flex";
+      certBottomVerify.href = cert.verifyUrl;
+      certBottomVerify.style.display = "inline";
+    } else {
+      certModalVerifyBtn.style.display = "none";
+      certBottomVerify.style.display = "none";
+    }
+
+    certOverlay.classList.add("open");
+    document.documentElement.classList.add("cert-open");
+    certModalClose.focus({ preventScroll: true });
+  }
+
+  function closeCertPreview() {
+    certOverlay.classList.remove("open");
+    document.documentElement.classList.remove("cert-open");
+  }
+
+  certModalClose.addEventListener("click", closeCertPreview);
+  certOverlay.addEventListener("click", e => {
+    if (e.target === certOverlay) closeCertPreview();
+  });
+
+  // Attach click & enter key to cert cards
+  inner.querySelectorAll(".cert-card").forEach(card => {
+    const idx = parseInt(card.getAttribute("data-cert-index"), 10);
+    const cert = ABOUT.certifications[idx];
+    if (!cert) return;
+
+    card.addEventListener("click", () => openCertPreview(cert));
+    card.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openCertPreview(cert);
+      }
+    });
+  });
+
+  function startDrawing() {
+    stopDrawing();
+    const view = content.getBoundingClientRect();
+    let i = 0;
+    boxes.forEach(b => {
+      const r = b.getBoundingClientRect();
+      const onScreen = r.bottom > view.top && r.top < view.bottom;
+      if (onScreen) {
+        b.style.setProperty("--d", (i * 70) + "ms");
+        b.classList.add("drawn");
+        i++;
+      } else {
+        b.classList.add("settled");
+      }
+    });
+  }
+
+  function stopDrawing() {
+    boxes.forEach(b => {
+      b.classList.remove("drawn", "settled");
+      b.style.removeProperty("--d");
+    });
+  }
+
+  function isOpen() { return overlay.classList.contains("open"); }
+
+  function openAbout() {
+    if (isOpen()) return;
+    lastFocus = document.activeElement;
+
+    const sw = window.innerWidth - document.documentElement.clientWidth;
+    if (sw > 0) document.body.style.paddingRight = sw + "px";
+    document.documentElement.classList.add("about-open");
+
+    content.scrollTop = 0;
+    overlay.classList.add("open");
+
+    clearTimeout(printedTimer);
+    clearTimeout(drawTimer);
+    printedTimer = setTimeout(() => {
+      overlay.classList.add("printed");
+      document.documentElement.classList.add("about-printed");
+    }, ABOUT_LAYERS * ABOUT_STEP + 450);
+    drawTimer = setTimeout(startDrawing, ABOUT_LAYERS * ABOUT_STEP + 150);
+
+    requestAnimationFrame(() => closeBtn.focus({ preventScroll: true }));
+
+    try { history.replaceState(null, "", "#about"); } catch (e) {}
+  }
+
+  function closeAbout() {
+    if (!isOpen() || closing) return;
+    closing = true;
+    clearTimeout(printedTimer);
+    clearTimeout(drawTimer);
+    overlay.classList.add("closing");
+    closeTimer = setTimeout(finishClose, ABOUT_CLOSE_MS);
+  }
+
+  function finishClose() {
+    closing = false;
+    stopDrawing();
+    overlay.classList.remove("open", "printed", "closing");
+    document.documentElement.classList.remove("about-open", "about-printed");
+    document.body.style.paddingRight = "";
+
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+  }
+
+  document.querySelectorAll("[data-about-open]")
+    .forEach(btn => btn.addEventListener("click", openAbout));
+
+  closeBtn.addEventListener("click", closeAbout);
+
+  document.addEventListener("keydown", e => {
+    // If cert preview is open, close only the preview on Escape
+    if (certOverlay.classList.contains("open") && e.key === "Escape") {
+      closeCertPreview();
+      e.stopPropagation();
+      return;
+    }
+
+    if (!isOpen()) return;
+
+    if (e.key === "Escape") {
+      closeAbout();
+      return;
+    }
+
+    if (e.key === "Tab" && !certOverlay.classList.contains("open")) {
+      const f = overlay.querySelectorAll("a[href], button");
+      if (!f.length) return;
+      const first = f[0];
+      const last = f[f.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  if (location.hash === "#about") openAbout();
+})();
+
+</script>
+
+</body>
+</html>
+    --about-btn: #D97D4C;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, .serif {
+    font-family: 'Fraunces', serif;
+  }
+
+  .wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  /* ---------- LIVE STATS ---------- */
+
+  .live-stats {
+    position: fixed;
+    top: clamp(16px, 3vw, 28px);
+    right: clamp(16px, 3vw, 32px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 1.2vw, 10px);
+    z-index: 50;
+  }
+
+  .stat-pill {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(6px, 1vw, 9px);
+    font-size: clamp(8px, 2.4vw, 15px);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: clamp(6px, 1.4vw, 10px) clamp(11px, 2.4vw, 18px);
+    white-space: nowrap;
+  }
+
+  .stat-pill .stat-label {
+    color: var(--green);
+  }
+
+  .stat-pill .stat-num {
+    color: var(--copper);
+    font-weight: 600;
+  }
+
+  /* ---------- HERO ---------- */
+
+  header {
+    padding: 110px 0 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .kicker {
+    color: var(--green);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-size: clamp(42px, 6.5vw, 74px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    max-width: 15ch;
+  }
+
+  header p.sub {
+    margin-top: 28px;
+    color: var(--text-dim);
+    font-size: 17px;
+    max-width: 60ch;
+    line-height: 1.75;
+  }
+
+  .hero-links {
+    margin-top: 44px;
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .hero-links a {
+    position: relative;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: none;
+    padding-bottom: 4px;
+    transition: color 0.15s;
+  }
+
+  .hero-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--copper);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  .hero-links a:hover {
+    color: var(--copper);
+  }
+
+  .hero-links a:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* ---------- HERO ANIMATION ---------- */
+
+  @keyframes heroFade {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  header > * {
+    animation: heroFade 0.7s ease both;
+  }
+
+  header .kicker { animation-delay: 0.05s; }
+  header h1 { animation-delay: 0.15s; }
+  header .sub { animation-delay: 0.25s; }
+  header .hero-links { animation-delay: 0.35s; }
+
+  /* ---------- TIER SECTIONS ---------- */
+
+  .tier {
+    padding: 90px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .tier-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .tier-head.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tier-num {
+    font-size: 13px;
+    color: var(--green);
+  }
+
+  .tier-title {
+    font-size: 15px;
+    color: var(--text-dim);
+    letter-spacing: 0.01em;
+  }
+
+  /* ---------- PROJECT CARD ---------- */
+
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .project {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 40px;
+    align-items: start;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 36px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease,
+      opacity 0.6s ease;
+  }
+
+  .project.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .project:hover {
+    background: var(--surface-hover);
+    border-color: var(--copper);
+    transform: translateY(-3px);
+  }
+
+  .project-wip {
+    cursor: default;
+  }
+
+  .project.project-wip.visible,
+  .other-build.project-wip.visible {
+    opacity: 0.65;
+  }
+
+  .project.project-wip.visible:hover,
+  .other-build.project-wip.visible:hover {
+    opacity: 0.9;
+  }
+
+  .project-thumb {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 3px;
+    background: #0B0D10;
+    display: block;
+    align-self: start;
+  }
+
+  .project-thumb:not(.placeholder) {
+    transition: transform 0.3s ease;
+  }
+
+  .project:hover .project-thumb:not(.placeholder) {
+    transform: scale(1.025);
+  }
+
+  .project-thumb.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    font-size: 12px;
+    border: 1px dashed var(--line);
+  }
+
+  .project-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .project-name {
+    font-family: 'Fraunces', serif;
+    font-size: 30px;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+
+  .project:hover .project-name {
+    color: var(--copper);
+  }
+
+  .project-date {
+    font-size: 13px;
+    color: var(--green);
+    transition: color 0.15s ease;
+  }
+
+  .project:hover .project-date {
+    color: var(--copper);
+  }
+
+  .project-tags {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .project-tag {
+    font-size: 11px;
+    color: var(--green);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 4px 12px;
+  }
+
+  .project-desc {
+    margin-top: 20px;
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.75;
+    max-width: 60ch;
+  }
+
+  .project-cta {
+    margin-top: auto;
+    padding-top: 24px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .project:hover .project-cta {
+    color: var(--copper);
+  }
+
+  /* ---------- OTHER BUILDS ---------- */
+
+  .other-prints ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .other-prints li {
+    list-style: none;
+  }
+
+  .other-build {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-between;
+    gap: 32px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 36px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease,
+      opacity 0.6s ease;
+  }
+
+  .other-build.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .other-build:hover {
+    background: var(--surface-hover);
+    border-color: var(--copper);
+    transform: translateY(-3px);
+  }
+
+  .other-build-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .other-build-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .other-build strong {
+    color: var(--text);
+    font-family: 'Fraunces', serif;
+    font-size: 30px;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+
+  .other-build:hover strong {
+    color: var(--copper);
+  }
+
+  .other-build .other-build-date {
+    font-size: 13px;
+    color: var(--green);
+    transition: color 0.15s ease;
+  }
+
+  .other-build:hover .other-build-date {
+    color: var(--copper);
+  }
+
+  .other-build-desc {
+    margin-top: 20px;
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.75;
+    max-width: 60ch;
+  }
+
+  .other-build .project-cta {
+    margin-top: 24px;
+    padding-top: 0;
+  }
+
+  .other-build:hover .project-cta {
+    color: var(--copper);
+  }
+
+  .other-build-thumb {
+    width: 200px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid var(--line);
+    background: #0B0D10;
+    flex-shrink: 0;
+    align-self: start;
+    transition: transform 0.3s ease, border-color 0.2s ease;
+  }
+
+  .other-build:hover .other-build-thumb:not(.placeholder) {
+    transform: scale(1.025);
+    border-color: var(--copper);
+  }
+
+  .other-build-thumb.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    font-size: 11px;
+    text-align: center;
+    border: 1px dashed var(--line);
+  }
+
+  /* ---------- FOOTER CONTACTS ---------- */
+
+  footer {
+    padding: 60px 0 80px;
+    color: var(--text-dim);
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    position: relative;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding-bottom: 4px;
+    transition: color 0.15s ease;
+  }
+
+  .footer-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--copper);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  .footer-links a:hover {
+    color: var(--copper);
+  }
+
+  .footer-links a:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* ---------- LINK-STYLE BUTTONS ---------- */
+
+  .link-btn {
+    position: relative;
+    background: none;
+    border: none;
+    padding: 0 0 4px;
+    font: inherit;
+    color: var(--text);
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+
+  .link-btn::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--copper);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  .link-btn:hover,
+  .link-btn:focus-visible {
+    color: var(--copper);
+    outline: none;
+  }
+
+  .link-btn:hover::after,
+  .link-btn:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .hero-links .link-btn { font-size: 14px; }
+  .footer-links .link-btn { color: var(--text-dim); }
+  .footer-links .link-btn:hover { color: var(--copper); }
+
+  /* ---------- HOMEPAGE "ABOUT ME" BUTTON (Clean, crisp) ---------- */
+
   .hero-links .about-btn {
     color: var(--about-btn);
     border: 1px solid var(--about-btn);
