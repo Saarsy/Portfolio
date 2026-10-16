@@ -4,7 +4,7 @@
 - [Technical Overview](#technical-overview)
 - [The Hard Parts](#the-hard-parts)
 - [Results](#results)
-- [What's Next](#what's-next)
+- [What's Next](#whats-next)
 
 ![Poster](/DialZero%20(Big%20project)/Images/Poster%20Hero%20Shot.jpeg)
 
