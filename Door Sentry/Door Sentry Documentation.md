@@ -12,6 +12,7 @@ The first step to achieving this was the design. I had to make something mechani
 ![Poster](/Door%20Sentry/Images/Drawing.png)
 ## Technical
 The technical part of this combines many aspects. The way this was gonna work was the rotary encoder sent a value to the RP2040-zero and that then sent another value to the Raspberry Pi, which then gave it to Home or Assistant or played something on the speaker, depending on the value the RP2040-zero gave. You may ask why I even included the RP2040-zero and I did that because the Raspberry Pi wasn't that great with receiving real-time information from the encoder as the RP2040-Zero did. It also provided nanosecond precision and made organization within the system neat.
+
 ![Poster](/Door%20Sentry/Images/RP2040%20Exposed.jpeg)
 ![Poster](/Door%20Sentry/Images/RP2040.jpeg)
 ![Poster](/Door%20Sentry/Images/Pi.jpeg)
