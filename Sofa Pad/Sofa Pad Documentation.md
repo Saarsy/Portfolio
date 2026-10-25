@@ -52,7 +52,9 @@ This prototype consisted of the changes that led it to being sellable: the new b
 ![Poster](/Sofa%20Pad/Images/Drawing.jpeg)
 
 # Results
-I had a polished product rather than an in progress build that my dad used every day for even things other than using his mouse. Seeing my custom design solve a problem and get used as a daily tool and become a unique conversation starter makes me want to try harder to solve other problems. This product has a few sales on Etsy too.
+I had a polished product rather than an in progress build that my dad used every day for even things other than using his mouse. Seeing my custom design solve a problem and get used as a daily tool and become a unique conversation starter makes me want to try harder to solve other problems.
+## Marketing/Etsy
+When going to family friends’ houses, I saw that they might have the same problem as my dad did. I knew many people were looking for something like this, but looking on the market, you see nothing like the product I designed. I knew this had potential. That’s why this is one of the top-selling things on my Etsy shop so far. I know this has even greater potential, so I will need to keep on iterating this design.
 # What's Next
 - Use PETG for withstanding higher temperatures
 - Grow Etsy sales for this product
